@@ -1,8 +1,3 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ห้องติวภาษาภาพและอุปกรณ์สื่อ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,7 +51,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .mono{font-family:var(--mono);letter-spacing:.02em}
 
 /* top bar */
-.bar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .bar .wrap{display:flex;align-items:center;gap:14px;height:60px}
 .rec{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--rec);white-space:nowrap}
 .rec i{width:10px;height:10px;border-radius:50%;background:var(--rec);animation:blink 1.6s infinite}
@@ -215,9 +210,46 @@ td b{font-weight:600}
 .donebox{display:flex;align-items:center;gap:10px;margin-top:20px;font-size:15px}
 .donebox input{width:20px;height:20px;accent-color:var(--ok)}
 footer{padding:50px 0 70px;color:var(--muted);font-size:14px}
+/* combo lab */
+.combo{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:860px){.combo{grid-template-columns:1fr}}
+.cscreen{position:relative;border-radius:6px;overflow:hidden;aspect-ratio:16/9;max-width:100%;background:#7f9a86;perspective:700px}
+.cscreen .camw{position:absolute;inset:-14%;transform-origin:50% 50%;transition:transform .6s cubic-bezier(.3,.7,.3,1)}
+@media (prefers-reduced-motion: reduce){.cscreen .camw{transition:none}}
+.cscreen svg{width:100%;height:100%;display:block}
+.cscreen .hud{position:absolute;left:10px;top:8px;font-family:var(--mono);font-size:12px;color:#fff;background:rgba(0,0,0,.5);padding:2px 8px;border-radius:4px;z-index:2}
+.ctl{display:flex;flex-direction:column;gap:6px}
+.ctl label,.ctl .lbl{font-family:var(--display);font-weight:600;font-size:15px}
+.ctl select{font:inherit;font-size:15px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);max-width:100%}
+.ctlgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:14px}
+.presets{display:flex;flex-wrap:wrap;gap:8px}
+.presets button{border:1px dashed var(--cue);background:var(--surface);color:var(--cue);border-radius:999px;padding:5px 12px;font-size:14px}
+.read3{display:grid;gap:10px}
+.read3 .row{display:grid;grid-template-columns:110px 1fr;gap:10px;align-items:start;padding:10px 12px;border-radius:8px;background:var(--bg)}
+.read3 .row b.k{font-family:var(--mono);font-size:12px;color:var(--rec)}
+.sum{border-radius:var(--r);padding:16px 18px;background:var(--tint);border-left:5px solid var(--cue)}
+/* spec reader */
+.sr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start;margin-top:12px}
+@media (max-width:820px){.sr{grid-template-columns:1fr}}
+.srlist{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.srlist button{display:grid;grid-template-columns:minmax(0,38%) minmax(0,1fr);gap:10px;text-align:left;border:0;border-bottom:1px solid var(--line);background:var(--surface);padding:10px 12px;font-size:14.5px}
+.srlist button:last-child{border-bottom:0}
+.srlist button .a{font-weight:600}
+.srlist button .v{font-family:var(--mono);font-size:13px;overflow-wrap:anywhere}
+.srlist button.on{background:var(--tint);box-shadow:inset 4px 0 0 var(--rec)}
+.srlist button .hit{display:inline-block;margin-left:6px;font-size:11px;color:var(--rec);font-family:var(--mono)}
+.srexp{position:sticky;top:80px;display:flex;flex-direction:column;gap:12px}
+.srexp .box{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
+.srexp .box h4{font-family:var(--display);margin:0 0 6px;font-size:17px}
+/* type browser */
+.types{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:12px}
+.tcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.tcard h4{margin:0;font-family:var(--display);font-size:17px}
+.tcard .grpl{font-family:var(--mono);font-size:11px;color:var(--cue)}
+.tcard .clue{font-family:var(--mono);font-size:12.5px;background:var(--bg);border-radius:6px;padding:6px 8px}
+
 </style>
-</head>
-<body>
+<div lang="th">
 
 <header class="bar">
   <div class="wrap">
@@ -226,6 +258,7 @@ footer{padding:50px 0 70px;color:var(--muted);font-size:14px}
       <a href="#ch1" data-ch="1">1 ขนาดภาพ</a>
       <a href="#ch2" data-ch="2">2 มุมกล้อง</a>
       <a href="#ch3" data-ch="3">3 การเคลื่อนกล้อง</a>
+      <a href="#combo" data-ch="7">รวม 3 อย่าง</a>
       <a href="#ch4" data-ch="4">4 สเปคอุปกรณ์</a>
       <a href="#ch5" data-ch="5">5 เครื่องมือ AI</a>
       <a href="#quiz" data-ch="6">ทดสอบรวม</a>
@@ -243,7 +276,8 @@ footer{padding:50px 0 70px;color:var(--muted);font-size:14px}
       <a href="#ch1"><span class="n">บทที่ 1</span><b>ขนาดภาพ</b><span>เลื่อนสไลด์ดูเฟรมแคบลงทีละขั้น</span></a>
       <a href="#ch2"><span class="n">บทที่ 2</span><b>มุมกล้อง</b><span>ย้ายกล้องขึ้นลง ดูตัวละครเปลี่ยนไป</span></a>
       <a href="#ch3"><span class="n">บทที่ 3</span><b>การเคลื่อนกล้อง</b><span>กดเล่นภาพเคลื่อนไหว 16 แบบ</span></a>
-      <a href="#ch4"><span class="n">บทที่ 4</span><b>สเปคอุปกรณ์</b><span>อ่านสเปคแล้วทายว่าเป็นอะไร</span></a>
+      <a href="#combo"><span class="n">บทที่ 3½</span><b>รวม 3 อย่าง</b><span>เลือกขนาด มุม การเคลื่อน แล้วดูผลรวม</span></a>
+      <a href="#ch4"><span class="n">บทที่ 4</span><b>สเปคอุปกรณ์</b><span>อ่านสเปคจริงทีละบรรทัด + เกมทายสเปค</span></a>
       <a href="#ch5"><span class="n">บทที่ 5</span><b>เครื่องมือ AI</b><span>Suno กับ Minimax แบบสั้น</span></a>
       <a href="#quiz"><span class="n">ท้ายเล่ม</span><b>ทดสอบรวม</b><span>20 ข้อ พร้อมเฉลยและเหตุผล</span></a>
     </div>
@@ -429,6 +463,42 @@ footer{padding:50px 0 70px;color:var(--muted);font-size:14px}
 </div>
 </section>
 
+<!-- ================= COMBO ================= -->
+<section class="ch" id="combo">
+<div class="wrap stack">
+  <div class="chhead">
+    <span class="chno">บทที่ 3½ / PUT IT TOGETHER</span>
+    <h2>รวม 3 อย่าง: ขนาดภาพ + มุมกล้อง + การเคลื่อนกล้อง</h2>
+    <p>ในการถ่ายจริง ทุกช็อตมีทั้ง 3 อย่างพร้อมกันเสมอ ลองเลือกแต่ละหมวด แล้วกด "เล่นช็อตนี้" ด้านล่างจะสรุปให้ว่าช็อตที่ได้สื่ออะไร และเขียนตอบข้อสอบอย่างไร</p>
+  </div>
+  <div class="idea read"><b class="k">หลักคิด: แต่ละอย่างตอบคำถามคนละข้อ</b>
+    <b>ขนาดภาพ</b> ตอบว่า "ผู้ชมอยู่ใกล้แค่ไหน" · <b>มุมกล้อง</b> ตอบว่า "ผู้ชมมองตัวละครแบบเหนือกว่าหรือต่ำกว่า" · <b>การเคลื่อนกล้อง</b> ตอบว่า "ผู้ชมรู้สึกนิ่งหรือเคลื่อนไหว" รวมกันจึงเป็นความรู้สึกของช็อตนั้น
+  </div>
+  <div class="card">
+    <div class="lbl" style="font-family:var(--display);font-weight:600;margin-bottom:8px">ลองช็อตสำเร็จรูป</div>
+    <div class="presets" id="presets"></div>
+    <div class="combo" style="margin-top:16px">
+      <div>
+        <div class="cscreen" id="cscreen"><div class="camw" id="camw"><svg id="comboSvg" viewBox="0 0 4000 2250" preserveAspectRatio="xMidYMid slice" role="img" aria-label="ภาพจำลองช็อตที่เลือก"></svg></div><span class="hud" id="comboHud"></span></div>
+        <div class="ctlgrid">
+          <div class="ctl"><label for="cSize">1 ขนาดภาพ</label><select id="cSize"></select></div>
+          <div class="ctl"><label for="cAngle">2 มุมกล้อง</label><select id="cAngle"></select></div>
+          <div class="ctl"><label for="cMove">3 การเคลื่อนกล้อง</label><select id="cMove"></select></div>
+        </div>
+        <button class="btn" id="cPlay" type="button" style="margin-top:14px">▶ เล่นช็อตนี้</button>
+        <p class="small" style="margin-top:8px">ภาพจำลองเป็นภาพแบน จึงไม่เห็นมิติแบบกล้องจริง ถ้าอยากเห็นความต่างของ Zoom กับ Push In ให้ดูบทที่ 3</p>
+      </div>
+      <div class="stack" style="gap:12px" aria-live="polite">
+        <div class="read3" id="comboParts"></div>
+        <div class="sum" id="comboSum"></div>
+        <div class="exam" id="comboExam"></div>
+      </div>
+    </div>
+  </div>
+  <label class="donebox"><input type="checkbox" data-done="7"> เข้าใจบทนี้แล้ว</label>
+</div>
+</section>
+
 <!-- ================= CHAPTER 4 ================= -->
 <section class="ch" id="ch4">
 <div class="wrap stack">
@@ -471,6 +541,26 @@ footer{padding:50px 0 70px;color:var(--muted);font-size:14px}
       <svg id="polarSvg" viewBox="-170 -170 340 340" role="img" aria-label="กราฟ polar pattern"></svg>
       <div id="polarInfo" aria-live="polite"></div>
     </div>
+  </div>
+
+  <div class="card">
+    <h3>อ่านสเปคจริงทีละบรรทัด (แบบที่ข้อสอบให้มา)</h3>
+    <p class="small" style="margin:4px 0 10px">สเปคจริงจากหน้าร้าน 3 ตัว กดแต่ละบรรทัดเพื่อดูว่าแปลว่าอะไร บรรทัดที่มีป้าย <span style="color:var(--rec);font-family:var(--mono)">● คำใบ้</span> คือบรรทัดที่บอกได้ทันทีว่าเป็นอุปกรณ์อะไร</p>
+    <div class="chips" id="srTabs" role="group" aria-label="เลือกสเปค"></div>
+    <div class="sr">
+      <div class="srlist" id="srList"></div>
+      <div class="srexp" aria-live="polite">
+        <div class="box" id="srLine"></div>
+        <div class="box" id="srConc"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>ประเภทอุปกรณ์แต่ละหมวด แตกย่อยครบ</h3>
+    <p class="small" style="margin:4px 0 10px">อาจารย์อาจถามให้บอก "ชนิดย่อย" เช่น ไมค์ชนิดไหน หูฟังแบบไหน กดเลือกหมวดด้านล่าง ทุกการ์ดมี <b>คำใบ้ในสเปค</b> ไว้ใช้แยกชนิด</p>
+    <div class="chips" id="typeTabs" role="group" aria-label="เลือกหมวดอุปกรณ์"></div>
+    <div class="types" id="typeGrid"></div>
   </div>
 
   <h3>ขั้นที่ 4: รู้จักอุปกรณ์ทีละชิ้น</h3>
@@ -909,9 +999,16 @@ const specItems=[
  {q:"อุปกรณ์นี้คืออะไร",spec:"ขนาด: 24.5 นิ้ว\nResolution: 1920 × 1080\nPanel: TN\nRefresh rate: 240 Hz\nResponse time: 1 ms",o:["จอเกมมิ่ง","จองานกราฟิกระดับสูง","จอมอนิเตอร์ติดกล้อง","ทีวี OLED"],why:"Hz สูงและ ms ต่ำ (ภาพลื่น ไม่เบลอ) แต่ TN สีไม่แม่น คือจอที่เน้นเล่นเกม"},
  {q:"อุปกรณ์นี้คืออะไร",spec:"Woofer: 5 นิ้ว · Tweeter: 1 นิ้ว\nBi-amp: 45W + 25W\nFrequency: 50 Hz – 20 kHz\nInput: XLR / TRS\nFlat frequency response",o:["ลำโพงมอนิเตอร์สตูดิโอแบบ Active","หูฟังแบบเปิด","ไมค์ไดนามิก","มิกเซอร์"],why:"มี Woofer, Tweeter และแอมป์ในตัว (Bi-amp) คือลำโพงมอนิเตอร์แบบ Active สำหรับฟังตอนมิกซ์"},
  {q:"อุปกรณ์นี้คืออะไร",spec:"Sensor: Full Frame 24.2 MP\nISO: 100 – 51200\nVideo: 4K 60p, 10-bit 4:2:2, Log\nIBIS 5 แกน\nLens mount: E-mount",o:["กล้องมิเรอร์เลส","เลนส์ซูม","จอภาพ 4K","ไฟ LED"],why:"มีเซนเซอร์ MP ISO และเมาท์เลนส์ คือบอดี้กล้อง"},
- {q:"อุปกรณ์นี้คืออะไร",spec:"Color temperature: 2700K – 6500K (Bi-color)\nCRI: 96\nPower: 60W\nOutput: 20,000 lux @1m\nBowens mount",o:["ไฟ LED สำหรับถ่ายวิดีโอ","จอภาพ","กล้อง","ลำโพง"],why:"หน่วย K, CRI, lux เป็นของแสง คือไฟถ่ายทำ ใส่ softbox ได้ (Bowens mount)"}
+ {q:"อุปกรณ์นี้คืออะไร",spec:"Color temperature: 2700K – 6500K (Bi-color)\nCRI: 96\nPower: 60W\nOutput: 20,000 lux @1m\nBowens mount",o:["ไฟ LED สำหรับถ่ายวิดีโอ","จอภาพ","กล้อง","ลำโพง"],why:"หน่วย K, CRI, lux เป็นของแสง คือไฟถ่ายทำ ใส่ softbox ได้ (Bowens mount)"},
+ {q:"อุปกรณ์นี้คืออะไร",spec:"Cartridge Type: Dynamic (moving coil)\nFrequency Response: 40 Hz – 16 kHz\nPolar Pattern: Cardioid\nSensitivity: -51.5 dBV/Pa (1.85 mV)\nConnector: 3-pin XLR male\nHousing: Die-cast aluminum",o:["ไมค์ไดนามิกแบบถือ (มีสาย)","ไมค์คอนเดนเซอร์ USB","ไมค์หนีบปก","หูฟังมอนิเตอร์"],why:"Dynamic + ไวน้อย (1.85 mV) + ตัวถังแข็งแรง + XLR = ไมค์ไดนามิกแบบถือสำหรับเวที"},
+ {q:"อุปกรณ์นี้คืออะไร",spec:"1\u2033 Condenser Capsule / Cardioid / Side-address\n20 Hz – 20 kHz · Sensitivity 25 mV · Noise 4 dBA\nAnalog: XLR 3-pin / Digital: USB-C\n24-bit & 32-bit float / 48–192 kHz",o:["ไมค์คอนเดนเซอร์ไดอะแฟรมใหญ่ แบบ Hybrid USB/XLR","ไมค์ไดนามิก","ออดิโออินเตอร์เฟซ","ไมค์ช็อตกัน"],why:"Condenser 1 นิ้ว + ไวสูง + มีทั้ง XLR และ USB-C = ไมค์คอนเดนเซอร์ LDC แบบไฮบริด"},
+ {q:"อุปกรณ์นี้คืออะไร",spec:"Model: T770NC-BT\nImpedance: 32 ohms · 20 Hz – 20 kHz\nBluetooth 5.3 · A2DP · AVRCP · HFP\nBattery: 70 h · Microphone: 1\nขนาด 20.5 × 5.5 × 22.5 cm",o:["หูฟังไร้สายแบบครอบหู มี ANC","หูฟังจุก TWS","ลำโพงบลูทูธ","หูฟังมอนิเตอร์สตูดิโอแบบมีสาย"],why:"NC + Bluetooth + แบต + ขนาดใหญ่ประมาณ 20 ซม. = หูฟังไร้สายแบบครอบหู"},
+ {q:"อุปกรณ์นี้คืออะไร",spec:"Type: Open-ear (Bone conduction)\nBluetooth 5.3 · IP67\nBattery: 10 h\nน้ำหนัก 29 g",o:["หูฟังแบบเปิดหู (Bone conduction)","หูฟังจุก In-ear","หูฟังครอบหูฝาปิด","ไมค์คาดศีรษะ"],why:"Open-ear / Bone conduction = หูฟังที่ไม่อุดหู ส่งเสียงผ่านกระดูก ได้ยินเสียงรอบข้าง"},
+ {q:"อุปกรณ์นี้คืออะไร",spec:"Earbuds: 2 ชิ้นแยกกัน · Ear tips S/M/L\nANC · Bluetooth 5.3\nBattery: 8 h (รวมกล่องชาร์จ 30 h)",o:["หูฟังจุกไร้สายแท้ (TWS)","หูฟังครอบหู","หูฟังคล้องคอ","ไมค์ไร้สาย"],why:"แยก 2 ข้าง + จุกยาง + กล่องชาร์จ = TWS แบบ In-ear"},
+ {q:"อุปกรณ์นี้คืออะไร",spec:"System: UHF 500–600 MHz\nTransmitter: Handheld · Receiver: XLR out\nRange: 100 m · Battery: AA × 2, 8 h",o:["ชุดไมค์ไร้สายแบบถือ","ไมค์ USB","ลำโพง PA","ออดิโออินเตอร์เฟซ"],why:"มีตัวส่ง/ตัวรับ คลื่น UHF ระยะ และแบตเตอรี่ = ไมค์ไร้สาย"},
+ {q:"อุปกรณ์นี้คืออะไร",spec:"Power: 1000W (Active)\nWoofer 15\u2033 + Compression driver 1.4\u2033\nMax SPL: 131 dB\nInputs: XLR/TRS combo · Output: XLR link",o:["ลำโพง PA แบบ Active","ลำโพงมอนิเตอร์สตูดิโอ","ซาวด์บาร์","หูฟัง"],why:"กำลังขับสูงมาก + ดอก 15 นิ้ว + Max SPL สูง = ลำโพง PA สำหรับเวที"}
 ];
-quiz("#specGame","เกมทายสเปค · 12 ข้อ",specItems.slice());
+quiz("#specGame","เกมทายสเปค · "+specItems.length+" ข้อ",specItems.slice());
 
 /* final quiz */
 const finalItems=[
@@ -938,6 +1035,231 @@ const finalItems=[
 ];
 quiz("#finalQuiz","ทดสอบรวม · 20 ข้อ",finalItems.slice());
 
+/* ================= COMBO: size + angle + movement ================= */
+(function(){
+const csv=$("#comboSvg");
+csv.innerHTML=shotSvg.innerHTML.replace(/id="sky"/,'id="sky2"').replace('url(#sky)','url(#sky2)');
+const person=csv.querySelector('g[transform^="translate(2000"]');
+const camw=$("#camw");
+const angs=angles.filter(a=>a.k!=="pov"&&a.k!=="ots");
+const angT={aerial:"rotateX(46deg) scale(.8)",overhead:"rotateX(68deg) scale(.95)",high:"rotateX(22deg)",eye:"none",shoulder:"rotateX(-5deg)",hip:"rotateX(-10deg)",knee:"rotateX(-15deg)",low:"rotateX(-24deg)",ground:"rotateX(-14deg) translateY(-6%)",worm:"rotateX(-40deg) scale(1.05)",dutch:"rotate(15deg)"};
+const angPow={aerial:-2,overhead:-1,high:-1,eye:0,shoulder:0,hip:0,knee:1,low:2,ground:1,worm:2,dutch:9};
+const moveEnergy={"Static":0,"Pan":1,"Tilt":1,"Push In":1,"Pull Out":1,"Zoom":1,"Dolly":1,"Dolly Zoom":2,"Tracking":1,"Trucking":1,"Arc":1,"Boom / Crane":1,"Whip Pan":3,"Crash Zoom":3,"Roll":3,"Random":3};
+const selS=$("#cSize"),selA=$("#cAngle"),selM=$("#cMove");
+selS.innerHTML=shots.map((s,i)=>`<option value="${i}">${s.k} · ${s.n}</option>`).join("");
+selA.innerHTML=angs.map((a,i)=>`<option value="${i}">${a.n}</option>`).join("");
+selM.innerHTML=moves.map((m,i)=>`<option value="${i}">${m.k}</option>`).join("");
+const presets=[
+ ["เปิดเรื่อง บอกสถานที่",0,"aerial","Boom / Crane"],
+ ["ฮีโร่ปรากฏตัว",2,"low","Push In"],
+ ["ตัวละครโดดเดี่ยว",1,"high","Pull Out"],
+ ["สัมภาษณ์ / vlog",6,"eye","Static"],
+ ["สติแตก / สยองขวัญ",7,"dutch","Random"],
+ ["ตระหนักรู้ความจริง",7,"eye","Dolly Zoom"],
+ ["โชว์สินค้าในโฆษณา",8,"eye","Arc"],
+ ["วิ่งไล่ล่า",5,"eye","Tracking"],
+ ["ผู้ร้ายน่าเกรงขาม",7,"worm","Push In"]
+];
+$("#presets").innerHTML=presets.map((p,i)=>`<button type="button" data-i="${i}">${p[0]}</button>`).join("");
+$("#presets").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{const p=presets[+b.dataset.i];selS.value=p[1];selA.value=angs.findIndex(a=>a.k===p[2]);selM.value=moves.findIndex(m=>m.k===p[3]);update(true);}));
+let raf=null;
+function setVB(v){csv.setAttribute("viewBox",v.map(n=>n.toFixed(2)).join(" "));}
+function setPerson(dx,sx,sc){person.setAttribute("transform",`translate(${2000+dx},1900) scale(${3*sc*sx},${3*sc})`);}
+function reset(){if(raf)cancelAnimationFrame(raf);csv.style.transform="";csv.style.filter="";setPerson(0,1,1);setVB(viewFor(shots[+selS.value]));}
+function play(){
+  reset();
+  const v=viewFor(shots[+selS.value]), m=moves[+selM.value], w=v[2], h=v[3];
+  const fast=moveEnergy[m.k]===3, D=reduce?1:(m.k==="Whip Pan"?700:m.k==="Crash Zoom"?900:2600);
+  const t0=performance.now();
+  const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+  const step=now=>{
+    const r=Math.min(1,(now-t0)/D), t=ease(r);
+    let dx=0,dy=0,sc=1,pdx=0,psx=1,psc=1,rot=0,blur=0;
+    switch(m.k){
+      case "Static": pdx=(-.25+.5*t)*w; break;
+      case "Pan": case "Trucking": dx=(-.25+.5*t)*w; break;
+      case "Whip Pan": dx=(-.3+.6*t)*w; blur=Math.sin(Math.PI*r)*8; break;
+      case "Tilt": dy=(-.3+.5*t)*h; break;
+      case "Push In": case "Zoom": sc=1-.45*t; break;
+      case "Pull Out": sc=.55+.45*t; break;
+      case "Crash Zoom": sc=1-.6*Math.min(1,r*3.5); break;
+      case "Dolly": sc=1-.4*Math.sin(Math.PI*t); break;
+      case "Dolly Zoom": sc=1-.45*t; psc=sc; break;
+      case "Roll": rot=25*Math.sin(2*Math.PI*t); break;
+      case "Tracking": pdx=(-.3+.6*t)*w; dx=pdx; break;
+      case "Arc": dx=(.2-.4*t)*w; psx=1-.4*Math.sin(Math.PI*t); break;
+      case "Boom / Crane": dy=(.15-.5*t)*h; sc=1+.35*t; break;
+      case "Random": dx=w*.025*Math.sin(r*37)+w*.015*Math.sin(r*91); dy=h*.03*Math.cos(r*29); rot=1.6*Math.sin(r*23); break;
+    }
+    const nw=w*sc, nh=h*sc, cx=v[0]+w/2+dx, cy=v[1]+h/2+dy;
+    setVB([cx-nw/2,cy-nh/2,nw,nh]); setPerson(pdx,psx,psc);
+    csv.style.transform=rot?`rotate(${rot}deg)`:""; csv.style.filter=blur>.3?`blur(${blur}px)`:"";
+    if(r<1) raf=requestAnimationFrame(step); else {csv.style.filter="";}
+  };
+  raf=requestAnimationFrame(step);
+}
+function update(andPlay){
+  const s=shots[+selS.value], a=angs[+selA.value], m=moves[+selM.value], i=+selS.value;
+  camw.style.transform=angT[a.k]||"none";
+  $("#comboHud").textContent=`${s.k} · ${a.n.toUpperCase()} · ${m.k.toUpperCase()}`;
+  $("#comboParts").innerHTML=`
+   <div class="row"><b class="k">ขนาดภาพ</b><div><b>${s.k}</b> ${s.n} · ${s.feel}</div></div>
+   <div class="row"><b class="k">มุมกล้อง</b><div><b>${a.n}</b> · ${a.feel}</div></div>
+   <div class="row"><b class="k">การเคลื่อน</b><div><b>${m.k}</b> · ${m.use}</div></div>`;
+  const dist=i<=2?"ผู้ชมอยู่ไกล เห็นสถานที่และบริบทรอบตัวละคร":i<=5?"ผู้ชมอยู่ระยะกลาง เห็นทั้งท่าทางและสีหน้า เป็นธรรมชาติ":"ผู้ชมอยู่ใกล้ชิด เห็นอารมณ์และรายละเอียดชัด";
+  const pw=angPow[a.k];
+  const pwr=pw===9?"ผู้ชมรู้สึกว่ามีบางอย่างผิดปกติ ไม่มั่นคง (ภาพเอียง)":pw<=-1?"ตัวละครดูเล็กลง อ่อนแอหรือถูกกดดัน (ผู้ชมมองลงมา)":pw>=1?"ตัวละครดูใหญ่ มีพลัง น่าเกรงขาม (ผู้ชมแหงนมอง)":"ผู้ชมมองตัวละครอย่างเท่าเทียม เป็นกลาง";
+  const en=moveEnergy[m.k];
+  const enr=en===0?"ภาพนิ่ง ให้ความรู้สึกสงบ ปล่อยให้การแสดงเล่าเรื่อง":en===3?"การเคลื่อนเร็วหรือสั่น ทำให้ตื่นเต้น วุ่นวาย หรือช็อก":en===2?"ฉากหลังบิดเบี้ยว ทำให้เวียนหัว เหมือนโลกของตัวละครเปลี่ยนไปทันที":"การเคลื่อนนุ่มนวล ช่วยนำสายตาผู้ชมและเพิ่มมิติให้ภาพ";
+  let note="";
+  if((a.k==="aerial")&&i>=5) note="หมายเหตุ: Aerial มักใช้กับภาพกว้าง ภาพแคบจากโดรนพบไม่บ่อย";
+  if(m.k==="Pull Out"&&i===0) note="หมายเหตุ: ELS กว้างที่สุดแล้ว Pull Out ต่อจะเห็นภาพเล็กลงไปอีก มักเริ่ม Pull Out จากภาพที่แคบกว่า";
+  $("#comboSum").innerHTML=`<b style="font-family:var(--display);font-size:17px">ช็อตนี้สื่ออะไร</b><ul style="margin:6px 0 0;padding-left:20px"><li>${dist}</li><li>${pwr}</li><li>${enr}</li></ul>${note?`<p class="small" style="margin-top:6px">${note}</p>`:""}`;
+  const enS=["ผู้ชมรู้สึกสงบ มั่นคง และมีเวลาดูการแสดง","นำสายตาผู้ชมอย่างนุ่มนวลและเพิ่มมิติให้ภาพ","ผู้ชมรู้สึกเวียนหัว เหมือนโลกของตัวละครเปลี่ยนไปทันที","ผู้ชมรู้สึกตื่นเต้น วุ่นวาย หรือช็อก"][en];
+  $("#comboExam").innerHTML=`<b class="k">ตัวอย่างเขียนตอบ</b>ช็อตนี้ใช้ขนาดภาพ <b>${s.k} (${s.n})</b> ร่วมกับมุมกล้อง <b>${a.n}</b> และการเคลื่อนกล้องแบบ <b>${m.k}</b> ขนาดภาพทำให้${dist} มุมกล้องทำให้${pwr} ส่วนการเคลื่อนกล้องแบบ ${m.k} ${enS} เมื่อรวมกันทั้ง 3 อย่างจึงช่วยสื่ออารมณ์ของฉากได้ชัดเจนขึ้น`;
+  reset(); if(andPlay) play();
+}
+[selS,selA,selM].forEach(el=>el.addEventListener("change",()=>update(false)));
+$("#cPlay").addEventListener("click",play);
+selS.value=2; selA.value=angs.findIndex(a=>a.k==="low"); selM.value=moves.findIndex(m=>m.k==="Push In");
+update(false);
+})();
+
+/* ================= SPEC READER (real spec sheets) ================= */
+(function(){
+const sheets=[
+ {tab:"ไมค์ตัวที่ 1 (1\" Condenser)",rows:[
+  ["Transducer","Pressure Gradient",0,"หลักการรับเสียงแบบมีทิศทาง ทำให้ไมค์ได้ยินด้านหน้าดีกว่าด้านหลัง ไมค์ Cardioid ส่วนใหญ่ใช้หลักนี้"],
+  ["Circuit","JFET Impedance Converter with Bipolar Output Buffer",1,"วงจรขยายสัญญาณในตัวไมค์ ไมค์คอนเดนเซอร์ต้องมีวงจรแบบนี้ (และต้องใช้ไฟเลี้ยง) เพราะแคปซูลให้สัญญาณอ่อนมาก ไมค์ไดนามิกไม่มีวงจรนี้"],
+  ["Processing","APHEX Digital Processing (48kHz/24-bit)",0,"มีตัวประมวลผลเสียงดิจิทัลในตัว ช่วยปรับแต่งเสียงให้พร้อมใช้ (ระดับความมั่นใจปานกลาง: หน้าสเปคไม่ได้บอกว่าปรับอะไรบ้าง)"],
+  ["Capsule","1″ Condenser Capsule",1,"บอกตรง ๆ ว่าเป็น <b>ไมค์คอนเดนเซอร์</b> ไดอะแฟรม 1 นิ้ว = <b>ไดอะแฟรมใหญ่ (Large Diaphragm, LDC)</b> เสียงอุ่น เก็บรายละเอียดดี เหมาะกับเสียงพูดและเสียงร้อง"],
+  ["Polar Pattern","Cardioid",0,"รับเสียงด้านหน้า ตัดเสียงด้านหลัง (รูปหัวใจ)"],
+  ["Address","Side-address",1,"ต้องพูดเข้า <b>ด้านข้าง</b> ของไมค์ ไม่ใช่ที่ปลาย เป็นลักษณะของไมค์สตูดิโอ ต่างจากไมค์ถือร้องเพลงที่พูดเข้าปลาย (End-address)"],
+  ["Frequency","20Hz – 20kHz",0,"รับเสียงได้ครบช่วงที่หูคนได้ยิน"],
+  ["Sensitivity","-32 dB re 1V/Pa (25mV) ±2 dB",1,"ไวมาก ให้สัญญาณ 25 mV (ไมค์ไดนามิกทั่วไปให้แค่ประมาณ 1.5–2 mV) ความไวสูงแบบนี้เป็นลักษณะของไมค์คอนเดนเซอร์"],
+  ["Max SPL","142 dB",0,"รับเสียงดังได้มากโดยไม่แตก"],
+  ["Noise","4 dBA",0,"เสียงซ่าในตัวไมค์ (Self-noise) ต่ำมาก = เสียงสะอาด เหมาะอัดเสียงเบา ๆ"],
+  ["Output Impedance","100 Ohms",0,"อิมพีแดนซ์ต่ำ เป็นมาตรฐานของไมค์งานโปร ส่งสัญญาณผ่านสายยาวได้"],
+  ["Connector","Analog: XLR 3-pin / Digital: USB-C / Powered via USB 5V",1,"ต่อได้ 2 แบบ: <b>XLR</b> เข้ามิกเซอร์หรือออดิโออินเตอร์เฟซ หรือ <b>USB-C</b> เสียบเข้าคอมได้ตรง (ใช้ไฟจาก USB) = ไมค์แบบ <b>Hybrid USB/XLR</b> (ตอนต่อ XLR ไมค์คอนเดนเซอร์ปกติใช้ Phantom +48V แต่สเปคส่วนนี้ไม่ได้ระบุ)"],
+  ["Recording","24-bit & 32-bit float / 48, 96, 192 kHz",1,"ความละเอียดการแปลงเสียงเป็นดิจิทัล ไมค์มีตัวแปลงสัญญาณในตัว (เพราะเป็นไมค์ USB) <b>32-bit float</b> ช่วยไม่ให้เสียงแตกง่ายเวลาพูดดังเกิน"],
+  ["OS","Windows 10+ / macOS 10.15+",0,"ใช้กับคอมพิวเตอร์ระบบไหนได้ ยืนยันว่าเป็นไมค์ที่เสียบคอมได้"],
+  ["Size / Weight","52 × 52 × 189 mm / 308 g",0,"ทรงกระบอกสูงประมาณ 19 ซม. ใช้ตั้งบนขาไมค์ ไม่ได้ออกแบบให้ถือ"]],
+  conc:"<b>ไมโครโฟนคอนเดนเซอร์ไดอะแฟรมใหญ่ (1 นิ้ว) แบบ Hybrid USB/XLR</b> รับเสียงแบบ Cardioid พูดเข้าด้านข้าง (Side-address)",
+  feat:["ไวมาก เสียงซ่าต่ำ เก็บรายละเอียดเสียงครบ 20 Hz–20 kHz","ต่อคอมผ่าน USB-C ได้เลย หรือต่อ XLR เข้ามิกเซอร์","อัดได้ถึง 192 kHz / 32-bit float"],
+  use:"อัดเสียงพูด พากย์เสียง พอดแคสต์ สตรีม และเสียงร้องในห้องที่เงียบ",
+  ans:"อุปกรณ์นี้คือไมโครโฟนคอนเดนเซอร์ไดอะแฟรมใหญ่แบบ Hybrid USB/XLR เพราะสเปคระบุ 1″ Condenser Capsule มีวงจร JFET ในตัว และมีความไวสูงถึง 25 mV แสดงว่ารับเสียงได้ไวและละเอียด รับเสียงแบบ Cardioid พูดเข้าด้านข้าง มีทั้งช่อง XLR และ USB-C พร้อมบันทึกได้ถึง 192 kHz/32-bit float จึงเหมาะกับงานอัดเสียงพูด พากย์เสียง และพอดแคสต์"},
+ {tab:"ไมค์ตัวที่ 2 (SHURE KSM8)",rows:[
+  ["Cartridge Type","Dual-Diaphragm dynamic (moving coil)",1,"บอกตรง ๆ ว่าเป็น <b>ไมค์ไดนามิก</b> ทำงานด้วยขดลวดเคลื่อนที่ในสนามแม่เหล็ก ไม่ต้องใช้ไฟเลี้ยง ทนทาน · แบบ 2 ไดอะแฟรมช่วยให้เสียงทุ้มไม่เพิ่มมากเกินเวลาจ่อปากใกล้ (Proximity effect) (ความมั่นใจปานกลางถึงสูง)"],
+  ["Frequency Response","40 Hz to 16 kHz",0,"ช่วงแคบกว่าไมค์คอนเดนเซอร์ แต่ครอบคลุมเสียงร้องและเสียงพูดครบ"],
+  ["Polar Pattern","Cardioid",0,"รับด้านหน้า ตัดด้านหลัง ลดเสียงหอนจากลำโพงบนเวที"],
+  ["Output Impedance","300 ohms",0,"อิมพีแดนซ์ต่ำ มาตรฐานไมค์โปร"],
+  ["Sensitivity","-51.5 dBV/Pa (1.85 mV) at 1 kHz",1,"ไวน้อย (1.85 mV) ซึ่งเป็นลักษณะของไมค์ไดนามิก ข้อดีคือเก็บเสียงรบกวนรอบตัวน้อย เหมาะกับเวทีที่เสียงดัง"],
+  ["Polarity","Positive pressure … pin-2 with respect to pin-3",0,"มาตรฐานการเดินสาย XLR (ขา 2 = สัญญาณบวก) เป็นข้อมูลทางเทคนิค ไม่ต้องจำลึก"],
+  ["Connector","3-pin XLR male",0,"ต่อสาย XLR เข้ามิกเซอร์ ไม่มี USB จึงเสียบคอมตรงไม่ได้"],
+  ["Housing","Die-cast aluminum with paint or brushed nickel finish",1,"ตัวถังอะลูมิเนียมหล่อ แข็งแรง ทนการใช้งานหนัก เป็นไมค์ <b>แบบถือ (Handheld)</b>"],
+  ["Net Weight","11.6 oz (330 g)",0,"น้ำหนักพอดีมือ"]],
+  conc:"<b>ไมโครโฟนไดนามิกแบบถือ (Handheld Dynamic Vocal Mic) ชนิดมีสาย XLR</b> รับเสียงแบบ Cardioid",
+  feat:["ไม่ต้องใช้ไฟเลี้ยง ทนทาน ตัวถังอะลูมิเนียม","ไวน้อย เก็บเสียงรบกวนรอบข้างน้อย ลดเสียงหอน","ช่วงความถี่ 40 Hz–16 kHz เน้นเสียงร้อง"],
+  use:"ร้องเพลงบนเวที พิธีกร งานแสดงสด",
+  ans:"อุปกรณ์นี้คือไมโครโฟนไดนามิกแบบถือ เพราะสเปคระบุ Cartridge Type เป็น Dynamic (moving coil) และมีความไวต่ำเพียง 1.85 mV แสดงว่าไม่ต้องใช้ไฟเลี้ยงและเก็บเสียงรบกวนรอบข้างน้อย รับเสียงแบบ Cardioid ตัวถังอะลูมิเนียมทนทาน ต่อด้วยสาย XLR จึงเหมาะกับการร้องเพลงบนเวทีหรืองานพิธีกร"},
+ {tab:"หูฟัง (JBL Tune 770NC)",rows:[
+  ["Model","T770NC-BT",1,"<b>NC</b> = Noise Cancelling (ตัดเสียงรบกวน) · <b>BT</b> = Bluetooth (ไร้สาย)"],
+  ["Frequency","20Hz – 20kHz",0,"เล่นเสียงได้ครบช่วงที่หูคนได้ยิน"],
+  ["Impedance","32 ohms",1,"อิมพีแดนซ์ต่ำ ขับง่าย ใช้กับมือถือได้เลยไม่ต้องมีแอมป์ (หูฟังสตูดิโอบางรุ่นสูงถึง 250 Ω)"],
+  ["Sensitivity","100 dB",0,"ให้ความดังเพียงพอ (หน่วยของหูฟังคือความดังที่ได้ต่อกำลังไฟ)"],
+  ["Microphone","Number of Microphones : 1",0,"มีไมค์ในตัวสำหรับคุยโทรศัพท์"],
+  ["Bluetooth","5.3 · A2DP · AVRCP · HFP · 2.4 GHz",1,"เชื่อมต่อไร้สาย · <b>A2DP</b> = ส่งเพลงสเตอริโอ · <b>AVRCP</b> = กดเล่น/หยุด/เปลี่ยนเพลงจากหูฟัง · <b>HFP</b> = คุยโทรศัพท์แบบแฮนด์ฟรี"],
+  ["Controls","ปุ่มบนฝาครอบหู · VoiceAware",1,"มีปุ่มบน <b>ear-cup (ฝาครอบหู)</b> = บอกว่าเป็นหูฟังแบบครอบหู · VoiceAware ทำให้ได้ยินเสียงตัวเองตอนคุยโทรศัพท์"],
+  ["Connector","Bluetooth · AUX 3.5mm",0,"ใช้ได้ทั้งไร้สายและเสียบสาย 3.5 มม."],
+  ["Battery","เล่นเพลง 70 ชม. · คุย 39 ชม. · ชาร์จ 2 ชม.",0,"มีแบตเตอรี่ในตัว (ยืนยันว่าเป็นหูฟังไร้สาย) ชาร์จผ่าน USB-C"],
+  ["Dimension","20.5 × 5.5 × 22.5 cm · 0.23 kg",1,"ขนาดใหญ่ประมาณ 20 ซม. = <b>หูฟังแบบครอบหู (Over-ear)</b> ไม่ใช่หูฟังจุก (หน้าร้านเขียนว่า Earphones แต่ขนาดยืนยันว่าเป็นแบบครอบหู)"]],
+  conc:"<b>หูฟังไร้สาย Bluetooth แบบครอบหู (Over-ear) มีระบบตัดเสียงรบกวน (ANC)</b> พร้อมไมค์ในตัว",
+  feat:["ไร้สาย Bluetooth 5.3 หรือเสียบสาย 3.5 มม. ได้","ตัดเสียงรบกวน (NC) แบตเตอรี่อยู่ได้ถึง 70 ชั่วโมง","32 Ω ใช้กับมือถือได้ทันที มีไมค์คุยโทรศัพท์"],
+  use:"ฟังเพลง ดูหนัง คุยโทรศัพท์ เดินทาง (ไม่เหมาะงานตัดต่อหรือมิกซ์เสียงจริงจัง เพราะ Bluetooth มีความหน่วง และเสียงถูกปรุงแต่งมาให้ฟังสนุก)",
+  ans:"อุปกรณ์นี้คือหูฟังไร้สายแบบครอบหูที่มีระบบตัดเสียงรบกวน เพราะสเปคมีรุ่น NC (Noise Cancelling) เชื่อมต่อ Bluetooth 5.3 ที่รองรับ A2DP, AVRCP และ HFP มีแบตเตอรี่ใช้ได้ 70 ชั่วโมง และมีขนาดประมาณ 20 ซม. พร้อมปุ่มบนฝาครอบหู แสดงว่าเป็นแบบครอบหู อิมพีแดนซ์ 32 Ω ใช้กับมือถือได้ทันที และมีไมค์ในตัว จึงเหมาะกับการฟังเพลงและคุยโทรศัพท์ในชีวิตประจำวัน"}
+];
+let cur=0;
+const tabs=$("#srTabs"), list=$("#srList");
+tabs.innerHTML=sheets.map((s,i)=>`<button type="button" data-i="${i}">${s.tab}</button>`).join("");
+tabs.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>show(+b.dataset.i)));
+function line(j){
+  const r=sheets[cur].rows[j];
+  list.querySelectorAll("button").forEach((b,k)=>b.classList.toggle("on",k===j));
+  $("#srLine").innerHTML=`<h4>${r[0]}</h4><p class="mono" style="font-size:13px;margin-bottom:6px">${r[1]}</p><p>${r[3]}</p>${r[2]?'<p class="small" style="margin-top:6px;color:var(--rec)">● บรรทัดนี้เป็นคำใบ้สำคัญว่าเป็นอุปกรณ์อะไร</p>':""}`;
+}
+function show(i){
+  cur=i; const s=sheets[i];
+  tabs.querySelectorAll("button").forEach((b,k)=>{b.classList.toggle("on",k===i);b.setAttribute("aria-pressed",k===i)});
+  list.innerHTML=s.rows.map((r,j)=>`<button type="button"><span class="a">${r[0]}${r[2]?'<span class="hit">● คำใบ้</span>':""}</span><span class="v">${r[1]}</span></button>`).join("");
+  list.querySelectorAll("button").forEach((b,j)=>b.addEventListener("click",()=>line(j)));
+  $("#srConc").innerHTML=`<h4>สรุป: อุปกรณ์นี้คือ</h4><p>${s.conc}</p><p style="margin-top:8px"><b>คุณสมบัติเด่น</b></p><ul style="margin:4px 0 0;padding-left:20px">${s.feat.map(f=>`<li>${f}</li>`).join("")}</ul><p style="margin-top:8px"><b>ใช้กับงาน:</b> ${s.use}</p><div class="exam" style="margin-top:10px"><b class="k">ตัวอย่างเขียนตอบ</b>${s.ans}</div>`;
+  line(s.rows.findIndex(r=>r[2]));
+}
+show(0);
+})();
+
+/* ================= DEVICE TYPE BROWSER ================= */
+(function(){
+const cats={
+ "ไมโครโฟน":[
+  ["ตามหลักการทำงาน","ไดนามิก (Dynamic)","ขดลวดกับแม่เหล็ก ไม่ต้องใช้ไฟ ทนทาน ไวน้อย","Dynamic / moving coil · ไม่มี Phantom · ~1.5–2 mV/Pa","เวที พิธีกร กลอง"],
+  ["ตามหลักการทำงาน","คอนเดนเซอร์ไดอะแฟรมใหญ่ (LDC)","แผ่นไดอะแฟรม 1 นิ้ว ไวมาก เสียงอุ่น ต้องใช้ไฟ","Condenser · 1″ capsule · Phantom +48V · Self-noise ต่ำ","อัดเสียงร้อง พากย์ สตูดิโอ"],
+  ["ตามหลักการทำงาน","คอนเดนเซอร์ไดอะแฟรมเล็ก (SDC)","ทรงแท่งดินสอ ตอบสนองเสียงแหลมเร็ว","Condenser · ½″ capsule · Pencil · Phantom","เครื่องดนตรีอะคูสติก ฉาบ คณะนักร้อง"],
+  ["ตามหลักการทำงาน","ริบบอน (Ribbon)","แผ่นริบบอนโลหะบาง เสียงนุ่ม อุ่น บอบบาง","Ribbon · Figure-8 · Output ต่ำ","เสียงร้องสไตล์วินเทจ เครื่องเป่า"],
+  ["ตามการใช้งาน","ไมค์ถือมีสาย (Handheld wired)","ถือร้องหรือพูด มักเป็นไดนามิก พูดเข้าปลาย","Handheld · End-address · XLR","ร้องเพลง พิธีกร"],
+  ["ตามการใช้งาน","ไมค์ไร้สายแบบถือ (Wireless handheld)","ตัวส่งอยู่ในด้ามไมค์ + ตัวรับเสียบมิกเซอร์","Transmitter/Receiver · UHF หรือ 2.4 GHz · ระยะ (ม.) · แบตเตอรี่ (ชม.)","เวที งานอีเวนต์"],
+  ["ตามการใช้งาน","ไมค์หนีบปก (Lavalier / Clip-on)","เล็กมาก หนีบเสื้อ มักรับรอบทิศ ใช้คู่ตัวส่งไร้สาย","Omni · หัว 5–6 มม. · Clip · 3.5 มม./TA4","สัมภาษณ์ vlog รายการทีวี"],
+  ["ตามการใช้งาน","ไมค์คาดศีรษะ (Headset mic)","ก้านไมค์อยู่ข้างปาก ระยะคงที่แม้ขยับตัว","Headset · Ear-hook · ไร้สาย","ร้องพร้อมเต้น วิทยากร ฟิตเนส"],
+  ["ตามการใช้งาน","ไมค์ช็อตกัน (Shotgun)","ยาว รับแคบมากด้านหน้า ติดกล้องหรือบูม","Supercardioid/Lobar · 20–30 ซม. · Interference tube","ถ่ายภาพยนตร์ วิดีโอ"],
+  ["ตามการใช้งาน","ไมค์ USB","มีตัวแปลงสัญญาณในตัว เสียบคอมได้ทันที","USB-C · 24-bit/48 kHz · Plug and play · ช่องหูฟัง","พอดแคสต์ สตรีม เรียนออนไลน์"],
+  ["ตามการใช้งาน","ไมค์ Hybrid USB/XLR","ต่อคอมผ่าน USB หรือมิกเซอร์ผ่าน XLR ได้ทั้งสองแบบ","Analog XLR + Digital USB-C","พอดแคสต์ที่อยากอัปเกรดภายหลัง"],
+  ["ตามการใช้งาน","ไมค์ตั้งโต๊ะ / Boundary (PZM)","แบนวางบนโต๊ะ รับเสียงครึ่งวงกลม","Boundary · Half-omni","ห้องประชุม"]],
+ "หูฟัง":[
+  ["ตามรูปทรง","หูฟังจุก (In-ear / IEM)","เสียบเข้าไปในรูหู มีจุกยางหรือโฟม กันเสียงรอบข้างได้ดี","Ear tips S/M/L · Driver 6–12 มม. · Isolation","นักร้องบนเวที (In-Ear Monitor) ฟังเพลง"],
+  ["ตามรูปทรง","เอียร์บัด (Earbuds)","วางในใบหู ไม่มีจุก ไม่อุดรูหู ได้ยินเสียงรอบข้าง","Earbud · ไม่มี ear tips","ฟังทั่วไป ใส่สบาย"],
+  ["ตามรูปทรง","ไร้สายแท้ (TWS: True Wireless)","หูซ้าย-ขวาแยกกัน ไม่มีสายเลย มีกล่องชาร์จ","Bluetooth · Charging case · แบตต่อครั้ง/รวมกล่อง (ชม.)","ชีวิตประจำวัน ออกกำลังกาย"],
+  ["ตามรูปทรง","แนบหู (On-ear)","ฟองน้ำวางทับใบหู ไม่ครอบรอบหู เล็กกว่าแบบครอบ","On-ear · Driver 30–40 มม.","พกพา ฟังทั่วไป"],
+  ["ตามรูปทรง","ครอบหู (Over-ear)","ฟองน้ำครอบรอบใบหูทั้งหมด เสียงเต็ม ใส่นาน","Over-ear/Circumaural · Driver 40–50 มม.","ทำงานเสียง ฟังจริงจัง เดินทาง"],
+  ["ตามรูปทรง","หูฟังแบบเปิดหู (Open-ear)","ไม่อุดและไม่ครอบหู ได้ยินเสียงรอบข้าง ปลอดภัยตอนวิ่งหรือขี่จักรยาน มี 2 แบบ: <b>Air conduction</b> ลำโพงเล็กส่งเสียงเข้าหู และ <b>Bone conduction</b> ส่งแรงสั่นผ่านกระดูกโหนกแก้ม","Open-ear · Air conduction / Bone conduction · IP กันเหงื่อ","วิ่ง ปั่นจักรยาน ทำงานที่ต้องได้ยินรอบตัว"],
+  ["ตามรูปทรง","คล้องคอ (Neckband)","สายคล้องคอ หูฟังจุกห้อยจากสาย","Bluetooth · แบตอยู่ในสายคล้อง","ออกกำลังกาย"],
+  ["ตามฝาครอบ","ฝาปิด (Closed-back)","ฝาครอบทึบ กันเสียงเข้า-ออก","Closed-back","อัดเสียง ถ่ายทำ (เสียงไม่รั่วเข้าไมค์)"],
+  ["ตามฝาครอบ","ฝาเปิด (Open-back)","ฝาครอบเป็นตะแกรง เสียงโปร่งเป็นธรรมชาติ แต่เสียงรั่วออก","Open-back · มัก 80–300 Ω","มิกซ์เสียงในห้องเงียบ"],
+  ["ตามฝาครอบ","กึ่งเปิด (Semi-open)","อยู่ระหว่างปิดกับเปิด","Semi-open","ใช้งานทั่วไป"],
+  ["ตามการเชื่อมต่อ/ฟีเจอร์","ไร้สาย + ตัดเสียง (Bluetooth + ANC)","ตัดเสียงรบกวนด้วยวงจร มีโหมดฟังเสียงรอบข้าง (Ambient/Transparency)","Bluetooth 5.x · ANC · A2DP/AVRCP/HFP · แบต (ชม.)","เดินทาง ทำงาน (ไม่เหมาะงานตัดต่อเพราะมีความหน่วง)"],
+  ["ตามการเชื่อมต่อ/ฟีเจอร์","หูฟังมอนิเตอร์สตูดิโอ (Studio monitor headphones)","เสียงตรง ไม่ปรุงแต่ง (Flat) มีสาย","Flat response · 3.5 มม. + 6.35 มม. · สายขด","อัดเสียง ตัดต่อ มิกซ์"]],
+ "ลำโพง":[
+  ["งานสตูดิโอ","ลำโพงมอนิเตอร์แบบ Active","มีแอมป์ในตัว เสียงตรง (Flat) วางบนโต๊ะทำงาน","Woofer 5–8″ + Tweeter 1″ · Bi-amp (W+W) · XLR/TRS","มิกซ์เสียง ตัดต่อ"],
+  ["งานสตูดิโอ","ลำโพงมอนิเตอร์แบบ Passive","ไม่มีแอมป์ในตัว ต้องต่อเพาเวอร์แอมป์แยก","Passive · ระบุ Impedance (4–8 Ω) · ขั้วต่อสายลำโพง","สตูดิโอที่มีแอมป์แยก"],
+  ["งานเวที","ลำโพง PA (Full-range)","ดังมาก กระจายเสียงให้คนจำนวนมาก มีทั้ง Active และ Passive","กำลังขับหลายร้อย–พัน W · Max SPL สูง · Speakon/XLR","คอนเสิร์ต งานอีเวนต์ ห้องประชุมใหญ่"],
+  ["งานเวที","ลำโพงมอนิเตอร์บนเวที (Floor monitor / Wedge)","วางบนพื้นเอียงหานักร้อง ให้นักร้องได้ยินเสียงตัวเอง","Wedge · 10–15″ · รับสัญญาณจาก Aux send ของมิกเซอร์","นักร้อง นักดนตรีบนเวที"],
+  ["งานเวที","ซับวูฟเฟอร์ (Subwoofer)","เล่นเฉพาะเสียงต่ำมาก","ดอก 10–18″ · 20–150 Hz · Crossover","เพิ่มเบสในงานเวทีหรือโฮมเธียเตอร์"],
+  ["งานเวที","Line Array","ลำโพงหลายตู้แขวนเรียงเป็นแนวดิ่ง ส่งเสียงได้ไกลและสม่ำเสมอ","หลายตู้ต่อกัน · Rigging","คอนเสิร์ตใหญ่ สนามกีฬา"],
+  ["ใช้ทั่วไป","ลำโพงบลูทูธพกพา","มีแบตเตอรี่ ไร้สาย กันน้ำ","Bluetooth · แบต (ชม.) · IP67","พกไปเที่ยว ปาร์ตี้"],
+  ["ใช้ทั่วไป","ซาวด์บาร์ (Soundbar)","ลำโพงยาววางหน้าทีวี เพิ่มเสียงให้ทีวี","HDMI eARC · Optical · Dolby Atmos","ดูหนังที่บ้าน"],
+  ["ใช้ทั่วไป","ลำโพงวางชั้น (Bookshelf / Hi-Fi)","ลำโพงคู่สำหรับฟังเพลงในบ้าน ใช้กับแอมป์","Passive · 2-way · Sensitivity dB","ฟังเพลงคุณภาพสูง"]],
+ "มิกเซอร์ / อินเตอร์เฟซ":[
+  ["มิกเซอร์","Analog Mixer","ปุ่มจริงทุกช่อง เข้าใจง่าย ปรับทันที","Channels · Mic preamp · EQ 3-band · Aux · Fader","ห้องประชุม งานเวทีเล็ก"],
+  ["มิกเซอร์","Digital Mixer","ควบคุมผ่านจอหรือแท็บเล็ต บันทึกค่า (Scene) ได้ มีเอฟเฟกต์เยอะ","Touchscreen · Scene recall · DSP · Wi-Fi app","คอนเสิร์ต งานที่ต้องเรียกค่าซ้ำ"],
+  ["มิกเซอร์","Powered Mixer","มิกเซอร์ที่มีแอมป์ในตัว ต่อลำโพง Passive ได้ทันที","Built-in amp (W) · Speaker out","งานเล็ก ระบบเสียงพกพา"],
+  ["มิกเซอร์","USB / Podcast Mixer","มิกเซอร์เล็กที่ต่อคอมได้ มีปุ่มเสียงประกอบ","USB audio · Sound pads · Headphone outs หลายช่อง","พอดแคสต์ ไลฟ์สด"],
+  ["อินเตอร์เฟซ","Audio Interface","แปลงเสียงจากไมค์หรือเครื่องดนตรีเข้าคอม ช่องน้อยกว่ามิกเซอร์","2-in/2-out · 24-bit/192 kHz · USB-C · Direct monitor","อัดเสียงที่บ้าน ทำเพลง"]],
+ "จอ / ภาพ":[
+  ["จอภาพ","จองานกราฟิก/ตัดต่อ","สีแม่น ขอบเขตสีกว้าง","IPS · 100% sRGB / DCI-P3 · ΔE < 2 · 4K","ออกแบบ ตัดต่อวิดีโอ"],
+  ["จอภาพ","จอเกมมิ่ง","ภาพลื่น ตอบสนองเร็ว","144–360 Hz · 1 ms · TN/IPS เร็ว","เล่นเกม"],
+  ["จอภาพ","จอมอนิเตอร์ติดกล้อง (Field monitor)","จอเล็กติดบนกล้อง ดูภาพตอนถ่าย สว่างมาก","5–7″ · HDMI/SDI in · 1000+ nits · LUT · Focus peaking","ถ่ายวิดีโอ"],
+  ["ฉายภาพ","โปรเจกเตอร์","ฉายภาพขึ้นจอใหญ่","Lumens (ความสว่าง) · Throw ratio · Contrast","ห้องเรียน ห้องประชุม"]]
+};
+const names=Object.keys(cats); let cur=0;
+const tabs=$("#typeTabs");
+tabs.innerHTML=names.map((n,i)=>`<button type="button" data-i="${i}">${n}</button>`).join("");
+tabs.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>show(+b.dataset.i)));
+function show(i){
+  cur=i; tabs.querySelectorAll("button").forEach((b,k)=>{b.classList.toggle("on",k===i);b.setAttribute("aria-pressed",k===i)});
+  $("#typeGrid").innerHTML=cats[names[i]].map(c=>`<div class="tcard"><span class="grpl">${c[0]}</span><h4>${c[1]}</h4><p style="font-size:15px">${c[2]}</p><div class="clue">${c[3]}</div><p class="small"><b>ใช้กับ:</b> ${c[4]}</p></div>`).join("");
+}
+show(0);
+})();
+
 /* progress (one viewer only) */
 function store(){try{return JSON.parse(localStorage.getItem("tiw-done")||"{}")}catch(e){return {}}}
 function save(o){try{localStorage.setItem("tiw-done",JSON.stringify(o))}catch(e){}}
@@ -949,5 +1271,4 @@ document.querySelectorAll("[data-done]").forEach(cb=>{
 });
 })();
 </script>
-</body>
-</html>
+</div>
