@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ห้องติวภาษาภาพและอุปกรณ์สื่อ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Layout idea: a camera viewfinder — content sits inside framed "monitors" with corner marks, timecode labels and a REC-red signal accent */
+  --bg:#EDF0F3;
+  --surface:#FFFFFF;
+  --ink:#141922;
+  --muted:#5B6574;
+  --line:#CDD3DB;
+  --rec:#D7263D;
+  --cue:#1F5FA8;
+  --ok:#1E8A55;
+  --okbg:#E3F4EA;
+  --badbg:#FBE5E8;
+  --tint:#E4ECF6;
+  --display:"Chakra Petch","IBM Plex Sans Thai",system-ui,sans-serif;
+  --body:"IBM Plex Sans Thai",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --r:10px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1318;--surface:#171C23;--ink:#E7EAEE;--muted:#9AA4B2;--line:#2C343F;
+    --rec:#FF4D5E;--cue:#6AA6F0;--ok:#4CC88A;--okbg:#14301F;--badbg:#3A1A20;--tint:#1C2735;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1318;--surface:#171C23;--ink:#E7EAEE;--muted:#9AA4B2;--line:#2C343F;
+  --rec:#FF4D5E;--cue:#6AA6F0;--ok:#4CC88A;--okbg:#14301F;--badbg:#3A1A20;--tint:#1C2735;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.7}
+img{max-width:100%;display:block}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.25;margin:0}
+h2{font-size:clamp(26px,4vw,36px)}
+h3{font-size:21px}
+p{margin:0}
+a{color:var(--cue)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--cue);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.read{max-width:68ch}
+.mono{font-family:var(--mono);letter-spacing:.02em}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:14px;height:60px}
+.rec{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--rec);white-space:nowrap}
+.rec i{width:10px;height:10px;border-radius:50%;background:var(--rec);animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.25}}
+@media (prefers-reduced-motion: reduce){.rec i{animation:none}}
+.nav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1}
+.nav a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);white-space:nowrap}
+.nav a:hover{border-color:var(--cue)}
+.nav a.done{border-color:var(--ok);color:var(--ok)}
+
+/* viewfinder frame */
+.vf{position:relative;padding:28px}
+.vf::before,.vf::after,.vf>.c1,.vf>.c2{content:"";position:absolute;width:26px;height:26px;border-color:var(--ink);border-style:solid;opacity:.7}
+.vf::before{top:0;left:0;border-width:3px 0 0 3px}
+.vf::after{top:0;right:0;border-width:3px 3px 0 0}
+.vf>.c1{bottom:0;left:0;border-width:0 0 3px 3px}
+.vf>.c2{bottom:0;right:0;border-width:0 3px 3px 0}
+
+/* hero */
+.hero{padding:40px 0 20px}
+.hero .vf{background:var(--surface);border-radius:4px}
+.tc{font-family:var(--mono);font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.hero h1{font-size:clamp(32px,6vw,58px);letter-spacing:-.01em}
+.hero h1 em{font-style:normal;color:var(--rec)}
+.hero .lead{margin-top:14px;font-size:19px;color:var(--muted);max-width:60ch}
+.map{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:26px}
+.map a{display:block;text-decoration:none;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.map a:hover{border-color:var(--cue)}
+.map b{display:block;font-family:var(--display);font-size:18px}
+.map span{font-size:14px;color:var(--muted)}
+.map .n{font-family:var(--mono);font-size:12px;color:var(--rec)}
+.howto{margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.howto div{border-left:3px solid var(--cue);padding:4px 0 4px 14px;font-size:15.5px}
+
+/* chapters */
+section.ch{padding:56px 0 16px;border-top:1px solid var(--line);margin-top:40px}
+.chhead{display:flex;flex-direction:column;gap:8px;margin-bottom:22px}
+.chno{font-family:var(--mono);font-size:13px;color:var(--rec);font-weight:600}
+.chhead p{color:var(--muted);max-width:68ch}
+.stack{display:flex;flex-direction:column;gap:22px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.idea{background:var(--tint);border-radius:var(--r);padding:18px 20px;border-left:5px solid var(--cue)}
+.idea b.k{font-family:var(--display);font-size:18px;display:block;margin-bottom:4px}
+.warn{background:var(--badbg);border-radius:var(--r);padding:14px 18px;border-left:5px solid var(--rec);font-size:15.5px}
+.exam{background:var(--okbg);border-radius:var(--r);padding:16px 20px;border-left:5px solid var(--ok)}
+.exam b.k{font-family:var(--display);font-size:17px;display:block;margin-bottom:4px;color:var(--ok)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.tag{display:inline-block;font-family:var(--mono);font-size:12px;padding:2px 8px;border-radius:4px;background:var(--tint);color:var(--cue);font-weight:600}
+.small{font-size:15px;color:var(--muted)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:15.5px;min-width:560px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--display);font-weight:600;background:var(--tint);font-size:15px}
+tr:last-child td{border-bottom:0}
+td b{font-weight:600}
+
+/* shot size lab */
+.lab{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:820px){.lab{grid-template-columns:1fr}}
+.screen{position:relative;background:#000;border-radius:6px;overflow:hidden;aspect-ratio:16/9}
+.screen svg{width:100%;height:100%;display:block}
+.screen .hud{position:absolute;left:10px;top:8px;font-family:var(--mono);font-size:12px;color:#fff;background:rgba(0,0,0,.45);padding:2px 8px;border-radius:4px;pointer-events:none}
+.screen .hud.r{left:auto;right:10px;color:#ff6b78}
+.screen .grid3x3{position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(to right,transparent calc(33.33% - .5px),rgba(255,255,255,.28) calc(33.33% - .5px),rgba(255,255,255,.28) calc(33.33% + .5px),transparent calc(33.33% + .5px),transparent calc(66.66% - .5px),rgba(255,255,255,.28) calc(66.66% - .5px),rgba(255,255,255,.28) calc(66.66% + .5px),transparent calc(66.66% + .5px)),
+  linear-gradient(to bottom,transparent calc(33.33% - .5px),rgba(255,255,255,.28) calc(33.33% - .5px),rgba(255,255,255,.28) calc(33.33% + .5px),transparent calc(33.33% + .5px),transparent calc(66.66% - .5px),rgba(255,255,255,.28) calc(66.66% - .5px),rgba(255,255,255,.28) calc(66.66% + .5px),transparent calc(66.66% + .5px))}
+.slider{margin-top:14px}
+.slider input{width:100%;accent-color:var(--rec)}
+.ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:2px}
+.ticks button{background:none;border:0;padding:2px;font:inherit;color:inherit}
+.ticks button.on{color:var(--rec);font-weight:600}
+.info h3{font-size:26px}
+.info .cut{margin:8px 0 12px;font-size:15px}
+.info dl{margin:0;display:grid;gap:10px}
+.info dt{font-family:var(--display);font-weight:600;font-size:15px;color:var(--muted)}
+.info dd{margin:0}
+.real{margin-top:14px}
+.real img{border-radius:6px;border:1px solid var(--line)}
+.real figcaption{font-size:13.5px;color:var(--muted);margin-top:6px}
+
+/* angle lab */
+.abtns,.chips{display:flex;flex-wrap:wrap;gap:8px}
+.abtns button,.chips button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:14.5px}
+.abtns button.on,.chips button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.side{background:var(--surface);border:1px solid var(--line);border-radius:6px}
+.side svg{width:100%;height:auto;display:block}
+.pv{perspective:520px;display:flex;align-items:center;justify-content:center;background:linear-gradient(#bfe0f7,#bfe0f7 62%,#9fc58a 62%);aspect-ratio:16/9;border-radius:6px;overflow:hidden;position:relative}
+.pv .fig{transition:transform .6s cubic-bezier(.3,.7,.3,1);transform-origin:50% 60%;width:28%}
+@media (prefers-reduced-motion: reduce){.pv .fig{transition:none}}
+.pv .hud{position:absolute;left:8px;top:6px;font-family:var(--mono);font-size:12px;color:#fff;background:rgba(0,0,0,.45);padding:2px 8px;border-radius:4px}
+
+/* movement demos */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.mv{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.mv .vfm{position:relative;aspect-ratio:16/9;overflow:hidden;background:#bfe0f7}
+.mv .body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.mv h3{font-size:18px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mv .grp{font-family:var(--mono);font-size:11px;padding:2px 6px;border-radius:4px;white-space:nowrap}
+.g1{background:#E4ECF6;color:#1F5FA8}.g2{background:#FBE5E8;color:#B21E31}.g3{background:#E3F4EA;color:#1E7A4B}.g0{background:#ECECEC;color:#555}
+:root[data-theme="dark"] .g1{background:#1C2735;color:#8DBDF5}:root[data-theme="dark"] .g2{background:#3A1A20;color:#FF8A96}:root[data-theme="dark"] .g3{background:#14301F;color:#7FD9A9}:root[data-theme="dark"] .g0{background:#2A2F36;color:#C3C9D1}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .g1{background:#1C2735;color:#8DBDF5}:root:not([data-theme="light"]) .g2{background:#3A1A20;color:#FF8A96}:root:not([data-theme="light"]) .g3{background:#14301F;color:#7FD9A9}:root:not([data-theme="light"]) .g0{background:#2A2F36;color:#C3C9D1}}
+.mv .hint{font-size:14px;color:var(--muted)}
+.mv .play{margin-top:auto;align-self:flex-start;border:1px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:6px;padding:5px 14px;font-size:14px}
+.L{position:absolute;inset:0;transform-origin:50% 62%}
+.L svg{position:absolute;width:100%;height:100%}
+.L.bg svg{width:220%;left:-60%;height:140%;top:-20%}
+.L.md svg{width:220%;left:-60%;height:100%}
+.vfm .hud{position:absolute;left:6px;top:4px;font-family:var(--mono);font-size:11px;color:#fff;background:rgba(0,0,0,.45);padding:1px 6px;border-radius:3px;z-index:3}
+.vfm .crn{position:absolute;inset:8px;border:0;pointer-events:none;z-index:3;background:
+ linear-gradient(#fff,#fff) top left/14px 2px no-repeat,linear-gradient(#fff,#fff) top left/2px 14px no-repeat,
+ linear-gradient(#fff,#fff) top right/14px 2px no-repeat,linear-gradient(#fff,#fff) top right/2px 14px no-repeat,
+ linear-gradient(#fff,#fff) bottom left/14px 2px no-repeat,linear-gradient(#fff,#fff) bottom left/2px 14px no-repeat,
+ linear-gradient(#fff,#fff) bottom right/14px 2px no-repeat,linear-gradient(#fff,#fff) bottom right/2px 14px no-repeat;opacity:.85}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:600px){.cmp{grid-template-columns:1fr}}
+.cmp .vfm{position:relative;aspect-ratio:16/9;overflow:hidden;background:#bfe0f7;border-radius:6px}
+
+/* devices */
+.dev{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:start}
+.dev svg{width:96px;height:96px;background:var(--tint);border-radius:12px;padding:8px}
+.dev .ic{stroke:var(--ink);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.dev .icf{fill:var(--ink)}
+.dev .ica{fill:var(--rec)}
+.dev h3{margin-bottom:4px}
+.specs{font-family:var(--mono);font-size:13px;background:var(--bg);border:1px dashed var(--line);border-radius:6px;padding:8px 10px;margin-top:8px;line-height:1.6}
+.polar{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:20px;align-items:center}
+@media (max-width:700px){.polar{grid-template-columns:1fr}}
+.polar svg{width:100%;max-width:340px;margin:0 auto;display:block}
+
+/* quiz & game */
+.q{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.q .meta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:13px;color:var(--muted);margin-bottom:10px;gap:10px;flex-wrap:wrap}
+.q .stem{font-size:18px;font-weight:500}
+.sheet{font-family:var(--mono);font-size:14px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:12px 14px;margin-top:10px;white-space:pre-line;line-height:1.75}
+.sheet::before{content:"SPEC SHEET";display:block;font-size:11px;color:var(--rec);letter-spacing:.12em;margin-bottom:4px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:14px}
+.opts button{text-align:left;border:1.5px solid var(--line);background:var(--bg);border-radius:8px;padding:10px 14px;font-size:15.5px}
+.opts button:hover:not(:disabled){border-color:var(--cue)}
+.opts button.right{border-color:var(--ok);background:var(--okbg)}
+.opts button.wrong{border-color:var(--rec);background:var(--badbg)}
+.opts button:disabled{cursor:default}
+.fb{margin-top:12px;font-size:15.5px;display:none}
+.fb.show{display:block}
+.qnav{display:flex;gap:10px;margin-top:14px;align-items:center;flex-wrap:wrap}
+.btn{border:1px solid var(--ink);background:var(--ink);color:var(--bg);border-radius:6px;padding:7px 16px;font-size:15px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.score{font-family:var(--display);font-size:20px}
+.flip{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.flip button{min-height:110px;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:12px;text-align:left;display:flex;flex-direction:column;justify-content:space-between;gap:6px}
+.flip button .f{font-family:var(--display);font-size:18px;font-weight:600}
+.flip button .b{display:none;font-size:14.5px}
+.flip button.open{background:var(--tint)}
+.flip button.open .b{display:block}
+.flip button .s{font-size:12px;color:var(--muted);font-family:var(--mono)}
+.donebox{display:flex;align-items:center;gap:10px;margin-top:20px;font-size:15px}
+.donebox input{width:20px;height:20px;accent-color:var(--ok)}
+footer{padding:50px 0 70px;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <div class="rec"><i></i>REC</div>
+    <nav class="nav" aria-label="บทเรียน">
+      <a href="#ch1" data-ch="1">1 ขนาดภาพ</a>
+      <a href="#ch2" data-ch="2">2 มุมกล้อง</a>
+      <a href="#ch3" data-ch="3">3 การเคลื่อนกล้อง</a>
+      <a href="#ch4" data-ch="4">4 สเปคอุปกรณ์</a>
+      <a href="#ch5" data-ch="5">5 เครื่องมือ AI</a>
+      <a href="#quiz" data-ch="6">ทดสอบรวม</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="wrap hero">
+  <div class="vf"><span class="c1"></span><span class="c2"></span>
+    <div class="tc"><span>SCENE 01 · TAKE 01</span><span>เตรียมสอบเขียน</span><span>00:00:00:00</span></div>
+    <h1>เรียนภาษาภาพ<br>ตั้งแต่ <em>ศูนย์</em> จนเขียนตอบได้</h1>
+    <p class="lead">เว็บนี้สอนเรื่องที่อาจารย์เปิดให้ดูบนจอในห้อง ทั้งขนาดภาพ มุมกล้อง การเคลื่อนกล้อง และการอ่านสเปคอุปกรณ์ แต่ละบทมีของให้ลองกดเล่น เพื่อให้ "เห็นภาพ" มากกว่าท่องจำ</p>
+    <div class="map">
+      <a href="#ch1"><span class="n">บทที่ 1</span><b>ขนาดภาพ</b><span>เลื่อนสไลด์ดูเฟรมแคบลงทีละขั้น</span></a>
+      <a href="#ch2"><span class="n">บทที่ 2</span><b>มุมกล้อง</b><span>ย้ายกล้องขึ้นลง ดูตัวละครเปลี่ยนไป</span></a>
+      <a href="#ch3"><span class="n">บทที่ 3</span><b>การเคลื่อนกล้อง</b><span>กดเล่นภาพเคลื่อนไหว 16 แบบ</span></a>
+      <a href="#ch4"><span class="n">บทที่ 4</span><b>สเปคอุปกรณ์</b><span>อ่านสเปคแล้วทายว่าเป็นอะไร</span></a>
+      <a href="#ch5"><span class="n">บทที่ 5</span><b>เครื่องมือ AI</b><span>Suno กับ Minimax แบบสั้น</span></a>
+      <a href="#quiz"><span class="n">ท้ายเล่ม</span><b>ทดสอบรวม</b><span>20 ข้อ พร้อมเฉลยและเหตุผล</span></a>
+    </div>
+    <div class="howto">
+      <div><b>เรียนทีละบท</b> อ่านกล่องสีฟ้า "หลักคิด" ก่อน แล้วค่อยลองเล่นและอ่านตาราง</div>
+      <div><b>กล่องสีเขียว</b> คือประเด็นที่ใช้เขียนตอบข้อสอบได้เลย</div>
+      <div><b>สูตรเขียนตอบ</b> ชื่อ → ลักษณะ → ทำให้ผู้ชมรู้สึกอะไร → ตัวอย่างการใช้</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= CHAPTER 1 ================= -->
+<section class="ch" id="ch1">
+<div class="wrap stack">
+  <div class="chhead">
+    <span class="chno">บทที่ 1 / SHOT SIZE</span>
+    <h2>ขนาดภาพ: ผู้ชมอยู่ห่างตัวละครแค่ไหน</h2>
+    <p>ขนาดภาพ (Shot Size) คือ "ตัวละครใหญ่หรือเล็กแค่ไหนในเฟรม" เราวัดจากร่างกายคน ว่าขอบล่างของภาพตัดที่ส่วนไหนของตัว</p>
+  </div>
+
+  <div class="idea read"><b class="k">หลักคิดข้อเดียวที่ต้องจำ</b>
+    ภาพยิ่ง <b>กว้าง</b> ยิ่งบอก <b>"ที่ไหน"</b> (สถานที่ บริบท ความสัมพันธ์กับสิ่งรอบตัว) ภาพยิ่ง <b>แคบ</b> ยิ่งบอก <b>"รู้สึกอะไร"</b> (อารมณ์ รายละเอียด) ลองนึกถึงชีวิตจริง: ยืนไกล ๆ เราเห็นว่าเพื่อนอยู่ที่ไหน ยืนใกล้ ๆ เราเห็นว่าเพื่อนกำลังร้องไห้
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:12px">ลองเลื่อน: กล้องค่อย ๆ เข้าใกล้ตัวละคร</h3>
+    <div class="lab">
+      <div>
+        <div class="screen" id="shotScreen">
+          <svg id="shotSvg" viewBox="0 0 4000 2250" preserveAspectRatio="xMidYMid slice" role="img" aria-label="ภาพจำลองขนาดภาพ"></svg>
+          <div class="grid3x3"></div>
+          <span class="hud" id="shotHud">ELS</span><span class="hud r">● REC</span>
+        </div>
+        <div class="slider">
+          <label for="shotRange" class="small">ขนาดภาพ (เลื่อนหรือกดชื่อด้านล่าง)</label>
+          <input type="range" id="shotRange" min="0" max="8" step="1" value="0">
+          <div class="ticks" id="shotTicks"></div>
+        </div>
+      </div>
+      <div class="info" id="shotInfo" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>ขนาดภาพ</th><th>ขอบเฟรมตัดที่</th><th>ใช้เพื่อ / สื่อความรู้สึก</th></tr></thead>
+      <tbody id="shotTable"></tbody>
+    </table>
+  </div>
+
+  <div class="warn read">นิยามบางคำแต่ละตำราเขียนไม่ตรงกัน เช่น บางเล่มใช้ Long Shot กับ Full Shot เป็นภาพเดียวกัน หรือเรียก MFS ว่า Medium Long Shot ถ้าจำได้ว่าอาจารย์พูดแบบไหน ให้ตอบตามอาจารย์</div>
+
+  <div class="exam read"><b class="k">ข้อสอบมักถาม: "ขนาดภาพมีผลต่อการเล่าเรื่องอย่างไร"</b>
+    ภาพกว้างให้ <b>ข้อมูล</b> ว่าเรื่องเกิดที่ไหน ใครอยู่กับใคร ภาพแคบให้ <b>อารมณ์</b> และความใกล้ชิด ผู้กำกับมักเรียงภาพจาก <b>กว้าง → กลาง → แคบ</b> เพื่อพาผู้ชมจาก "ที่ไหน" ไป "ใคร" ไป "รู้สึกอะไร" และไม่ใช้ Close Up ทั้งเรื่อง เพราะผู้ชมจะไม่รู้บริบท และอารมณ์จะไม่มีจังหวะขึ้นลง
+  </div>
+
+  <div>
+    <h3 style="margin-bottom:10px">ฝึกจำ: กดการ์ดเพื่อดูคำตอบ</h3>
+    <div class="flip" id="flip1"></div>
+  </div>
+  <label class="donebox"><input type="checkbox" data-done="1"> เข้าใจบทนี้แล้ว</label>
+</div>
+</section>
+
+<!-- ================= CHAPTER 2 ================= -->
+<section class="ch" id="ch2">
+<div class="wrap stack">
+  <div class="chhead">
+    <span class="chno">บทที่ 2 / CAMERA ANGLE</span>
+    <h2>มุมกล้อง: กล้องมองตัวละครจากระดับไหน</h2>
+    <p>มุมกล้อง (Camera Angle) คือ "กล้องอยู่สูงหรือต่ำแค่ไหนเมื่อเทียบกับตัวละคร" ตัวละครคนเดียวกัน ถ่ายคนละมุม ผู้ชมจะรู้สึกต่อเขาต่างกัน</p>
+  </div>
+  <div class="idea read"><b class="k">หลักคิดข้อเดียวที่ต้องจำ</b>
+    นึกถึงตอนเราเป็นเด็ก ต้อง <b>แหงนมอง</b> ผู้ใหญ่ ผู้ใหญ่จึงดูตัวใหญ่ น่าเกรงขาม นั่นคือ <b>Low Angle</b> ส่วนผู้ใหญ่ <b>ก้มมอง</b> เด็ก เด็กจึงดูตัวเล็ก นั่นคือ <b>High Angle</b> สรุปว่า <b>กล้องสูง = ตัวละครดูเล็ก/อ่อนแอ · กล้องต่ำ = ตัวละครดูใหญ่/มีอำนาจ · ระดับสายตา = เป็นกลาง</b>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:12px">ลองย้ายกล้อง: เลือกมุมแล้วดูทั้งตำแหน่งกล้องและภาพที่ได้</h3>
+    <div class="abtns" id="angleBtns" role="group" aria-label="เลือกมุมกล้อง"></div>
+    <div class="grid2" style="margin-top:14px">
+      <div>
+        <p class="small" style="margin-bottom:6px">ตำแหน่งกล้อง (มองจากด้านข้าง)</p>
+        <div class="side"><svg id="sideSvg" viewBox="0 0 600 340" role="img" aria-label="ตำแหน่งกล้อง"></svg></div>
+      </div>
+      <div>
+        <p class="small" style="margin-bottom:6px">ภาพที่ผู้ชมเห็น (จำลอง)</p>
+        <div class="pv" id="pv"><span class="hud" id="pvHud">EYE LEVEL</span><svg class="fig" id="pvFig" viewBox="-40 -112 80 116" aria-hidden="true"></svg></div>
+      </div>
+    </div>
+    <div class="info" id="angleInfo" style="margin-top:16px" aria-live="polite"></div>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>มุมกล้อง</th><th>กล้องอยู่ตรงไหน</th><th>ผู้ชมรู้สึกอย่างไร</th></tr></thead>
+      <tbody id="angleTable"></tbody>
+    </table>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>คู่ที่ชอบสับสน</th><th>จำแบบนี้</th></tr></thead>
+      <tbody>
+        <tr><td><b>Aerial vs Overhead</b></td><td>Aerial = สูงมากและไกล เห็นพื้นที่กว้าง (โดรน) · Overhead = อยู่เหนือหัว มองลงตั้งฉาก เห็นการจัดวาง (ถ่ายอาหารบนโต๊ะ)</td></tr>
+        <tr><td><b>High Angle vs Overhead</b></td><td>High = มองลงแบบเฉียง ยังเห็นหน้า · Overhead = มองลงตรง ๆ เหมือนแผนผัง</td></tr>
+        <tr><td><b>Low Angle vs Worm's Eye</b></td><td>Low = ต่ำกว่าตัวละคร เงยขึ้นปานกลาง · Worm's Eye = อยู่ที่พื้น เงยขึ้นเกือบตั้งฉาก ทุกอย่างดูใหญ่โต</td></tr>
+        <tr><td><b>Ground Level vs Worm's Eye</b></td><td>ทั้งคู่วางกล้องที่พื้น · Ground Level มองขนานพื้น · Worm's Eye มองขึ้นฟ้า</td></tr>
+        <tr><td><b>POV vs OTS</b></td><td>POV = เห็นสิ่งที่ตัวละครเห็น <b>ไม่เห็น</b>ตัวคนที่มอง · OTS = <b>เห็น</b>ไหล่และหลังหัวอยู่ในเฟรม</td></tr>
+        <tr><td><b>Dutch Angle vs Roll</b></td><td>Dutch = กล้อง <b>เอียงค้าง</b> (เป็นมุมกล้อง) · Roll = กล้อง <b>กำลังหมุน</b> (เป็นการเคลื่อนกล้อง บทที่ 3)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid3">
+    <figure class="real card" style="margin:0"><img src="img/high.jpg" alt="ภาพมุมสูง เด็กถูกล้อมด้วยมือ" loading="lazy"><figcaption><b>High Angle</b> จากโฆษณา Doritos: มองลงมาที่เด็กใหม่ที่ถูกรุม ทำให้ดูตัวเล็กและไร้ทางสู้</figcaption></figure>
+    <figure class="real card" style="margin:0"><img src="img/low.jpg" alt="ภาพมุมต่ำ คนขับรถมองผ่านพวงมาลัย" loading="lazy"><figcaption><b>Low Angle</b> + กรอบในกรอบ: คนขับรถดูเป็นผู้ใหญ่ที่ควรคุมสถานการณ์</figcaption></figure>
+    <figure class="real card" style="margin:0"><img src="img/ots.jpg" alt="ภาพข้ามไหล่แม่ไปยังเด็ก" loading="lazy"><figcaption><b>OTS</b> ข้ามไหล่แม่ไปหาเด็ก บอกความสัมพันธ์ของสองคนในภาพเดียว</figcaption></figure>
+  </div>
+
+  <div class="exam read"><b class="k">ข้อสอบมักถาม: "ทำไมไม่ควรใช้ Eye Level ทุกฉาก"</b>
+    เพราะ Eye Level เป็นมุมที่เป็นกลาง ถ้าใช้ทุกฉาก ภาพจะราบเรียบ และไม่สามารถใช้มุมกล้องบอกอารมณ์หรือบอกว่าใครมีอำนาจมากกว่าได้ เช่น ทำให้ผู้ร้ายดูน่ากลัว (Low Angle) หรือทำให้คนที่แพ้ดูอ่อนแอ (High Angle)
+  </div>
+  <div>
+    <h3 style="margin-bottom:10px">ฝึกจำ: กดการ์ดเพื่อดูคำตอบ</h3>
+    <div class="flip" id="flip2"></div>
+  </div>
+  <label class="donebox"><input type="checkbox" data-done="2"> เข้าใจบทนี้แล้ว</label>
+</div>
+</section>
+
+<!-- ================= CHAPTER 3 ================= -->
+<section class="ch" id="ch3">
+<div class="wrap stack">
+  <div class="chhead">
+    <span class="chno">บทที่ 3 / CAMERA MOVEMENT</span>
+    <h2>การเคลื่อนกล้อง: กล้องขยับระหว่างถ่าย</h2>
+    <p>การเคลื่อนกล้อง (Camera Movement) คือ "กล้องทำอะไรระหว่างที่กำลังถ่าย" หมุน เลื่อน ยก หรือซูม ทั้งหมด 16 แบบ แบ่งได้เป็น 3 กลุ่มใหญ่</p>
+  </div>
+  <div class="idea read"><b class="k">หลักคิด: ลองทำท่าด้วยตัวเอง</b>
+    <span class="grp g1 mono" style="padding:1px 6px;border-radius:4px">หมุนอยู่กับที่</span> ยืนนิ่งแล้ว <b>หันหัว</b> ซ้ายขวา (Pan) หรือ ก้มเงย (Tilt) ตัวไม่ขยับ ·
+    <span class="grp g2 mono" style="padding:1px 6px;border-radius:4px">ย้ายตัวกล้อง</span> <b>เดิน</b> เข้าหา ถอยออก เดินเลี่ยงไปข้าง เดินวน หรือย่อตัวและยืดตัว ·
+    <span class="grp g3 mono" style="padding:1px 6px;border-radius:4px">ใช้เลนส์</span> ยืนนิ่ง แต่ <b>ใช้กล้องส่องทางไกล</b> ขยายภาพ (Zoom)
+  </div>
+
+  <div class="card">
+    <h3>ทดลองเปรียบเทียบ: Zoom กับ Push In ต่างกันตรงไหน (ข้อสอบชอบถาม)</h3>
+    <p class="small" style="margin:6px 0 12px">ดูที่ <b>ภูเขาด้านหลัง</b> ตอนกดเล่น: Zoom ขยายทุกอย่างเท่ากัน ส่วน Push In ทำให้คนใหญ่ขึ้นเร็วกว่าภูเขา เพราะกล้องเดินเข้าไปจริง</p>
+    <div class="cmp">
+      <div><div class="vfm" id="cmpZoom"></div><p class="small" style="margin-top:6px"><b>ZOOM</b> ภาพแบน ฉากหลังขยายพอ ๆ กับคน</p></div>
+      <div><div class="vfm" id="cmpPush"></div><p class="small" style="margin-top:6px"><b>PUSH IN / DOLLY</b> มีมิติ คนขยายเร็วกว่าฉากหลัง</p></div>
+    </div>
+    <button class="btn" id="cmpPlay" style="margin-top:12px">▶ เล่นพร้อมกัน</button>
+  </div>
+
+  <div>
+    <h3 style="margin-bottom:4px">กดเล่นทีละแบบ</h3>
+    <p class="small" style="margin-bottom:12px">สีป้ายบอกกลุ่ม: <span class="grp g0 mono" style="padding:1px 6px;border-radius:4px">ไม่ขยับ</span> <span class="grp g1 mono" style="padding:1px 6px;border-radius:4px">หมุนอยู่กับที่</span> <span class="grp g2 mono" style="padding:1px 6px;border-radius:4px">ย้ายตัวกล้อง</span> <span class="grp g3 mono" style="padding:1px 6px;border-radius:4px">ใช้เลนส์</span></p>
+    <div class="mgrid" id="mgrid"></div>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>คู่เปรียบเทียบ</th><th>ต่างกันอย่างไร</th></tr></thead>
+      <tbody>
+        <tr><td><b>Zoom vs Push In / Dolly</b></td><td>Zoom ใช้เลนส์ กล้องไม่ขยับ ทุกอย่างขยายเท่ากัน ภาพดูแบน · Push In/Dolly ย้ายกล้องจริง ของใกล้ขยายเร็วกว่าของไกล ภาพมีมิติ เหมือนผู้ชมเดินเข้าไป</td></tr>
+        <tr><td><b>Pan vs Trucking</b></td><td>Pan หมุนกล้องอยู่กับที่ · Trucking ย้ายกล้องทั้งตัวเลื่อนไปด้านข้าง</td></tr>
+        <tr><td><b>Tilt vs Boom/Crane</b></td><td>Tilt ก้มเงยอยู่กับที่ · Boom ยกกล้องทั้งตัวขึ้นหรือลง</td></tr>
+        <tr><td><b>Pan vs Whip Pan</b> / <b>Zoom vs Crash Zoom</b></td><td>ทิศเดียวกัน ต่างกันที่ความเร็ว แบบ Whip/Crash เร็วมาก ใช้สร้างความตื่นเต้น ช็อก หรือเปลี่ยนฉาก</td></tr>
+        <tr><td><b>Tracking vs Trucking</b></td><td>Tracking เคลื่อนตามตัวแบบไปทิศใดก็ได้ · Trucking เลื่อนด้านข้าง ไม่จำเป็นต้องตามใคร</td></tr>
+        <tr><td><b>Static vs Random</b></td><td>Static นิ่งสนิท สงบ มั่นคง · Random/Handheld สั่น ไม่มีแบบแผน วุ่นวาย สมจริง</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="exam read"><b class="k">ตัวอย่างวิเคราะห์จากโฆษณา Doritos (ใบงานของเรา)</b>
+    โฆษณาใช้ <b>Static</b> เกือบทั้งเรื่อง ช่วงเด็กใหม่แอบมองเพื่อนจึงเงียบและลังเล พอถึงตอนเด็กทั้งรถกรูมาแย่งขนม เปลี่ยนเป็น <b>Handheld</b> ภาพสั่น ผู้ชมรู้สึกว่าสถานการณ์ควบคุมไม่ได้ ส่วนภาพแผ่นขนมใช้ <b>ECU + Tracking</b> เคลื่อนตามแผ่นขนมที่ถูกส่งต่อ ให้สินค้าเป็นจุดเด่นที่สุด
+  </div>
+  <div>
+    <h3 style="margin-bottom:10px">ฝึกจำ: กดการ์ดเพื่อดูคำตอบ</h3>
+    <div class="flip" id="flip3"></div>
+  </div>
+  <label class="donebox"><input type="checkbox" data-done="3"> เข้าใจบทนี้แล้ว</label>
+</div>
+</section>
+
+<!-- ================= CHAPTER 4 ================= -->
+<section class="ch" id="ch4">
+<div class="wrap stack">
+  <div class="chhead">
+    <span class="chno">บทที่ 4 / SPEC SHEET</span>
+    <h2>อ่านสเปค แล้วทายให้ได้ว่าเป็นอุปกรณ์อะไร</h2>
+    <p>สเปค (Specification) คือ "ใบบอกคุณสมบัติ" ของอุปกรณ์ เหมือนฉลากอาหารที่บอกว่ามีอะไรอยู่ข้างใน ข้อสอบจะให้สเปคมา เราต้องดูว่าตัวเลขและคำในสเปคบอกอะไร แล้วสรุปว่าเป็นอุปกรณ์ชนิดไหน</p>
+  </div>
+  <div class="warn read">บทนี้รวมอุปกรณ์ที่ <b>มักสอนในวิชาผลิตสื่อ</b>: ไมโครโฟน หูฟัง ลำโพงมอนิเตอร์ มิกเซอร์ ออดิโออินเตอร์เฟซ จอภาพ กล้อง เลนส์ และไฟ เพราะเราไม่รู้แน่ว่าอาจารย์เปิดตัวไหนให้ดู ตัวเลขในบทนี้เป็นค่าทั่วไปของอุปกรณ์แต่ละประเภท ไม่ใช่ของรุ่นใดรุ่นหนึ่ง</div>
+
+  <div class="idea read"><b class="k">ขั้นที่ 1: ดูหน่วยในสเปคก่อน ก็แยกกลุ่มได้แล้ว</b>
+    เห็น <b>Hz, Ω, dB, Polar pattern</b> → อุปกรณ์ <b>เสียง</b> · เห็น <b>Resolution, Hz (refresh), ms, nits</b> → <b>จอภาพ</b> · เห็น <b>Sensor, MP, ISO, fps</b> → <b>กล้อง</b> · เห็น <b>มม. (mm), f/</b> → <b>เลนส์</b> · เห็น <b>K, CRI, lux</b> → <b>ไฟ</b>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:10px">ขั้นที่ 2: ศัพท์ในสเปคเสียงที่ต้องรู้</h3>
+    <div class="tbl" style="border:0">
+      <table>
+        <thead><tr><th>คำในสเปค</th><th>แปลว่า</th><th>อ่านค่าอย่างไร</th></tr></thead>
+        <tbody>
+          <tr><td><b>Frequency Response</b> <span class="tag">Hz–kHz</span></td><td>ช่วงเสียงต่ำถึงสูงที่อุปกรณ์รับหรือเล่นได้</td><td>หูคนได้ยิน 20 Hz – 20 kHz · ช่วงยิ่งกว้าง ยิ่งเก็บเสียงได้ครบ</td></tr>
+          <tr><td><b>Impedance</b> <span class="tag">Ω โอห์ม</span></td><td>ความต้านทานไฟฟ้า</td><td>หูฟัง 16–32 Ω ใช้กับมือถือได้ · 80–300 Ω ต้องใช้แอมป์ (งานสตูดิโอ)</td></tr>
+          <tr><td><b>Sensitivity</b> <span class="tag">mV/Pa · dB</span></td><td>ไมค์: รับเสียงไวแค่ไหน · หูฟัง/ลำโพง: ดังแค่ไหน</td><td>ไมค์คอนเดนเซอร์ไวกว่าไมค์ไดนามิกมาก</td></tr>
+          <tr><td><b>Max SPL</b> <span class="tag">dB SPL</span></td><td>เสียงดังที่สุดที่ไมค์รับได้โดยไม่แตก</td><td>ค่าสูง (130 dB ขึ้นไป) รับกลองหรือแอมป์กีตาร์ได้</td></tr>
+          <tr><td><b>Self-noise / S/N</b> <span class="tag">dB(A)</span></td><td>เสียงซ่าในตัวอุปกรณ์</td><td>Self-noise <b>ต่ำ</b> ยิ่งดี · S/N Ratio <b>สูง</b> ยิ่งดี</td></tr>
+          <tr><td><b>Phantom Power</b> <span class="tag">+48V</span></td><td>ไฟเลี้ยงที่ส่งไปทางสาย XLR</td><td><b>ไมค์คอนเดนเซอร์ต้องใช้</b> ไมค์ไดนามิกไม่ต้องใช้</td></tr>
+          <tr><td><b>Polar Pattern</b></td><td>ทิศทางที่ไมค์ได้ยิน</td><td>ดูเครื่องมือด้านล่าง</td></tr>
+          <tr><td><b>Sample Rate / Bit Depth</b> <span class="tag">kHz / bit</span></td><td>ความละเอียดตอนแปลงเสียงเป็นดิจิทัล</td><td>48 kHz / 24-bit ขึ้นไป = ระดับงานโปร</td></tr>
+          <tr><td><b>Connector</b></td><td>ช่องเสียบ</td><td>XLR 3 ขา (งานโปร) · TRS 6.35 มม. · 3.5 มม. · USB-C · Speakon (ลำโพงเวที)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>ขั้นที่ 3: Polar Pattern ไมค์ "ได้ยิน" ทางไหน</h3>
+    <p class="small" style="margin:4px 0 12px">ไมค์ชี้ขึ้นด้านบน (0° = ด้านหน้า) ส่วนสีแดงคือบริเวณที่ไมค์รับเสียงได้ดี กดเลือกเพื่อดูแต่ละแบบ</p>
+    <div class="chips" id="polarBtns" role="group" aria-label="เลือก polar pattern"></div>
+    <div class="polar" style="margin-top:12px">
+      <svg id="polarSvg" viewBox="-170 -170 340 340" role="img" aria-label="กราฟ polar pattern"></svg>
+      <div id="polarInfo" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <h3>ขั้นที่ 4: รู้จักอุปกรณ์ทีละชิ้น</h3>
+  <div class="grid2" id="devices"></div>
+
+  <div class="tbl">
+    <table>
+      <thead><tr><th>ถ้าในสเปคมีคำว่า…</th><th>น่าจะเป็น</th></tr></thead>
+      <tbody>
+        <tr><td>Polar pattern, Frequency response, Sensitivity, Max SPL</td><td><b>ไมโครโฟน</b></td></tr>
+        <tr><td>+ "Phantom power +48V required", diaphragm 1 นิ้ว, self-noise</td><td><b>ไมค์คอนเดนเซอร์</b></td></tr>
+        <tr><td>+ ไม่ต้องใช้ไฟ, ทนทาน, Cardioid, ~50 Hz–15 kHz</td><td><b>ไมค์ไดนามิก</b></td></tr>
+        <tr><td>+ Supercardioid/Lobar, ยาว 20–30 ซม., ใช้กับ boom pole</td><td><b>ไมค์ช็อตกัน</b></td></tr>
+        <tr><td>+ Omni, เล็กมาก, คลิปหนีบ, 3.5 มม.</td><td><b>ไมค์หนีบปก (Lavalier)</b></td></tr>
+        <tr><td>+ Transmitter/Receiver, UHF หรือ 2.4 GHz, ระยะ (ม.), แบตเตอรี่</td><td><b>ไมค์ไร้สาย</b></td></tr>
+        <tr><td>Driver 40–50 มม., Impedance Ω, Closed/Open-back</td><td><b>หูฟัง</b></td></tr>
+        <tr><td>Woofer + Tweeter, Bi-amp วัตต์, Flat response</td><td><b>ลำโพงมอนิเตอร์สตูดิโอ</b></td></tr>
+        <tr><td>Channels, Mic/Line input, EQ, Aux send, Fader, FX</td><td><b>มิกเซอร์เสียง</b></td></tr>
+        <tr><td>Inputs 2 ช่อง + preamp, 24-bit/192 kHz, USB-C, Direct monitor</td><td><b>ออดิโออินเตอร์เฟซ</b></td></tr>
+        <tr><td>ขนาดนิ้ว, Resolution, Refresh rate, Response time, IPS, nits, sRGB</td><td><b>จอภาพ</b></td></tr>
+        <tr><td>Sensor Full Frame/APS-C, MP, ISO, 4K 60p, 10-bit</td><td><b>กล้อง</b></td></tr>
+        <tr><td>Focal length มม., Aperture f/, Mount</td><td><b>เลนส์</b></td></tr>
+        <tr><td>Color temperature K, CRI, Lux @1m, Watt</td><td><b>ไฟ LED ถ่ายทำ</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="q" id="specGame" aria-live="polite"></div>
+
+  <div class="exam read"><b class="k">สูตรเขียนตอบข้อ "ทายสเปค"</b>
+    "อุปกรณ์นี้คือ <b>[ชื่อและประเภท]</b> เพราะสเปค <b>[A]</b> และ <b>[B]</b> แสดงว่า <b>[อธิบายความหมาย]</b> จึงเหมาะกับงาน <b>[การใช้งาน]</b>"<br>
+    ตัวอย่าง: อุปกรณ์นี้คือไมโครโฟนคอนเดนเซอร์ เพราะต้องใช้ Phantom Power +48V และมีช่วงความถี่ 20 Hz–20 kHz แสดงว่ารับเสียงไวและเก็บเสียงได้ครบช่วงที่หูคนได้ยิน จึงเหมาะกับงานอัดเสียงร้องหรือพากย์เสียงในสตูดิโอ
+  </div>
+  <label class="donebox"><input type="checkbox" data-done="4"> เข้าใจบทนี้แล้ว</label>
+</div>
+</section>
+
+<!-- ================= CHAPTER 5 ================= -->
+<section class="ch" id="ch5">
+<div class="wrap stack">
+  <div class="chhead">
+    <span class="chno">บทที่ 5 / AI TOOLS</span>
+    <h2>เครื่องมือ AI ที่ทำในใบงาน</h2>
+    <p>สองงานนี้เป็นงานปฏิบัติ ถ้าออกสอบน่าจะถามหลักการและเหตุผล ไม่ได้ถามวิธีกดปุ่ม</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <span class="tag">TEXT → MUSIC</span>
+      <h3 style="margin:6px 0">Suno AI สร้างเพลง</h3>
+      <p>Generative AI ที่สร้างดนตรี ทำนอง และเสียงร้องจากข้อความ</p>
+      <ul>
+        <li><b>ขั้นตอน:</b> คิดคอนเซ็ปต์ (เล่าอะไร อารมณ์ไหน ใครฟัง) → เลือกแนวเพลง จังหวะ Mood → เขียนเนื้อเพลง → เขียน prompt</li>
+        <li><b>Prompt ที่ดี</b> = แนวเพลง + อารมณ์ + จังหวะ (BPM) + เครื่องดนตรี + เสียงร้อง + ภาษา</li>
+        <li><b>แท็กแบ่งท่อน:</b> [Intro] [Verse] [Chorus] [Bridge] [Outro]</li>
+        <li><b>ทำไมต้องคิดคอนเซ็ปต์ก่อน:</b> เพื่อให้เพลงสื่อความหมายตรงเป้าหมายและเข้ากับภาพ ไม่ใช่ได้เพลงสุ่ม</li>
+        <li><b>จริยธรรม:</b> ไม่เลียนแบบศิลปินจริง ตรวจสิทธิ์การใช้งาน บอกว่าใช้ AI</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag">VOICE CLONING</span>
+      <h3 style="margin:6px 0">Minimax โคลนเสียง</h3>
+      <p>AI เรียนรู้ลักษณะเสียงของเรา (ระดับเสียง น้ำเสียง จังหวะ) แล้วพูดข้อความใหม่ด้วยเสียงนั้น</p>
+      <ul>
+        <li><b>เงื่อนไขในใบงาน:</b> บท 3 สไตล์ (พูดคุย / ทางการ / อารมณ์) · วรรณยุกต์ครบ 5 เสียง · มีประโยคคำถาม · เว้นจังหวะหายใจ · รวมไม่เกิน 60 วินาที</li>
+        <li><b>เหตุผล:</b> AI ได้ตัวอย่างระดับเสียงและช่วงเสียงครบ เสียงที่โคลนจึงเป็นธรรมชาติ ภาษาไทยมีวรรณยุกต์ ถ้าตัวอย่างไม่ครบ เสียงโคลนจะเพี้ยน</li>
+        <li><b>อัดให้ดี:</b> ห้องเงียบ ไม่ก้อง ไมค์ห่างปากประมาณ 1 คืบ</li>
+        <li><b>จริยธรรม:</b> โคลนเฉพาะเสียงตัวเองหรือได้รับอนุญาต ห้ามใช้หลอกลวง เสียงเป็นข้อมูลส่วนบุคคล (PDPA)</li>
+      </ul>
+    </div>
+  </div>
+  <label class="donebox"><input type="checkbox" data-done="5"> เข้าใจบทนี้แล้ว</label>
+</div>
+</section>
+
+<!-- ================= QUIZ ================= -->
+<section class="ch" id="quiz">
+<div class="wrap stack">
+  <div class="chhead">
+    <span class="chno">ท้ายเล่ม / FINAL CHECK</span>
+    <h2>ทดสอบรวม 20 ข้อ</h2>
+    <p>ผสมทุกบท ตอบผิดได้ไม่เป็นไร อ่านเหตุผลหลังตอบ เพราะเหตุผลคือสิ่งที่ต้องเขียนในข้อสอบจริง</p>
+  </div>
+  <div class="q" id="finalQuiz" aria-live="polite"></div>
+  <label class="donebox"><input type="checkbox" data-done="6"> ทำแบบทดสอบรวมแล้ว</label>
+</div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap read">ภาพตัวอย่างในบทที่ 1–2 มาจากโฆษณา "The New Kid | Doritos Commercial" ที่ใช้ในใบงาน ภาพจำลองอื่นวาดขึ้นใหม่เพื่อการเรียน · ถ้าเนื้อหาในเว็บไม่ตรงกับที่อาจารย์สอน ให้ยึดตามอาจารย์</div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s);
+const NS="http://www.w3.org/2000/svg";
+const reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- person drawing (feet at 0, height 100 upward = negative y) ---------- */
+function personSVG(){
+  return `<g>
+  <rect x="-9" y="-60" width="7" height="59" fill="#33467a"/><rect x="2" y="-60" width="7" height="59" fill="#33467a"/>
+  <ellipse cx="-6" cy="-1" rx="6" ry="2.2" fill="#2a2222"/><ellipse cx="6" cy="-1" rx="6" ry="2.2" fill="#2a2222"/>
+  <polygon points="-11.5,-58 11.5,-58 13,-82 -13,-82" fill="#d9483b"/>
+  <rect x="-11.5" y="-61" width="23" height="4" fill="#3c2a20"/>
+  <polygon points="-13,-82 -17,-80 -18.5,-46 -14.5,-46" fill="#d9483b"/><polygon points="13,-82 17,-80 18.5,-46 14.5,-46" fill="#d9483b"/>
+  <ellipse cx="-16.5" cy="-44" rx="2.6" ry="3" fill="#f0c8a0"/><ellipse cx="16.5" cy="-44" rx="2.6" ry="3" fill="#f0c8a0"/>
+  <rect x="-3" y="-87" width="6" height="6" fill="#f0c8a0"/>
+  <ellipse cx="0" cy="-93.5" rx="6.3" ry="7.2" fill="#f0c8a0"/>
+  <path d="M-6.8,-94.5 A6.8,7 0 0 1 6.8,-94.5 Z" fill="#46301f"/>
+  <ellipse cx="-2.4" cy="-94.3" rx="1.35" ry=".85" fill="#fff"/><ellipse cx="2.4" cy="-94.3" rx="1.35" ry=".85" fill="#fff"/>
+  <circle cx="-2.4" cy="-94.3" r=".6" fill="#3c2814"/><circle cx="2.4" cy="-94.3" r=".6" fill="#3c2814"/>
+  <circle cx="-2.25" cy="-94.5" r=".18" fill="#fff"/><circle cx="2.55" cy="-94.5" r=".18" fill="#fff"/>
+  <path d="M.2,-93.6 L-.5,-91.7 L.5,-91.5" stroke="#c89670" stroke-width=".3" fill="none"/>
+  <path d="M-2,-90 Q0,-88.4 2,-90" stroke="#a84646" stroke-width=".45" fill="none"/>
+  </g>`;
+}
+
+/* ================= CHAPTER 1: shot size lab ================= */
+const PX=2000, PY=1900, PS=3; // person world placement
+const shots=[
+ {k:"ELS",n:"Extreme Long Shot",th:"ภาพไกลมาก",top:null,cut:"เห็นทั้งพื้นที่ คนตัวเล็กมาก",use:"บอกผู้ชมว่าเรื่องเกิดที่ไหน เวลาไหน เรียกว่า Establishing Shot",feel:"ยิ่งใหญ่ อ้างว้าง โดดเดี่ยว มนุษย์ตัวเล็กเมื่อเทียบกับโลก",ex:"เปิดเรื่องด้วยภาพมหาวิทยาลัยทั้งบริเวณ",img:null},
+ {k:"LS",n:"Long Shot",th:"ภาพไกล",top:160,bot:-60,cut:"เห็นทั้งตัว และมีพื้นที่รอบตัวมาก",use:"แสดงว่าตัวละครอยู่ตรงไหนของฉาก สัมพันธ์กับสิ่งรอบตัวอย่างไร",feel:"ผู้ชมเป็นคนนอกที่ยืนสังเกตการณ์",ex:"ตัวละครเดินอยู่กลางลานกว้าง",img:["ls.jpg","ภาพภายในรถโรงเรียน เห็นเด็กทั้งคันรถ"]},
+ {k:"FS",n:"Full Shot",th:"ภาพเต็มตัว",top:106,bot:-4,cut:"หัวจรดเท้าพอดีเฟรม",use:"แสดงการแต่งกาย บุคลิก ท่าทาง ภาษากายทั้งตัว",feel:"แนะนำตัวละคร เห็นตัวตนครบ",ex:"ฉากเต้น ฉากต่อสู้ ตัวละครปรากฏตัวครั้งแรก",img:null},
+ {k:"MFS",n:"Medium Full Shot",th:"ภาพเกือบเต็มตัว",top:104,bot:25,cut:"ตัดที่หัวเข่า",use:"เห็นทั้งท่าทางและเริ่มเห็นสีหน้า",feel:"เป็นกันเอง เห็นการเคลื่อนไหวพอประมาณ",ex:"คน 2–3 คนยืนคุยกัน",img:["ots.jpg","แม่ส่งถุงขนมให้ลูก: เด็กอยู่ในขนาด MFS (เห็นถึงหัวเข่า) และถ่ายข้ามไหล่แม่"]},
+ {k:"CS",n:"Cowboy Shot",th:"ภาพคาวบอย",top:104,bot:36,cut:"ตัดที่กลางต้นขา",use:"มาจากหนังคาวบอย ต้องการให้เห็นซองปืนที่สะโพกพร้อมใบหน้า",feel:"มั่นใจ พร้อมเผชิญหน้า เท่",ex:"ฉากยืนเผชิญหน้ากัน เห็นมือและอาวุธ",img:null},
+ {k:"MS",n:"Medium Shot",th:"ภาพครึ่งตัว",top:104,bot:57,cut:"ตัดที่เอว",use:"ใช้บ่อยที่สุด เห็นทั้งท่าทางมือและสีหน้า",feel:"เป็นธรรมชาติ เหมือนยืนคุยกันจริง",ex:"ฉากสนทนาทั่วไป",img:["ms.jpg","เด็กใหม่นั่งกินขนมคนเดียวบนรถ"]},
+ {k:"MCU",n:"Medium Close Up",th:"ภาพครึ่งอก",top:103,bot:71,cut:"ตัดที่อก",use:"เน้นสีหน้า แต่ยังเห็นบริบทรอบตัวบ้าง",feel:"เริ่มใกล้ชิด เหมือนคุยตัวต่อตัว",ex:"ข่าว สัมภาษณ์ vlog",img:["mcu.jpg","คู่วัยรุ่นบนรถ เห็นตั้งแต่อกขึ้นไป"]},
+ {k:"CU",n:"Close Up",th:"ภาพใกล้",top:102.5,bot:84,cut:"ใบหน้าเต็มเฟรม",use:"เน้นอารมณ์และความรู้สึกภายในของตัวละคร",feel:"ใกล้ชิด เข้าถึงใจตัวละคร",ex:"ตัวละครร้องไห้หลังได้ยินข่าวร้าย",img:["cu.jpg","คนขับรถยิ้มกว้างกลางกลุ่มเด็ก เห็นสีหน้าชัด"]},
+ {k:"ECU",n:"Extreme Close Up",th:"ภาพใกล้มาก",top:99.1,bot:91.8,cut:"เห็นส่วนเดียว เช่น ตา ปาก มือ หรือรายละเอียดของวัตถุ",use:"บังคับให้ผู้ชมเห็นรายละเอียดสำคัญ",feel:"ตึงเครียด ลุ้น ลึกลับ · ในโฆษณาใช้โชว์สินค้า",ex:"ดวงตาตอนตกใจ / หยดน้ำบนขวด",img:["ecu.jpg","แผ่น Doritos แผ่นเดียวเต็มจอ (product shot)"]}
+];
+function viewFor(s){
+  if(!s.top) return [0,0,4000,2250];
+  if(s.k==="ECU") return [PX-6.5*PS,PY-99.1*PS,13*PS,7.3*PS];
+  const h=(s.top-s.bot)*PS, w=h*16/9;
+  return [PX-w/2,PY-s.top*PS,w,h];
+}
+const shotSvg=$("#shotSvg");
+shotSvg.innerHTML=`
+ <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fd0f2"/><stop offset="1" stop-color="#d7ecf8"/></linearGradient></defs>
+ <rect x="-2000" y="-2000" width="8000" height="6000" fill="url(#sky)"/>
+ <polygon points="-2000,1500 0,950 700,1300 1300,800 2000,1250 2700,850 3400,1250 4000,950 6000,1500 6000,1900 -2000,1900" fill="#7f9a86"/>
+ <polygon points="-2000,1700 500,1450 1400,1600 2400,1420 3300,1620 6000,1460 6000,1900 -2000,1900" fill="#5f8a64"/>
+ <rect x="-2000" y="1900" width="8000" height="3000" fill="#8fae5c"/>
+ <polygon points="1880,1900 2120,1900 3000,2600 1000,2600" fill="#cbbf9e"/>
+ <g><rect x="900" y="1450" width="650" height="450" fill="#e6dccb"/><polygon points="860,1450 1225,1280 1590,1450" fill="#b4513a"/>
+ ${[0,1,2,3].map(i=>[0,1].map(j=>`<rect x="${950+i*150}" y="${1510+j*170}" width="80" height="110" fill="#5d7fa8"/>`).join("")).join("")}</g>
+ <rect x="2800" y="1600" width="45" height="300" fill="#6e5038"/><ellipse cx="2822" cy="1530" rx="190" ry="170" fill="#3f7a46"/>
+ <g transform="translate(${PX},${PY}) scale(${PS})">${personSVG()}</g>`;
+let cur=viewFor(shots[0]), anim=null;
+function setView(v){shotSvg.setAttribute("viewBox",v.map(n=>n.toFixed(3)).join(" "));}
+function goView(target){
+  if(anim) cancelAnimationFrame(anim);
+  if(reduce){cur=target;setView(cur);return;}
+  const from=cur.slice(), t0=performance.now(), D=650;
+  const lw0=Math.log(from[2]), lw1=Math.log(target[2]);
+  const step=now=>{
+    let t=Math.min(1,(now-t0)/D); t=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+    const w=Math.exp(lw0+(lw1-lw0)*t), h=w*(target[3]/target[2]*t+from[3]/from[2]*(1-t));
+    const cx=(from[0]+from[2]/2)*(1-t)+(target[0]+target[2]/2)*t;
+    const cy=(from[1]+from[3]/2)*(1-t)+(target[1]+target[3]/2)*t;
+    cur=[cx-w/2,cy-h/2,w,h]; setView(cur);
+    if(t<1) anim=requestAnimationFrame(step);
+  };
+  anim=requestAnimationFrame(step);
+}
+const ticks=$("#shotTicks"), range=$("#shotRange"), info=$("#shotInfo");
+shots.forEach((s,i)=>{const b=document.createElement("button");b.type="button";b.textContent=s.k;b.addEventListener("click",()=>{range.value=i;showShot(i)});ticks.appendChild(b);});
+function showShot(i){
+  const s=shots[i];
+  goView(viewFor(s));
+  $("#shotHud").textContent=s.k+" · "+s.n;
+  [...ticks.children].forEach((b,j)=>b.classList.toggle("on",j===i));
+  info.innerHTML=`<span class="tag">${i+1} / 9</span>
+   <h3 style="margin-top:6px">${s.k} <span style="font-weight:500;font-size:18px;color:var(--muted)">${s.n}</span></h3>
+   <p class="cut">${s.th} · <b>ขอบเฟรม:</b> ${s.cut}</p>
+   <dl><div><dt>ใช้เพื่อ</dt><dd>${s.use}</dd></div><div><dt>ผู้ชมรู้สึก</dt><dd>${s.feel}</dd></div><div><dt>ตัวอย่างฉาก</dt><dd>${s.ex}</dd></div></dl>
+   ${s.img?`<figure class="real" style="margin:14px 0 0"><img src="img/${s.img[0]}" alt="${s.img[1]}"><figcaption>ภาพจริงจากโฆษณา Doritos: ${s.img[1]}</figcaption></figure>`:""}`;
+}
+range.addEventListener("input",()=>showShot(+range.value));
+showShot(0);
+$("#shotTable").innerHTML=shots.map(s=>`<tr><td><b>${s.k}</b><br><span class="small">${s.n}</span></td><td>${s.cut}</td><td>${s.use} · ${s.feel}</td></tr>`).join("");
+
+/* flip cards */
+function flips(el,items){
+  $(el).innerHTML=items.map(([q,a])=>`<button type="button" aria-expanded="false"><span class="f">${q}</span><span class="b">${a}</span><span class="s">กดเพื่อดูคำตอบ</span></button>`).join("");
+  $(el).querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{const o=b.classList.toggle("open");b.setAttribute("aria-expanded",o);b.querySelector(".s").textContent=o?"กดเพื่อซ่อน":"กดเพื่อดูคำตอบ";}));
+}
+flips("#flip1",[
+ ["เรียง 9 ขนาดจากกว้างไปแคบ","ELS → LS → FS → MFS → CS → MS → MCU → CU → ECU"],
+ ["MS ตัดที่ไหน","เอว · เห็นมือและสีหน้า เป็นธรรมชาติเหมือนคุยกัน"],
+ ["MCU ตัดที่ไหน","อก · เน้นสีหน้าแต่ยังมีบริบท ใช้ในข่าว/สัมภาษณ์"],
+ ["Cowboy Shot มาจากไหน","หนังคาวบอย ตัดกลางต้นขาให้เห็นซองปืน สื่อความมั่นใจ"],
+ ["อยากให้ตัวละครดูโดดเดี่ยว","ELS หรือ LS ตัวละครเล็กท่ามกลางพื้นที่ว่าง"],
+ ["Establishing Shot คืออะไร","ภาพเปิดฉากบอกสถานที่และเวลา มักเป็น ELS/LS"]
+]);
+
+/* ================= CHAPTER 2: angle lab ================= */
+const angles=[
+ {k:"aerial",n:"Aerial Shot",cam:[50,20],aim:[470,200],rx:65,s:.32,dz:0,pos:"สูงมากและไกล เช่น โดรน เฮลิคอปเตอร์",feel:"ยิ่งใหญ่ อลังการ เห็นพื้นที่กว้าง ตัวละครดูเล็กมาก ใช้เปิดเรื่องหรือบอกสถานที่"},
+ {k:"overhead",n:"Overhead (Bird's Eye)",cam:[470,22],aim:[470,140],rx:85,s:.9,dz:0,pos:"อยู่เหนือตัวแบบ มองลงตั้งฉาก 90°",feel:"เห็นการจัดวางทั้งหมด เหมือนพระเจ้ามองลงมา นิยมถ่ายอาหารและสินค้าบนโต๊ะ"},
+ {k:"high",n:"High Angle",cam:[230,24],aim:[470,140],rx:40,s:.7,dz:0,pos:"สูงกว่าระดับสายตา กดมุมลง",feel:"ตัวละครดูเล็ก อ่อนแอ ด้อยกว่า น่าสงสาร หรือกำลังถูกกดดัน"},
+ {k:"eye",n:"Eye Level",cam:[220,74],aim:[455,74],rx:0,s:1,dz:0,pos:"ระดับเดียวกับสายตาตัวละคร",feel:"เป็นกลาง เป็นธรรมชาติ ผู้ชมรู้สึกเท่าเทียมกับตัวละคร"},
+ {k:"shoulder",n:"Shoulder Level",cam:[220,105],aim:[440,105],rx:-8,s:1,dz:0,pos:"ระดับไหล่ ต่ำกว่าตาเล็กน้อย",feel:"ตัวละครดูมั่นคงขึ้นเล็กน้อย แต่ยังเป็นธรรมชาติ"},
+ {k:"hip",n:"Hip Level",cam:[220,188],aim:[430,188],rx:-16,s:1.06,dz:0,pos:"ระดับสะโพก",feel:"เน้นมือและการกระทำ เช่น ฉากดวลปืน ตัวละครดูมั่นใจ"},
+ {k:"knee",n:"Knee Level",cam:[220,248],aim:[440,248],rx:-25,s:1.12,dz:0,pos:"ระดับเข่า",feel:"ตัวละครดูสูง เหนือกว่า หรือเน้นการก้าวเดิน"},
+ {k:"low",n:"Low Angle",cam:[300,296],aim:[470,110],rx:-40,s:1.3,dz:0,pos:"ต่ำกว่าตัวละคร เงยขึ้น",feel:"มีอำนาจ น่าเกรงขาม แข็งแกร่ง ใช้กับฮีโร่ ผู้นำ หรือผู้ร้าย"},
+ {k:"ground",n:"Ground Level",cam:[150,312],aim:[470,312],rx:-20,s:1,dz:0,pos:"วางบนพื้น มองขนานพื้น",feel:"เน้นสิ่งที่อยู่บนพื้น เช่น เท้า ล้อ ภาพแปลกตา มีพลัง"},
+ {k:"worm",n:"Worm's Eye View",cam:[410,310],aim:[470,60],rx:-62,s:1.5,dz:0,pos:"อยู่ที่พื้นแล้วเงยขึ้นเกือบตั้งฉาก",feel:"ทุกอย่างดูใหญ่โตมหึมา น่าเกรงขาม ข่มขู่ หรือตื่นตาตื่นใจ"},
+ {k:"dutch",n:"Dutch Angle",cam:[220,74],aim:[455,74],rx:0,s:1,dz:18,pos:"ระดับไหนก็ได้ แต่เอียงกล้องจนเส้นขอบฟ้าเอียง",feel:"สับสน ไม่มั่นคง ผิดปกติ ตึงเครียด (ฉากเมา ฉากสยองขวัญ)"},
+ {k:"pov",n:"POV",cam:null,pos:"กล้องแทนดวงตาของตัวละคร",feel:"ผู้ชมรู้สึกเป็นตัวละครนั้นเอง มีส่วนร่วม ลุ้นตาม"},
+ {k:"ots",n:"Over the Shoulder",cam:null,pos:"อยู่ด้านหลังตัวละครหนึ่ง ข้ามไหล่ไปเห็นหน้าอีกคน",feel:"ฉากสนทนา บอกว่าใครคุยกับใคร และระยะห่างของความสัมพันธ์"}
+];
+const pvFig=$("#pvFig"), pv=$("#pv");
+pvFig.innerHTML=personSVG();
+const side=$("#sideSvg");
+function camIcon(x,y,ang){return `<g transform="translate(${x},${y}) rotate(${ang})"><rect x="-16" y="-10" width="24" height="20" rx="2" fill="var(--cue)"/><polygon points="8,-6 20,-11 20,11 8,6" fill="#555"/></g>`;}
+function drawSide(a){
+  let s=`<rect x="0" y="0" width="600" height="340" fill="transparent"/><line x1="0" y1="318" x2="600" y2="318" stroke="#7aa55a" stroke-width="4"/>
+  <g transform="translate(470,318) scale(2.6)">${personSVG()}</g>`;
+  if(a.cam){
+    const [x,y]=a.cam,[tx,ty]=a.aim; const ang=Math.atan2(ty-y,tx-x)*180/Math.PI;
+    s+=`<line x1="${x}" y1="${y}" x2="${tx}" y2="${ty}" stroke="var(--rec)" stroke-width="2" stroke-dasharray="6 5"/>`;
+    s+=camIcon(x,y,ang+(a.k==="dutch"?18:0));
+    s+=`<text x="${Math.min(x+24,470)}" y="${Math.max(y-16,18)}" font-family="IBM Plex Mono" font-size="15" fill="var(--rec)">${a.n}</text>`;
+  } else if(a.k==="pov"){
+    s+=`<g transform="translate(470,318) scale(2.6)"><circle cx="0" cy="-94" r="9" fill="none" stroke="var(--rec)" stroke-width="1"/></g><line x1="494" y1="74" x2="595" y2="96" stroke="var(--rec)" stroke-width="2" stroke-dasharray="6 5"/><text x="300" y="40" font-family="IBM Plex Mono" font-size="15" fill="var(--rec)">กล้อง = ดวงตาตัวละคร</text>`;
+  } else {
+    s+=`<g transform="translate(330,318) scale(2.6)">${personSVG()}</g>`+camIcon(250,60,4)+`<line x1="262" y1="62" x2="455" y2="76" stroke="var(--rec)" stroke-width="2" stroke-dasharray="6 5"/><text x="120" y="60" font-family="IBM Plex Mono" font-size="15" fill="var(--rec)">กล้องอยู่หลังไหล่ A มองไปหน้า B</text>`;
+  }
+  side.innerHTML=s;
+}
+function showAngle(i){
+  const a=angles[i];
+  [...$("#angleBtns").children].forEach((b,j)=>{b.classList.toggle("on",j===i);b.setAttribute("aria-pressed",j===i)});
+  drawSide(a);
+  $("#pvHud").textContent=a.n.toUpperCase();
+  pv.querySelectorAll(".extra").forEach(e=>e.remove());
+  if(a.k==="pov"){
+    pvFig.style.transform="scale(0)";
+    pv.insertAdjacentHTML("beforeend",`<div class="extra" style="position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center"><div style="width:30%;height:82%;background:#222;border-radius:14px 14px 0 0;padding:8px"><div style="background:#8cc6ff;height:100%;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;color:#123">แชตจากเพื่อน</div></div></div><div class="extra" style="position:absolute;left:18%;bottom:-6%;width:16%;height:30%;background:#f0c8a0;border-radius:50%"></div><div class="extra" style="position:absolute;right:18%;bottom:-6%;width:16%;height:30%;background:#f0c8a0;border-radius:50%"></div>`);
+  } else if(a.k==="ots"){
+    pvFig.style.transform="translateX(40%) scale(1.25)";
+    pv.insertAdjacentHTML("beforeend",`<div class="extra" style="position:absolute;left:-6%;bottom:-30%;width:46%;height:95%;background:#2f4e7a;border-radius:46% 46% 0 0"></div><div class="extra" style="position:absolute;left:6%;bottom:42%;width:20%;height:38%;background:#46301f;border-radius:50%"></div>`);
+  } else {
+    pvFig.style.transform=`rotateX(${a.rx}deg) rotate(${a.dz}deg) scale(${a.s})`;
+    pv.style.transform=a.k==="dutch"?"rotate(0deg)":"";
+    pv.style.background=a.k==="overhead"?"#9fc58a":(a.k==="aerial"?"linear-gradient(#bfe0f7 20%,#9fc58a 20%)":(a.k==="worm"||a.k==="low"?"linear-gradient(#bfe0f7 85%,#9fc58a 85%)":(a.k==="high"?"linear-gradient(#bfe0f7 35%,#9fc58a 35%)":"")));
+    if(a.k==="dutch") pv.style.background="linear-gradient(-18deg,#9fc58a 38%,#bfe0f7 38%)";
+  }
+  if(a.k==="pov"||a.k==="ots") pv.style.background="";
+  $("#angleInfo").innerHTML=`<h3>${a.n}</h3><p class="cut"><b>กล้องอยู่:</b> ${a.pos}</p><p><b>ผู้ชมรู้สึก:</b> ${a.feel}</p>`;
+}
+angles.forEach((a,i)=>{const b=document.createElement("button");b.type="button";b.textContent=a.n;b.addEventListener("click",()=>showAngle(i));$("#angleBtns").appendChild(b);});
+showAngle(3);
+$("#angleTable").innerHTML=angles.map(a=>`<tr><td><b>${a.n}</b></td><td>${a.pos}</td><td>${a.feel}</td></tr>`).join("");
+flips("#flip2",[
+ ["อยากให้ตัวละครดูมีอำนาจ","Low Angle (กล้องต่ำ เงยขึ้น) ถ้าต้องการมากขึ้นใช้ Worm's Eye"],
+ ["อยากให้ตัวละครดูอ่อนแอ","High Angle (กล้องสูง กดลง)"],
+ ["ถ่ายอาหารบนโต๊ะให้เห็นการจัดวาง","Overhead ตั้งฉากลงมา 90°"],
+ ["ตัวละครเมา สับสน สติแตก","Dutch Angle เอียงเส้นขอบฟ้า"],
+ ["ผู้ชมเห็นจอมือถือแบบที่ตัวละครเห็น","POV"],
+ ["ฉากคุยกัน เห็นหลังหัวคนหนึ่งกับหน้าอีกคน","Over the Shoulder (OTS)"]
+]);
+
+/* ================= CHAPTER 3: movement demos ================= */
+const bgSVG=`<svg viewBox="0 0 2200 900" preserveAspectRatio="none" aria-hidden="true"><rect width="2200" height="900" fill="#bfe0f7"/>
+<polygon points="0,560 200,330 380,470 560,260 760,480 940,300 1120,500 1300,280 1500,470 1700,320 1900,500 2200,360 2200,900 0,900" fill="#7f9a86"/>
+<circle cx="1550" cy="170" r="60" fill="#fff2b3"/></svg>`;
+const mdSVG=`<svg viewBox="0 0 2200 500" preserveAspectRatio="none" aria-hidden="true" style="top:auto;bottom:0;height:62%">
+<rect y="250" width="2200" height="250" fill="#8fae5c"/>
+${Array.from({length:11},(_,i)=>`<rect x="${90+i*200}" y="120" width="18" height="140" fill="#6e5038"/><ellipse cx="${99+i*200}" cy="105" rx="60" ry="70" fill="#3f7a46"/>`).join("")}</svg>`;
+const fgHTML=`<svg viewBox="-60 -110 120 116" preserveAspectRatio="xMidYMax meet" aria-hidden="true" style="left:0;bottom:4%;height:58%;width:100%">${personSVG()}</svg>`;
+function scene(){return `<div class="L bg">${bgSVG}</div><div class="L md">${mdSVG}</div><div class="L fg">${fgHTML}</div><div class="crn"></div>`;}
+const moves=[
+ {k:"Static",g:0,gl:"ไม่ขยับ",d:"กล้องตั้งนิ่ง ไม่ขยับเลย มีแต่ตัวละครที่เคลื่อนไหว",h:"สังเกต: ฉากหลังนิ่งสนิท",use:"สงบ มั่นคง ปล่อยให้การแสดงเล่าเรื่อง",
+  a:{fg:[["translateX(-30%)"],["translateX(30%)"]]},dur:2600},
+ {k:"Pan",g:1,gl:"หมุนอยู่กับที่",d:"หมุนกล้องซ้าย–ขวาบนขาตั้งเดิม",h:"สังเกต: ทุกชั้นเลื่อนเท่ากัน (ไม่มีมิติ)",use:"กวาดดูพื้นที่ หมุนตามคนที่เดินผ่าน",
+  a:{all:[["translateX(18%)"],["translateX(-18%)"]]},dur:2600},
+ {k:"Whip Pan",g:1,gl:"หมุนอยู่กับที่",d:"Pan เร็วมากจนภาพเบลอ",h:"สังเกต: ภาพเบลอแวบเดียว",use:"เปลี่ยนฉาก (ทรานซิชัน) ตื่นเต้น ฉับไว",
+  a:{all:[["translateX(20%)","blur(0)"],["translateX(-20%)","blur(6px)",.5],["translateX(-20%)","blur(0)"]]},dur:900},
+ {k:"Tilt",g:1,gl:"หมุนอยู่กับที่",d:"ก้ม–เงยกล้องบนแกนเดิม",h:"สังเกต: ภาพเลื่อนขึ้นลงทั้งภาพ",use:"เผยความสูง ไล่จากเท้าขึ้นไปถึงหน้า",
+  a:{all:[["translateY(-14%)"],["translateY(16%)"]]},dur:2600},
+ {k:"Push In",g:2,gl:"ย้ายตัวกล้อง",d:"เคลื่อนตัวกล้องเข้าหาตัวแบบ",h:"สังเกต: คนใหญ่ขึ้นเร็วกว่าภูเขา",use:"เพิ่มความเข้มข้น บอกว่า \"ตรงนี้สำคัญ\"",
+  a:{bg:[["scale(1)"],["scale(1.08)"]],md:[["scale(1)"],["scale(1.35)"]],fg:[["scale(1)"],["scale(2.1)"]]},dur:2600},
+ {k:"Pull Out",g:2,gl:"ย้ายตัวกล้อง",d:"เคลื่อนตัวกล้องถอยออกจากตัวแบบ",h:"สังเกต: เผยพื้นที่รอบตัวมากขึ้น",use:"เผยบริบท สื่อความโดดเดี่ยว ปิดฉาก",
+  a:{bg:[["scale(1.08)"],["scale(1)"]],md:[["scale(1.35)"],["scale(1)"]],fg:[["scale(2.1)"],["scale(1)"]]},dur:2600},
+ {k:"Zoom",g:3,gl:"ใช้เลนส์",d:"ใช้เลนส์ขยายภาพ กล้องไม่ขยับ",h:"สังเกต: ทุกอย่างขยายเท่ากัน ภาพแบน",use:"เน้นจุดสนใจเร็ว ใช้บ่อยในข่าว กีฬา สารคดี",
+  a:{all:[["scale(1)"],["scale(1.9)"]]},dur:2600},
+ {k:"Crash Zoom",g:3,gl:"ใช้เลนส์",d:"ซูมเข้าเร็วมากในเสี้ยววินาที",h:"สังเกต: กระแทกเข้าใกล้ทันที",use:"ช็อก ตกใจ ตลก",
+  a:{all:[["scale(1)"],["scale(2.6)",null,.25],["scale(2.6)"]]},dur:1300},
+ {k:"Dolly",g:2,gl:"ย้ายตัวกล้อง",d:"กล้องบนรถเข็นหรือราง เคลื่อนเข้าแล้วออกอย่างนุ่มนวล",h:"สังเกต: เคลื่อนลื่นไหล มีมิติ",use:"ภาพนุ่มนวล ผู้ชมรู้สึกเหมือนเดินเข้าไปในฉาก",
+  a:{bg:[["scale(1)"],["scale(1.06)",null,.5],["scale(1)"]],md:[["scale(1)"],["scale(1.3)",null,.5],["scale(1)"]],fg:[["scale(1)"],["scale(1.8)",null,.5],["scale(1)"]]},dur:3400},
+ {k:"Dolly Zoom",g:2,gl:"ย้ายกล้อง + เลนส์",d:"Dolly เข้า พร้อมกับ Zoom ออก (หรือกลับกัน)",h:"สังเกต: คนขนาดเท่าเดิม แต่ฉากหลังยืดใหญ่",use:"เวียนหัว ช็อก ตระหนักรู้ความจริง (Vertigo effect)",
+  a:{bg:[["scale(1)"],["scale(2.2)"]],md:[["scale(1)"],["scale(1.6)"]],fg:[["scale(1)"],["scale(1)"]]},dur:2600},
+ {k:"Roll",g:1,gl:"หมุนอยู่กับที่",d:"หมุนกล้องรอบแกนเลนส์",h:"สังเกต: ภาพหมุนเอียงทั้งภาพ",use:"มึนงง ไม่มั่นคง ฝันร้าย",
+  a:{all:[["rotate(0deg) scale(1.3)"],["rotate(25deg) scale(1.3)",null,.5],["rotate(-25deg) scale(1.3)"]]},dur:2600},
+ {k:"Tracking",g:2,gl:"ย้ายตัวกล้อง",d:"กล้องเคลื่อนตามตัวแบบที่กำลังเดิน",h:"สังเกต: คนอยู่กลางเฟรมตลอด ฉากผ่านไปข้างหลัง",use:"ผู้ชมรู้สึกเดินทางไปพร้อมตัวละคร",
+  a:{bg:[["translateX(10%)"],["translateX(-10%)"]],md:[["translateX(30%)"],["translateX(-30%)"]],fg:[["translateY(0)"],["translateY(-2%)",null,.25],["translateY(0)",null,.5],["translateY(-2%)",null,.75],["translateY(0)"]]},dur:2800},
+ {k:"Trucking",g:2,gl:"ย้ายตัวกล้อง",d:"ย้ายกล้องทั้งตัวเลื่อนไปด้านข้าง (คนยืนนิ่ง)",h:"สังเกต: ของใกล้เลื่อนเร็ว ของไกลเลื่อนช้า",use:"เผยฉากยาวต่อเนื่อง เกิดมิติ (parallax)",
+  a:{bg:[["translateX(5%)"],["translateX(-5%)"]],md:[["translateX(18%)"],["translateX(-18%)"]],fg:[["translateX(45%)"],["translateX(-45%)"]]},dur:2800},
+ {k:"Arc",g:2,gl:"ย้ายตัวกล้อง",d:"เคลื่อนเป็นวงโค้งรอบตัวแบบ",h:"สังเกต: คนอยู่กลาง ฉากหลังหมุนผ่านไปทางตรงข้าม",use:"ตัวแบบเด่น เป็นศูนย์กลาง ฉากฮีโร่หรือโรแมนติก",
+  a:{bg:[["translateX(-22%)"],["translateX(22%)"]],md:[["translateX(-40%)"],["translateX(40%)"]],fg:[["scaleX(1)"],["scaleX(.7)",null,.5],["scaleX(1)"]]},dur:3000},
+ {k:"Boom / Crane",g:2,gl:"ย้ายตัวกล้อง",d:"ยกกล้องทั้งตัวขึ้นหรือลงในแนวดิ่ง",h:"สังเกต: ของใกล้เลื่อนลงเร็วกว่าภูเขา",use:"อลังการ เปิดหรือปิดเรื่อง",
+  a:{bg:[["translateY(0)"],["translateY(10%)"]],md:[["translateY(0)"],["translateY(30%)"]],fg:[["translateY(0)"],["translateY(55%)"]]},dur:2800},
+ {k:"Random",g:2,gl:"ย้ายตัวกล้อง",d:"ถือกล้องด้วยมือ ขยับไม่มีแบบแผน (Handheld)",h:"สังเกต: ภาพสั่นไม่เป็นจังหวะ",use:"สมจริงแบบสารคดี วุ่นวาย ตื่นตระหนก",
+  a:{all:[["translate(0,0) rotate(0)"],["translate(2%,-3%) rotate(1.5deg)",null,.15],["translate(-3%,1%) rotate(-1deg)",null,.3],["translate(1%,3%) rotate(2deg)",null,.45],["translate(-2%,-2%) rotate(-2deg)",null,.6],["translate(3%,1%) rotate(1deg)",null,.75],["translate(-1%,2%) rotate(-1.5deg)",null,.9],["translate(0,0) rotate(0)"]]},dur:2400}
+];
+function kf(list){
+  const n=list.length;
+  return list.map((f,i)=>{const o={transform:f[0]}; if(f[1]) o.filter=f[1]; o.offset=(f[2]!=null)?f[2]:(n===1?0:i/(n-1)); return o;});
+}
+function play(box,m){
+  const layers={bg:box.querySelector(".bg"),md:box.querySelector(".md"),fg:box.querySelector(".fg")};
+  box.getAnimations({subtree:true}).forEach(a=>a.cancel());
+  const opt={duration:reduce?1:m.dur,easing:"ease-in-out",fill:"forwards"};
+  if(m.a.all){const wrap=box.querySelector(".all");wrap.animate(kf(m.a.all),opt);}
+  ["bg","md","fg"].forEach(k=>{if(m.a[k]) layers[k].animate(kf(m.a[k]),opt);});
+}
+function sceneBox(el){el.innerHTML=`<div class="L all" style="transform-origin:50% 60%">${scene()}</div>`;}
+const mg=$("#mgrid");
+moves.forEach((m,i)=>{
+  const c=document.createElement("article"); c.className="mv";
+  c.innerHTML=`<div class="vfm"><span class="hud">${m.k.toUpperCase()}</span></div><div class="body"><h3>${m.k}<span class="grp g${m.g}">${m.gl}</span></h3><p>${m.d}</p><p class="hint">${m.h}</p><p class="small"><b>ใช้เพื่อ:</b> ${m.use}</p><button class="play" type="button">▶ เล่น</button></div>`;
+  const v=c.querySelector(".vfm"); const hud=v.querySelector(".hud"); sceneBox(v); v.appendChild(hud);
+  c.querySelector(".play").addEventListener("click",()=>play(v,m));
+  mg.appendChild(c);
+});
+const cz=$("#cmpZoom"), cp=$("#cmpPush"); sceneBox(cz); sceneBox(cp);
+$("#cmpPlay").addEventListener("click",()=>{play(cz,moves.find(m=>m.k==="Zoom"));play(cp,moves.find(m=>m.k==="Push In"));});
+flips("#flip3",[
+ ["Zoom ต่างจาก Push In อย่างไร","Zoom ใช้เลนส์ กล้องอยู่ที่เดิม ภาพแบน · Push In กล้องเคลื่อนเข้าไปจริง ภาพมีมิติ"],
+ ["Pan ต่างจาก Trucking","Pan หมุนอยู่กับที่ · Trucking ย้ายกล้องไปด้านข้าง"],
+ ["Tilt ต่างจาก Boom","Tilt ก้มเงยอยู่กับที่ · Boom ยกกล้องทั้งตัวขึ้นลง"],
+ ["เปลี่ยนฉากเร็ว ๆ แบบมีพลัง","Whip Pan"],
+ ["คนเท่าเดิม แต่ฉากหลังยืด","Dolly Zoom (Vertigo effect)"],
+ ["ฉากวิ่งหนี อยากให้สมจริงตื่นตระหนก","Random/Handheld + Tracking"]
+]);
+
+/* ================= CHAPTER 4: polar + devices + spec game ================= */
+const pol=[
+ ["Omnidirectional","รับเสียงรอบทิศเท่ากัน",t=>1,"ไมค์หนีบปก (Lavalier) เก็บเสียงบรรยากาศ ประชุมโต๊ะกลม","เก็บเสียงรอบข้างเข้ามาด้วย ไม่เหมาะกับที่เสียงดัง"],
+ ["Cardioid","รับด้านหน้าและข้าง ตัดเสียงด้านหลัง (รูปหัวใจ)",t=>.5*(1+Math.cos(t)),"ไมค์ร้องเพลงบนเวที พอดแคสต์ อัดเสียงร้อง","แบบที่พบบ่อยที่สุด"],
+ ["Supercardioid","ด้านหน้าแคบกว่า Cardioid มีรับด้านหลังนิดหน่อย",t=>Math.abs(.37+.63*Math.cos(t)),"เวทีที่มีเสียงรบกวนมาก ไมค์ช็อตกันบางรุ่น","ต้องวางลำโพงมอนิเตอร์ให้ถูกตำแหน่ง"],
+ ["Hypercardioid","ด้านหน้าแคบมาก มีรับด้านหลังมากขึ้น",t=>Math.abs(.25+.75*Math.cos(t)),"ถ่ายทำในห้อง เก็บเสียงเฉพาะจุด","ต้องเล็งไมค์ให้แม่น"],
+ ["Figure-8 (Bidirectional)","รับด้านหน้าและหลังเท่ากัน ตัดด้านข้าง",t=>Math.abs(Math.cos(t)),"ไมค์ริบบอน สัมภาษณ์ 2 คนหันหน้าเข้าหากัน","ด้านข้างเงียบสนิท"],
+ ["Shotgun / Lobar","รับแคบมากเฉพาะด้านหน้า เหมือนลำแสงไฟฉาย",t=>{const c=Math.cos(t);return c>-.2?Math.pow(Math.abs(.1+.9*c),6):.1*Math.abs(Math.cos(3*t));},"ไมค์ติดกล้อง ไมค์บูมในกองถ่ายภาพยนตร์","เก็บเสียงจากระยะไกลได้ ถ้าเล็งตรง"]
+];
+const psvg=$("#polarSvg");
+function drawPolar(i){
+  const p=pol[i]; let d="";
+  for(let k=0;k<=360;k++){const t=k*Math.PI/180;const r=p[2](t)*140;const x=r*Math.sin(t),y=-r*Math.cos(t);d+=(k?"L":"M")+x.toFixed(1)+","+y.toFixed(1);}
+  psvg.innerHTML=`<circle r="140" fill="none" stroke="var(--line)"/><circle r="93" fill="none" stroke="var(--line)" stroke-dasharray="3 4"/><circle r="47" fill="none" stroke="var(--line)" stroke-dasharray="3 4"/>
+  <line x1="-150" y1="0" x2="150" y2="0" stroke="var(--line)"/><line x1="0" y1="-150" x2="0" y2="150" stroke="var(--line)"/>
+  <path d="${d}Z" fill="var(--rec)" fill-opacity=".18" stroke="var(--rec)" stroke-width="3"/>
+  <text x="0" y="-152" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="var(--muted)">FRONT 0°</text>
+  <text x="0" y="164" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="var(--muted)">REAR 180°</text>
+  <rect x="-6" y="-14" width="12" height="28" rx="6" fill="var(--ink)"/>`;
+  $("#polarInfo").innerHTML=`<h3>${p[0]}</h3><p style="margin:6px 0"><b>ลักษณะ:</b> ${p[1]}</p><p style="margin-bottom:6px"><b>ใช้กับ:</b> ${p[3]}</p><p class="small">${p[4]}</p>`;
+  [...$("#polarBtns").children].forEach((b,j)=>{b.classList.toggle("on",j===i);b.setAttribute("aria-pressed",j===i)});
+}
+pol.forEach((p,i)=>{const b=document.createElement("button");b.type="button";b.textContent=p[0];b.addEventListener("click",()=>drawPolar(i));$("#polarBtns").appendChild(b);});
+drawPolar(1);
+
+const icons={
+ dyn:`<circle class="icf" cx="48" cy="26" r="16"/><path class="ic" d="M40 42 L44 84 L52 84 L56 42"/><path class="ic" d="M36 20 L60 20 M36 28 L60 28" stroke="var(--bg)"/>`,
+ cond:`<rect class="ic" x="34" y="10" width="28" height="46" rx="14"/><path class="ic" d="M34 30 H62 M34 38 H62"/><path class="ic" d="M24 34 Q24 66 48 66 Q72 66 72 34 M48 66 V86 M36 86 H60"/>`,
+ shot:`<rect class="ic" x="8" y="40" width="70" height="14" rx="7"/><rect class="icf" x="78" y="42" width="10" height="10" rx="2"/><path class="ic" d="M20 47 H66" stroke-dasharray="4 4"/><path class="ic" d="M30 54 L30 70 M56 54 L56 70 M24 70 H62"/>`,
+ lav:`<rect class="icf" x="40" y="14" width="12" height="20" rx="6"/><path class="ic" d="M30 34 H62 L56 48 H36 Z"/><path class="ic" d="M46 48 C46 70 20 66 20 86"/>`,
+ hp:`<path class="ic" d="M18 60 V48 A30 30 0 0 1 78 48 V60"/><rect class="icf" x="12" y="56" width="16" height="26" rx="6"/><rect class="icf" x="68" y="56" width="16" height="26" rx="6"/>`,
+ spk:`<rect class="ic" x="24" y="8" width="48" height="80" rx="6"/><circle class="ic" cx="48" cy="28" r="9"/><circle class="ic" cx="48" cy="62" r="16"/><circle class="icf" cx="48" cy="62" r="5"/>`,
+ mix:`<rect class="ic" x="8" y="14" width="80" height="68" rx="6"/>${[20,36,52,68].map(x=>`<circle class="ic" cx="${x}" cy="28" r="4"/><circle class="ic" cx="${x}" cy="42" r="4"/><path class="ic" d="M${x} 52 V74"/><rect class="ica" x="${x-5}" y="${58+(x%3)*4}" width="10" height="6" rx="1"/>`).join("")}`,
+ ifc:`<rect class="ic" x="10" y="30" width="76" height="36" rx="6"/><circle class="ic" cx="28" cy="48" r="8"/><circle class="ic" cx="50" cy="48" r="8"/><circle class="ica" cx="72" cy="48" r="5"/>`,
+ mon:`<rect class="ic" x="8" y="14" width="80" height="50" rx="4"/><path class="ic" d="M48 64 V78 M32 82 H64"/><path class="ica" d="M16 54 L34 34 L46 46 L60 28 L80 54 Z"/>`,
+ cam:`<rect class="ic" x="10" y="30" width="56" height="42" rx="6"/><path class="ic" d="M22 30 L28 20 H46 L52 30"/><circle class="ic" cx="38" cy="51" r="13"/><path class="ic" d="M66 42 L86 32 V70 L66 60"/><circle class="ica" cx="20" cy="38" r="3"/>`,
+ lens:`<rect class="ic" x="18" y="22" width="60" height="52" rx="8"/><path class="ic" d="M30 22 V74 M42 22 V74"/><circle class="ic" cx="62" cy="48" r="10"/>`,
+ light:`<rect class="ic" x="16" y="12" width="64" height="44" rx="4"/>${[0,1,2,3,4].map(i=>[0,1,2].map(j=>`<circle class="ica" cx="${26+i*11}" cy="${22+j*12}" r="3"/>`).join("")).join("")}<path class="ic" d="M48 56 V72 M32 86 L48 72 L64 86"/>`
+};
+const devices=[
+ ["dyn","ไมค์ไดนามิก (Dynamic Mic)","ใช้ขดลวดกับแม่เหล็ก ไม่ต้องใช้ไฟ ทนทาน รับเสียงดังได้ ไวน้อย จึงเก็บเสียงรบกวนรอบตัวน้อย","Cardioid · 50 Hz–15 kHz · ไม่ต้องใช้ Phantom · XLR","ร้องเพลงบนเวที พิธีกร กลอง แอมป์กีตาร์"],
+ ["cond","ไมค์คอนเดนเซอร์ (Condenser Mic)","แผ่นไดอะแฟรมบางมาก ต้องใช้ไฟ +48V ไวมาก เก็บรายละเอียดเสียงได้ดี แต่บอบบาง","20 Hz–20 kHz · Phantom +48V · Self-noise 7–15 dB(A) · Diaphragm 1 นิ้ว (LDC)","อัดเสียงร้องและพากย์เสียงในสตูดิโอ"],
+ ["shot","ไมค์ช็อตกัน (Shotgun Mic)","ยาว รับเสียงแคบมากเฉพาะทางด้านหน้า ติดกล้องหรือ boom pole ใช้คู่กับที่กันลม (ขนแมว)","Supercardioid/Lobar · ยาว 20–30 ซม. · Phantom หรือแบตเตอรี่","ถ่ายภาพยนตร์ วิดีโอ เก็บเสียงนักแสดงจากระยะไกล"],
+ ["lav","ไมค์หนีบปก (Lavalier)","เล็กมาก หนีบเสื้อ มักใช้กับชุดไร้สาย (ตัวส่ง + ตัวรับ)","Omni · หัวไมค์ 5–6 มม. · 3.5 มม. · UHF หรือ 2.4 GHz · ระยะ 50–100 ม.","สัมภาษณ์ รายการทีวี vlog สอนออนไลน์"],
+ ["hp","หูฟังมอนิเตอร์ (Headphones)","Closed-back กันเสียงรั่ว (ใช้ตอนอัด) · Open-back เสียงโปร่ง (ใช้ตอนมิกซ์) · Flat response = เสียงตามจริง","Driver 40–50 มม. · 5 Hz–40 kHz · 32–250 Ω · 3.5 มม. + หัวแปลง 6.35 มม.","ฟังเสียงตอนอัด ตัดต่อ มิกซ์"],
+ ["spk","ลำโพงมอนิเตอร์ (Studio Monitor)","Active = มีแอมป์ในตัว · Passive = ต้องต่อแอมป์แยก · เสียงตรง ไม่ปรุงแต่ง","Woofer 5–8 นิ้ว + Tweeter 1 นิ้ว · Bi-amp 50W + 50W · 45 Hz–20 kHz · XLR/TRS","ฟังเสียงตอนมิกซ์และตัดต่อ"],
+ ["mix","มิกเซอร์เสียง (Audio Mixer)","รับเสียงหลายช่อง ปรับระดับ แต่งเสียง แล้วรวมเป็นเสียงออก · Digital mixer บันทึกค่าได้","Channels 4–16+ · Mic preamp XLR · EQ 3-band · Aux send · Fader · FX · Phantom · USB","งานเวที ห้องประชุม รายการสด"],
+ ["ifc","ออดิโออินเตอร์เฟซ (Audio Interface)","แปลงเสียงจากไมค์หรือเครื่องดนตรีเป็นดิจิทัลเข้าคอมพิวเตอร์ (ช่องน้อยกว่ามิกเซอร์)","2-in/2-out · Preamp · Phantom +48V · 24-bit/192 kHz · USB-C · Direct monitor","อัดเสียงในบ้าน พอดแคสต์ ทำเพลง"],
+ ["mon","จอภาพ (Monitor / Display)","IPS = สีแม่น มุมมองกว้าง · VA = คอนทราสต์สูง · TN = เร็ว ถูก · OLED = ดำสนิท","27 นิ้ว · 2560×1440 (QHD) หรือ 3840×2160 (4K) · 60–240 Hz · 1–5 ms · 100% sRGB · 350 nits","งานกราฟิก/ตัดต่อ → IPS + สีกว้าง · เกม → Hz สูง ms ต่ำ"],
+ ["cam","กล้อง (Camera)","ขนาดเซนเซอร์ใหญ่ = รับแสงดี หลังละลายง่าย: Full Frame > APS-C > Micro Four Thirds","Sensor · 24–45 MP · ISO 100–51200 · 4K 60p · 10-bit 4:2:2 · Log · IBIS · Lens mount","ถ่ายภาพนิ่งและวิดีโอ"],
+ ["lens","เลนส์ (Lens)","Focal length: น้อยกว่า 35 มม. = มุมกว้าง · 50 มม. = ใกล้สายตาคน · มากกว่า 70 มม. = เทเล · f/ ตัวเลขน้อย = รูรับแสงกว้าง หลังเบลอ","24–70 มม. f/2.8 (เลนส์ซูม) · 50 มม. f/1.8 (เลนส์ฟิกซ์/Prime)","เลือกตามระยะและอารมณ์ภาพ"],
+ ["light","ไฟ LED ถ่ายทำ","3200K = แสงส้ม · 5600K = แสงกลางวัน · CRI 95 ขึ้นไป = สีแม่น · จัดไฟ 3 จุด: Key, Fill, Back","Bi-color 2700–6500K · CRI 96 · 60–200W · Lux @1m · Bowens mount","ถ่ายวิดีโอ สัมภาษณ์ สตูดิโอ"]
+];
+$("#devices").innerHTML=devices.map(d=>`<div class="card dev"><svg viewBox="0 0 96 96" aria-hidden="true">${icons[d[0]]}</svg><div><h3>${d[1]}</h3><p>${d[2]}</p><div class="specs">${d[3]}</div><p class="small" style="margin-top:6px"><b>ใช้กับ:</b> ${d[4]}</p></div></div>`).join("");
+
+/* generic quiz engine */
+function quiz(el,title,items,kind){
+  let i=0,score=0,answered=false;
+  const root=$(el);
+  function render(){
+    if(i>=items.length){
+      const pct=Math.round(score/items.length*100);
+      root.innerHTML=`<div class="meta"><span>${title}</span><span>จบแล้ว</span></div><p class="score">ได้ ${score} / ${items.length} ข้อ (${pct}%)</p><p style="margin-top:6px">${pct>=80?"ดีมาก พร้อมสอบแล้ว ทบทวนเฉพาะข้อที่ผิดอีกรอบก็พอ":pct>=50?"ผ่านครึ่งแล้ว กลับไปดูบทที่ยังผิดบ่อย แล้วลองทำใหม่":"ไม่เป็นไร ทำรอบแรกผิดเยอะเป็นเรื่องปกติ อ่านเหตุผลแล้วลองใหม่ จะจำได้แม่นขึ้น"}</p><div class="qnav"><button class="btn" type="button" id="${el.slice(1)}R">ทำใหม่ (สลับข้อ)</button></div>`;
+      root.querySelector("button").addEventListener("click",()=>{items.sort(()=>Math.random()-.5);i=0;score=0;render();});
+      return;
+    }
+    const q=items[i]; answered=false;
+    const opts=q.o.map((t,j)=>({t,j})).sort(()=>Math.random()-.5);
+    root.innerHTML=`<div class="meta"><span>${title}</span><span>ข้อ ${i+1} / ${items.length} · ถูก ${score}</span></div>
+      <p class="stem">${q.q}</p>${q.spec?`<div class="sheet">${q.spec}</div>`:""}
+      <div class="opts">${opts.map(o=>`<button type="button" data-j="${o.j}">${o.t}</button>`).join("")}</div>
+      <div class="fb"></div><div class="qnav"><button class="btn" type="button" disabled>ข้อต่อไป →</button></div>`;
+    const fb=root.querySelector(".fb"), next=root.querySelector(".qnav .btn");
+    root.querySelectorAll(".opts button").forEach(b=>b.addEventListener("click",()=>{
+      if(answered) return; answered=true;
+      const ok=+b.dataset.j===0; if(ok) score++;
+      root.querySelectorAll(".opts button").forEach(x=>{x.disabled=true;if(+x.dataset.j===0)x.classList.add("right");});
+      if(!ok) b.classList.add("wrong");
+      fb.innerHTML=`<b style="color:${ok?"var(--ok)":"var(--rec)"}">${ok?"ถูกต้อง":"ยังไม่ใช่"}</b> คำตอบคือ <b>${q.o[0]}</b><br>${q.why}`;
+      fb.classList.add("show"); next.disabled=false; next.focus();
+      root.querySelector(".meta span:last-child").textContent=`ข้อ ${i+1} / ${items.length} · ถูก ${score}`;
+    }));
+    next.addEventListener("click",()=>{i++;render();});
+  }
+  render();
+}
+const specItems=[
+ {q:"อุปกรณ์นี้คืออะไร",spec:"Polar pattern: Cardioid\nFrequency response: 50 Hz – 15 kHz\nPower: ไม่ต้องใช้\nConnector: XLR 3-pin\nจุดเด่น: ทนทาน รับเสียงดังได้สูง",o:["ไมโครโฟนไดนามิก","ไมโครโฟนคอนเดนเซอร์","หูฟังมอนิเตอร์","ไมค์หนีบปก"],why:"ไม่ต้องใช้ไฟและทนทาน คือลักษณะของไมค์ไดนามิก ช่วงความถี่แคบกว่าคอนเดนเซอร์ เหมาะกับเวทีและพิธีกร"},
+ {q:"อุปกรณ์นี้คืออะไร",spec:"Diaphragm: 1 นิ้ว\nFrequency: 20 Hz – 20 kHz\nPower: +48V Phantom Power\nSelf-noise: 7 dB(A)\nMax SPL: 132 dB",o:["ไมโครโฟนคอนเดนเซอร์","ไมโครโฟนไดนามิก","ลำโพงมอนิเตอร์","ออดิโออินเตอร์เฟซ"],why:"ต้องใช้ Phantom +48V และไวมาก (self-noise ต่ำ) คือไมค์คอนเดนเซอร์ เหมาะอัดเสียงร้องหรือพากย์ในสตูดิโอ"},
+ {q:"อุปกรณ์นี้คืออะไร",spec:"Polar pattern: Supercardioid / Lobar\nความยาว: 25 ซม.\nPower: แบตเตอรี่ AA หรือ Phantom\nอุปกรณ์เสริม: ที่ยึดกล้อง, windscreen",o:["ไมค์ช็อตกัน","ไมค์หนีบปก","ไมค์ USB","ไมค์ไดนามิก"],why:"รับเสียงแคบมาก (Lobar) และตัวยาว คือไมค์ช็อตกัน ใช้เก็บเสียงในงานถ่ายวิดีโอ"},
+ {q:"อุปกรณ์นี้คืออะไร",spec:"Polar pattern: Omnidirectional\nขนาดหัวไมค์: 6 มม.\nติดตั้ง: คลิปหนีบ\nConnector: 3.5 มม.\nระบบ: Wireless 2.4 GHz ระยะ 100 ม.",o:["ไมค์หนีบปกไร้สาย","ไมค์ช็อตกัน","ไมค์คอนเดนเซอร์ไดอะแฟรมใหญ่","หูฟังไร้สาย"],why:"เล็ก หนีบได้ รับรอบทิศ และมีระบบไร้สาย คือ Lavalier สำหรับสัมภาษณ์หรือ vlog"},
+ {q:"อุปกรณ์นี้คืออะไร",spec:"Driver: 40 มม.\nType: Closed-back\nFrequency: 10 Hz – 20 kHz\nImpedance: 63 Ω\nสาย: ขด 3 ม. + หัวแปลง 6.35 มม.",o:["หูฟังมอนิเตอร์แบบปิด","ลำโพงมอนิเตอร์","ไมโครโฟนไดนามิก","มิกเซอร์เสียง"],why:"มี Driver และบอกว่าเป็น Closed-back คือหูฟัง แบบปิดกันเสียงรั่ว เหมาะใช้ตอนอัดเสียง"},
+ {q:"อุปกรณ์นี้คืออะไร",spec:"12 Channels\n4 Mic Preamps (XLR)\n3-band EQ ทุกช่อง\n2 Aux Sends\nBuilt-in FX 16 แบบ\nPhantom +48V · USB Audio",o:["มิกเซอร์เสียง","ออดิโออินเตอร์เฟซ","ลำโพง PA","หูฟังมอนิเตอร์"],why:"มีหลาย Channel, EQ, Aux และ FX คือมิกเซอร์ ใช้ผสมเสียงหลายแหล่งพร้อมกัน"},
+ {q:"อุปกรณ์นี้คืออะไร",spec:"2 Inputs (XLR/TRS combo)\nResolution: 24-bit / 192 kHz\nConnection: USB-C\nDirect Monitor · Phantom +48V\nHeadphone output",o:["ออดิโออินเตอร์เฟซ","มิกเซอร์ 12 ช่อง","ไมค์ USB","จอภาพ"],why:"ช่องน้อย มี bit/sample rate และเชื่อม USB คือ Audio Interface ใช้แปลงเสียงเข้าคอมพิวเตอร์"},
+ {q:"อุปกรณ์นี้คืออะไร",spec:"ขนาด: 27 นิ้ว\nResolution: 3840 × 2160\nPanel: IPS\nRefresh rate: 60 Hz\nColor: 99% sRGB, 95% DCI-P3, ΔE < 2",o:["จอภาพ 4K สำหรับงานกราฟิก/ตัดต่อ","จอเกมมิ่ง","กล้องวิดีโอ 4K","โปรเจกเตอร์"],why:"IPS + ขอบเขตสีกว้างและแม่น (ΔE < 2) เหมาะงานสี ถ้าเป็นจอเกมจะเน้น 144 Hz ขึ้นไป"},
+ {q:"อุปกรณ์นี้คืออะไร",spec:"ขนาด: 24.5 นิ้ว\nResolution: 1920 × 1080\nPanel: TN\nRefresh rate: 240 Hz\nResponse time: 1 ms",o:["จอเกมมิ่ง","จองานกราฟิกระดับสูง","จอมอนิเตอร์ติดกล้อง","ทีวี OLED"],why:"Hz สูงและ ms ต่ำ (ภาพลื่น ไม่เบลอ) แต่ TN สีไม่แม่น คือจอที่เน้นเล่นเกม"},
+ {q:"อุปกรณ์นี้คืออะไร",spec:"Woofer: 5 นิ้ว · Tweeter: 1 นิ้ว\nBi-amp: 45W + 25W\nFrequency: 50 Hz – 20 kHz\nInput: XLR / TRS\nFlat frequency response",o:["ลำโพงมอนิเตอร์สตูดิโอแบบ Active","หูฟังแบบเปิด","ไมค์ไดนามิก","มิกเซอร์"],why:"มี Woofer, Tweeter และแอมป์ในตัว (Bi-amp) คือลำโพงมอนิเตอร์แบบ Active สำหรับฟังตอนมิกซ์"},
+ {q:"อุปกรณ์นี้คืออะไร",spec:"Sensor: Full Frame 24.2 MP\nISO: 100 – 51200\nVideo: 4K 60p, 10-bit 4:2:2, Log\nIBIS 5 แกน\nLens mount: E-mount",o:["กล้องมิเรอร์เลส","เลนส์ซูม","จอภาพ 4K","ไฟ LED"],why:"มีเซนเซอร์ MP ISO และเมาท์เลนส์ คือบอดี้กล้อง"},
+ {q:"อุปกรณ์นี้คืออะไร",spec:"Color temperature: 2700K – 6500K (Bi-color)\nCRI: 96\nPower: 60W\nOutput: 20,000 lux @1m\nBowens mount",o:["ไฟ LED สำหรับถ่ายวิดีโอ","จอภาพ","กล้อง","ลำโพง"],why:"หน่วย K, CRI, lux เป็นของแสง คือไฟถ่ายทำ ใส่ softbox ได้ (Bowens mount)"}
+];
+quiz("#specGame","เกมทายสเปค · 12 ข้อ",specItems.slice());
+
+/* final quiz */
+const finalItems=[
+ {q:"ผู้กำกับต้องการเปิดเรื่องด้วยภาพมหาวิทยาลัยทั้งบริเวณ ควรใช้ขนาดภาพใด",o:["Extreme Long Shot","Medium Shot","Close Up","Cowboy Shot"],why:"ELS เห็นพื้นที่ทั้งหมด ทำหน้าที่ Establishing Shot บอกสถานที่ก่อนเข้าเรื่อง"},
+ {q:"ต้องการให้เห็นตัวละครตั้งแต่ศีรษะจรดเท้า เพื่อโชว์การแต่งกาย",o:["Full Shot","Medium Close Up","Extreme Close Up","Medium Shot"],why:"Full Shot ตัวละครเต็มตัวพอดีเฟรม เห็นการแต่งกายและภาษากายครบ"},
+ {q:"ภาพตัดที่ช่วงอก เห็นสีหน้าชัด ใช้บ่อยในข่าว",o:["Medium Close Up","Medium Full Shot","Long Shot","Cowboy Shot"],why:"MCU ตัดที่อก เน้นสีหน้าแต่ยังมีบริบท"},
+ {q:"ต้องการเน้นดวงตาตัวละครตอนตกใจ",o:["Extreme Close Up","Close Up","Medium Shot","Full Shot"],why:"ECU ขยายเฉพาะดวงตา ผู้ชมรับรู้อารมณ์อย่างเข้มข้น"},
+ {q:"ภาพตัดที่กลางต้นขา มาจากหนังตะวันตก",o:["Cowboy Shot","Medium Full Shot","Medium Shot","Long Shot"],why:"Cowboy Shot ให้เห็นซองปืนที่สะโพกพร้อมใบหน้า"},
+ {q:"ต้องการให้ตัวละครดูตัวเล็ก ด้อยกว่าสิ่งแวดล้อม",o:["High Angle","Low Angle","Eye Level","Worm's Eye View"],why:"กล้องสูงกดลง ทำให้ตัวละครดูเล็กและอ่อนแอ"},
+ {q:"ตัวละครเดินเข้าหากล้อง ต้องการให้ดูมีอำนาจน่าเกรงขาม",o:["Low Angle","High Angle","Overhead","Dutch Angle"],why:"กล้องต่ำเงยขึ้น ตัวละครดูสูงใหญ่และทรงพลัง"},
+ {q:"ตั้งกล้องให้เส้นขอบฟ้าเอียง เพื่อสร้างความรู้สึกสับสนไม่มั่นคง",o:["Dutch Angle","Roll","POV","Aerial Shot"],why:"Dutch Angle คือมุมเอียงค้าง (ถ้ากล้องกำลังหมุนอยู่จะเป็น Roll)"},
+ {q:"ภาพหน้าจอโทรศัพท์ตามที่ตัวละครกำลังมองเห็น",o:["POV","Over the Shoulder","Eye Level","Close Up"],why:"POV ให้ผู้ชมเห็นผ่านสายตาตัวละคร"},
+ {q:"ฉากสนทนาที่เห็นไหล่และหลังศีรษะของคนหนึ่ง กับหน้าอีกคน",o:["Over the Shoulder","POV","Two Shot แบบ Overhead","Dutch Angle"],why:"OTS ถ่ายข้ามไหล่ บอกความสัมพันธ์ของคนสองคน"},
+ {q:"ถ่ายอาหารบนโต๊ะจากด้านบนตั้งฉาก ให้เห็นการจัดวาง",o:["Overhead Shot","Aerial Shot","High Angle","Ground Level"],why:"Overhead มองลงตั้งฉาก 90° เห็นองค์ประกอบครบ"},
+ {q:"กล้องอยู่ที่เดิม ใช้เลนส์ขยายภาพ ฉากหลังกับคนขยายเท่ากัน",o:["Zoom","Push In","Dolly","Tracking"],why:"Zoom ใช้เลนส์ กล้องไม่ขยับ perspective ไม่เปลี่ยน ภาพดูแบน"},
+ {q:"กล้องเคลื่อนเข้าหาตัวละครจริง ภาพมีมิติ ของใกล้ขยายเร็วกว่าของไกล",o:["Push In / Dolly In","Zoom In","Tilt","Pan"],why:"การย้ายกล้องจริงทำให้ perspective เปลี่ยน เกิดมิติ"},
+ {q:"หมุนกล้องซ้ายไปขวาเร็วมากจนภาพเบลอ ใช้เปลี่ยนฉาก",o:["Whip Pan","Crash Zoom","Trucking","Roll"],why:"Whip Pan คือ Pan ความเร็วสูง ภาพเบลอใช้เป็นทรานซิชัน"},
+ {q:"ตัวละครมีขนาดเท่าเดิม แต่ฉากหลังยืดออก ให้ความรู้สึกเวียนหัว",o:["Dolly Zoom","Zoom","Arc","Boom"],why:"Dolly Zoom = เคลื่อนกล้องและซูมสวนทางกัน (Vertigo effect)"},
+ {q:"กล้องเคลื่อนเป็นวงโค้งรอบตัวละคร ทำให้ตัวละครเด่นเป็นศูนย์กลาง",o:["Arc","Pan","Tracking","Roll"],why:"Arc คือเคลื่อนรอบตัวแบบโดยหันเข้าหาตลอด"},
+ {q:"ยกกล้องทั้งตัวสูงขึ้นจนเห็นภาพกว้าง ใช้ปิดเรื่อง",o:["Crane / Boom Up","Tilt Up","Zoom Out","Pull Out"],why:"Boom/Crane ย้ายกล้องขึ้นในแนวดิ่ง (Tilt แค่เงยกล้องอยู่กับที่)"},
+ {q:"สเปค: ต้องใช้ +48V Phantom Power · 20 Hz–20 kHz · Self-noise ต่ำ",o:["ไมค์คอนเดนเซอร์","ไมค์ไดนามิก","หูฟัง","ลำโพงมอนิเตอร์"],why:"Phantom Power คือคำใบ้สำคัญของไมค์คอนเดนเซอร์"},
+ {q:"สเปค: Channels 8 · EQ 3-band · Aux send · Fader",o:["มิกเซอร์เสียง","ออดิโออินเตอร์เฟซ","จอภาพ","ไมค์ USB"],why:"หลายช่อง + EQ + Aux + Fader คือมิกเซอร์"},
+ {q:"สเปค: 5600K · CRI 97 · 30,000 lux @1m",o:["ไฟ LED ถ่ายทำ","จอภาพ","กล้อง","เลนส์"],why:"K, CRI, lux เป็นหน่วยของแสง"}
+];
+quiz("#finalQuiz","ทดสอบรวม · 20 ข้อ",finalItems.slice());
+
+/* progress (one viewer only) */
+function store(){try{return JSON.parse(localStorage.getItem("tiw-done")||"{}")}catch(e){return {}}}
+function save(o){try{localStorage.setItem("tiw-done",JSON.stringify(o))}catch(e){}}
+const done=store();
+document.querySelectorAll("[data-done]").forEach(cb=>{
+  const k=cb.dataset.done; cb.checked=!!done[k];
+  const link=document.querySelector(`.nav a[data-ch="${k}"]`); if(link) link.classList.toggle("done",cb.checked);
+  cb.addEventListener("change",()=>{done[k]=cb.checked;save(done);if(link) link.classList.toggle("done",cb.checked);});
+});
+})();
+</script>
+</body>
+</html>
