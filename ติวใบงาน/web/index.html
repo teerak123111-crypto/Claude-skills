@@ -241,6 +241,16 @@ footer{padding:50px 0 70px;color:var(--muted);font-size:14px}
 .srexp{position:sticky;top:80px;display:flex;flex-direction:column;gap:12px}
 .srexp .box{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
 .srexp .box h4{font-family:var(--display);margin:0 0 6px;font-size:17px}
+
+.cmpwrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);margin-top:12px}
+.cmpt{border-collapse:separate;border-spacing:0;min-width:640px;font-size:14.5px}
+.cmpt th,.cmpt td{padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top;min-width:130px}
+.cmpt thead th{background:var(--tint);font-family:var(--display);font-size:14.5px}
+.cmpt .rh{position:sticky;left:0;background:var(--surface);font-family:var(--display);font-weight:600;font-size:14px;min-width:120px;z-index:1;box-shadow:1px 0 0 var(--line)}
+.cmpt thead .rh{background:var(--tint)}
+.cmpt tr.key td,.cmpt tr.key .rh{background:var(--badbg)}
+.cmpt tr.key td{font-family:var(--mono);font-size:13px;font-weight:600}
+.cmpt tr.key .rh{color:var(--rec)}
 /* type browser */
 .types{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:12px}
 .tcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:6px}
@@ -541,6 +551,13 @@ footer{padding:50px 0 70px;color:var(--muted);font-size:14px}
       <svg id="polarSvg" viewBox="-170 -170 340 340" role="img" aria-label="กราฟ polar pattern"></svg>
       <div id="polarInfo" aria-live="polite"></div>
     </div>
+  </div>
+
+  <div class="card">
+    <h3>เปรียบเทียบความต่าง: ชนิดย่อยวางเทียบกัน</h3>
+    <p class="small" style="margin:4px 0 10px">เลือกหัวข้อเพื่อดูตารางเทียบ แถวสีแดง <b style="color:var(--rec)">★ จุดตัดสิน</b> คือคำในสเปคที่ใช้แยกชนิดได้เร็วที่สุด ถ้าตารางกว้างเกินจอ เลื่อนตารางไปทางขวาได้</p>
+    <div class="chips" id="cmpTabs" role="group" aria-label="เลือกตารางเปรียบเทียบ"></div>
+    <div class="cmpwrap" id="cmpTable"></div>
   </div>
 
   <div class="card">
@@ -1504,6 +1521,89 @@ tabs.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>show(+
 function show(i){
   cur=i; tabs.querySelectorAll("button").forEach((b,k)=>{b.classList.toggle("on",k===i);b.setAttribute("aria-pressed",k===i)});
   $("#typeGrid").innerHTML=cats[names[i]].map(c=>`<div class="tcard"><span class="grpl">${c[0]}</span><h4>${c[1]}</h4><p style="font-size:15px">${c[2]}</p><div class="clue">${c[3]}</div><p class="small"><b>ใช้กับ:</b> ${c[4]}</p></div>`).join("");
+}
+show(0);
+})();
+
+/* ================= COMPARISON TABLES ================= */
+(function(){
+const K="จุดตัดสิน";
+const T=[
+ {t:"ไมค์: ตามหลักการทำงาน",h:["","ไดนามิก","คอนเดนเซอร์ ไดอะแฟรมใหญ่ (LDC)","คอนเดนเซอร์ ไดอะแฟรมเล็ก (SDC)","ริบบอน"],r:[
+  [K,"Dynamic / Moving coil · ไม่ต้องใช้ไฟ","Condenser · Capsule 1″ · Phantom +48V","Condenser · Capsule ½″ · ทรงแท่งดินสอ","Ribbon · Figure-8"],
+  ["หลักการ","ขดลวดขยับในสนามแม่เหล็ก","แผ่นบางเป็นตัวเก็บประจุ ต้องมีไฟ","เหมือน LDC แต่แผ่นเล็ก","แผ่นริบบอนโลหะบางสั่นในสนามแม่เหล็ก"],
+  ["ความไว (Sensitivity)","ต่ำ ~1.5–2 mV/Pa","สูง ~15–30 mV/Pa","ปานกลาง–สูง ~10–15 mV/Pa","ต่ำ ~1–2 mV/Pa"],
+  ["ช่วงความถี่ทั่วไป","~50 Hz–15/16 kHz","20 Hz–20 kHz","20 Hz–20 kHz","~30 Hz–15 kHz"],
+  ["ความทนทาน","ทนมาก","บอบบางกว่า ไม่ชอบความชื้น","บอบบางกว่า","บอบบางมาก ระวังลม"],
+  ["เสียง","หนา ชัด เก็บเสียงรอบข้างน้อย","อุ่น ละเอียด","ใส ไว เสียงแหลมชัด","นุ่ม อุ่น วินเทจ"],
+  ["เหมาะกับ","เวที พิธีกร กลอง พอดแคสต์ห้องไม่เงียบ","อัดเสียงร้อง พากย์ในสตูดิโอ","กีตาร์โปร่ง ฉาบ คณะนักร้อง","เครื่องเป่า เสียงร้องสไตล์วินเทจ"]]},
+ {t:"ไมค์: ตามการใช้งาน",h:["","ไมค์ถือมีสาย","ไมค์ไร้สายแบบถือ","หนีบปก (Lavalier)","คาดศีรษะ (Headset)","ช็อตกัน (Shotgun)","ไมค์ USB","Boundary"],r:[
+  [K,"Handheld · XLR","Transmitter + Receiver · UHF/2.4 GHz · แบต","Clip · Omni · หัว 5–6 มม.","Ear-hook / Headband · Boom arm","Lobar/Supercardioid · ยาว 20–30 ซม.","USB-C · 24-bit/48 kHz","แบนวางโต๊ะ · Half-cardioid"],
+  ["ติดตั้งอย่างไร","ถือ / ขาไมค์","ถือ","หนีบเสื้อ","เกี่ยวหูหรือคาดหัว","ติดกล้อง / บูม","ตั้งโต๊ะ","วางบนโต๊ะหรือพื้น"],
+  ["ทิศรับเสียงที่พบบ่อย","Cardioid","Cardioid","Omni","Omni / Cardioid","Lobar (แคบมาก)","Cardioid","ครึ่งวงกลม"],
+  ["ต่อกับอะไร","มิกเซอร์ (XLR)","ตัวรับ → มิกเซอร์","ตัวส่ง → กล้อง/มือถือ","ตัวส่งแบบเหน็บเอว","กล้อง / เครื่องบันทึก","คอมพิวเตอร์ตรง","มิกเซอร์ / ระบบประชุม"],
+  ["มือว่างไหม","ไม่","ไม่","ว่าง","ว่าง","ว่าง (คนถือบูมแทน)","ว่าง","ว่าง"],
+  ["เหมาะกับ","ร้องเพลง พิธีกร","เวที อีเวนต์","สัมภาษณ์ vlog","ร้องพร้อมเต้น วิทยากร","ถ่ายหนัง วิดีโอ","พอดแคสต์ สตรีม","ห้องประชุม"]]},
+ {t:"หูฟัง: ตามรูปทรง",h:["","จุก (In-ear)","เอียร์บัด","TWS","แนบหู (On-ear)","ครอบหู (Over-ear)","Open-ear (อากาศ)","Bone conduction","คล้องคอ"],r:[
+  [K,"Ear tips S/M/L","ไม่มีจุก วางในใบหู","2 ข้างแยก + กล่องชาร์จ","Supra-aural · ฟองน้ำทับใบหู","Ear pad/Earmuff ครอบรอบหู","Ear-hook · Air conduction","Bone conduction · บนโหนกแก้ม","Neckband"],
+  ["ใส่ตรงไหน","ในรูหู","ในใบหู","ในรูหู","บนใบหู","รอบใบหู","ข้างรูหู ไม่อุด","บนกระดูกโหนกแก้ม","ในรูหู + สายคล้องคอ"],
+  ["ขนาด driver ทั่วไป","6–12 มม. หรือ BA","~14 มม.","6–11 มม.","30–40 มม.","40–50 มม. ขึ้นไป","~16 มม.","ตัวสั่นสะเทือน","6–12 มม."],
+  ["น้ำหนักทั่วไป","5–20 g","~10 g","~5 g ต่อข้าง","150–200 g","200–400 g","25–40 g","~30 g","25–40 g"],
+  ["กันเสียงรอบข้าง","ดีมาก","น้อย","ดี (มัก ANC)","ปานกลาง","ดี (ฝาปิด)","ไม่กัน","ไม่กัน","ดี"],
+  ["ได้ยินรอบตัว","ไม่ค่อย","ได้บ้าง","มีโหมด Transparency","ได้บ้าง","ไม่ค่อย","ได้","ได้","ไม่ค่อย"],
+  ["เหมาะกับ","นักร้องบนเวที ฟังจริงจัง","ฟังทั่วไป","ชีวิตประจำวัน","พกพา","งานเสียง เดินทาง","วิ่ง ทำงาน","วิ่ง ปั่นจักรยาน ว่ายน้ำบางรุ่น","ออกกำลังกาย"]]},
+ {t:"หูฟัง: ฝาปิด / ฝาเปิด",h:["","ฝาปิด (Closed-back)","ฝาเปิด (Open-back)","กึ่งเปิด (Semi-open)"],r:[
+  [K,"Closed-back","Open-back / Open","Semi-open"],
+  ["หน้าตาฝาครอบ","ทึบ","เป็นตะแกรง มองทะลุได้","ทึบบางส่วน"],
+  ["เสียงรั่ว","น้อย","มาก คนข้าง ๆ ได้ยิน","ปานกลาง"],
+  ["กันเสียงภายนอก","ดี","แทบไม่กัน","ปานกลาง"],
+  ["ลักษณะเสียง","เบสแน่น โฟกัส","โปร่ง กว้าง เป็นธรรมชาติ","อยู่ระหว่างกลาง"],
+  ["เหมาะกับ","อัดเสียง ถ่ายทำ ที่สาธารณะ","มิกซ์ในห้องเงียบ ฟังที่บ้าน","ใช้ทั่วไป"]]},
+ {t:"หูฟัง: ชนิด driver",h:["","Dynamic","Planar magnetic","Balanced Armature (BA)","Bone conduction"],r:[
+  [K,"Dynamic driver ทรงกลม","Planar / Flat / Isodynamic · แผ่นใหญ่","BA · มักหลายตัว · Hybrid","Bone conduction"],
+  ["รูปร่าง","วงกลม","แผ่นแบนขนาดใหญ่ (มักสี่เหลี่ยม)","กล่องจิ๋ว","ตัวสั่นสะเทือน"],
+  ["พบใน","หูฟังเกือบทุกชนิด","หูฟังครอบหูระดับสูง","หูฟังจุก IEM","หูฟังเปิดหู"],
+  ["ต้องใช้แอมป์ไหม","ส่วนใหญ่ไม่ต้อง","มักควรใช้ (ความไวต่ำ)","ไม่ต้อง (ขับง่าย)","ไม่ต้อง (ไร้สาย)"],
+  ["จุดเด่น","เบสดี ราคาหลากหลาย","รายละเอียดสูง เพี้ยนน้อย","ละเอียด ตัวเล็ก","หูโล่ง ได้ยินรอบตัว"]]},
+ {t:"หูฟัง vs ลำโพง",h:["","หูฟัง","ลำโพง"],r:[
+  [K,"mW · มม. · กรัม · ฟองน้ำครอบหู/จุก","W · นิ้ว · กิโลกรัม · Woofer/Tweeter"],
+  ["ขนาด driver","มิลลิเมตร (6–50 มม.)","นิ้ว (1″–18″)"],
+  ["จำนวน driver","มัก 1 ตัว","แยก Woofer + Tweeter (2-way)"],
+  ["กำลังไฟ","มิลลิวัตต์ · dB/mW","วัตต์ · Bi-amp · Max SPL @1m"],
+  ["Impedance","16–300 Ω","4–8 Ω (Passive)"],
+  ["ช่องต่อ","3.5 / 4.4 / 6.35 มม. · Bluetooth","XLR · TRS · RCA · Speakon · ปลั๊กไฟ AC"],
+  ["คำบอกการใช้","Ear cup · Headband · Ear tips · Clamping force","Cabinet · Bass port · Pole/Wall mount"]]},
+ {t:"ลำโพง: Active / Passive",h:["","Active","Passive"],r:[
+  [K,"Built-in amp · Bi-amp (W+W) · ปลั๊กไฟ","Recommended amp power · Binding posts · ไม่มีปลั๊กไฟ"],
+  ["แอมป์","มีในตัว","ต้องต่อเครื่องแอมป์แยก"],
+  ["การต่อ","แหล่งเสียง → ลำโพง","แหล่งเสียง → แอมป์ → ลำโพง"],
+  ["ช่องรับสัญญาณ","XLR / TRS / RCA","ขั้วสายลำโพง / Speakon"],
+  ["ตัวอย่าง","มอนิเตอร์สตูดิโอ, PA ส่วนใหญ่, ลำโพงบลูทูธ","ลำโพงบ้าน Hi-Fi, ลำโพงเวทีบางรุ่น"]]},
+ {t:"ลำโพง: ตามการใช้งาน",h:["","มอนิเตอร์สตูดิโอ","PA","Wedge บนเวที","ซับวูฟเฟอร์","Line Array","บลูทูธพกพา","ซาวด์บาร์","Bookshelf"],r:[
+  [K,"Flat response · 5–8″ + 1″","1000 W · 12–15″ · Max SPL สูง","ตู้เอียง 40°/50°","35–150 Hz · ดอก 12–18″","Coverage แนวตั้งแคบ · Rigging","Bluetooth · แบต · IP67","HDMI eARC · Dolby Atmos","Passive · Hi-Fi · 6 Ω"],
+  ["ฟังใคร","คนทำเสียง","ผู้ชมจำนวนมาก","นักร้องบนเวที","ผู้ชม (เสียงต่ำ)","ผู้ชมงานใหญ่","กลุ่มเล็ก","คนดูทีวี","คนฟังเพลงในบ้าน"],
+  ["กำลังขับ","10–100 W","หลายร้อย–พัน W","300–1000 W","1000 W ขึ้นไป","สูงมาก ต่อหลายตู้","10–50 W","100–500 W","ตามแอมป์"],
+  ["มีแบต","ไม่","ไม่","ไม่","ไม่","ไม่","มี","ไม่","ไม่"],
+  ["ใช้ที่ไหน","ห้องตัดต่อ สตูดิโอ","อีเวนต์ คอนเสิร์ต","บนพื้นเวที","คู่กับ PA","คอนเสิร์ตใหญ่ สนาม","นอกบ้าน","หน้าทีวี","ห้องนั่งเล่น"]]},
+ {t:"มิกเซอร์ / อินเตอร์เฟซ",h:["","Analog Mixer","Digital Mixer","Powered Mixer","Podcast Mixer","Audio Interface"],r:[
+  [K,"ปุ่มจริงทุกช่อง · EQ · Aux · Fader","Touchscreen · Scene memory · App","Built-in amp · Speaker out","Headphone outs หลายช่อง · Sound pads","2-in/2-out · 24-bit/192 kHz · USB-C"],
+  ["จำนวนช่อง","4–24","16–64","4–12","2–4","1–8"],
+  ["แอมป์ขับลำโพง","ไม่มี","ไม่มี","มี","ไม่มี","ไม่มี"],
+  ["ต่อคอม","บางรุ่นมี USB","มี USB อัดหลายแทร็ก","บางรุ่น","มี","ต้องต่อ (หน้าที่หลัก)"],
+  ["เหมาะกับ","งานเล็ก ห้องประชุม","คอนเสิร์ต งานซับซ้อน","ระบบเสียงพกพา","พอดแคสต์ ไลฟ์","อัดเสียงที่บ้าน ทำเพลง"]]},
+ {t:"จอ / ภาพ",h:["","จองานกราฟิก","จอเกมมิ่ง","จอติดกล้อง","โปรเจกเตอร์"],r:[
+  [K,"IPS · sRGB/DCI-P3 · ΔE < 2","144–360 Hz · 1 ms","5–7″ · 1000+ nits · HDMI in","ANSI lumens · Throw ratio"],
+  ["เน้นอะไร","สีแม่น","ความเร็ว ภาพลื่น","ดูภาพกลางแดด ช่วยโฟกัส","ฉายภาพใหญ่"],
+  ["ขนาดทั่วไป","27–32″","24–27″","5–7″","ภาพ 60–300″"],
+  ["เหมาะกับ","ออกแบบ ตัดต่อ","เล่นเกม","ถ่ายวิดีโอ","ห้องเรียน ประชุม"]]}
+];
+const tabs=$("#cmpTabs");
+tabs.innerHTML=T.map((x,i)=>`<button type="button" data-i="${i}">${x.t}</button>`).join("");
+tabs.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>show(+b.dataset.i)));
+function show(i){
+  tabs.querySelectorAll("button").forEach((b,k)=>{b.classList.toggle("on",k===i);b.setAttribute("aria-pressed",k===i)});
+  const x=T[i];
+  $("#cmpTable").innerHTML=`<table class="cmpt"><thead><tr>${x.h.map((h,j)=>`<th${j?"":' class="rh"'}>${h||"เปรียบเทียบ"}</th>`).join("")}</tr></thead><tbody>${x.r.map(r=>`<tr class="${r[0]===K?"key":""}"><th class="rh" scope="row">${r[0]===K?"★ "+K:r[0]}</th>${r.slice(1).map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
 }
 show(0);
 })();
