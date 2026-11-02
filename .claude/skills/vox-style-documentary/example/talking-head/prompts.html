@@ -1,0 +1,112 @@
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ใบงานภาพ · ผมตามหาชายที่หายไปกลางฟ้า</title><style>
+:root{--bg:#f4efe6;--card:#fffdf8;--ink:#231c16;--mute:#6f6255;--line:#e2d8c8;--red:#c8232f;--ok:#2f7d4a;--warn:#b7791f}
+@media (prefers-color-scheme:dark){:root{--bg:#17130f;--card:#211b16;--ink:#efe6d8;--mute:#a89a8a;--line:#3a3129}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "IBM Plex Sans Thai",Thonburi,"Leelawadee UI",sans-serif}
+main{max-width:860px;margin:0 auto;padding:24px 16px 80px}h1{font-size:28px;margin:0 0 4px;color:var(--red)}.sub{color:var(--mute);margin:0 0 20px}
+.steps{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px 14px 36px;margin-bottom:22px}.steps li{margin:4px 0}
+.prog{font-weight:600;margin:0 0 14px}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:0 0 14px}
+.card.ref{border-color:var(--red)}header{display:flex;gap:12px;align-items:flex-start}.num{flex:none;width:34px;height:34px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-weight:700}
+header>div{flex:1;min-width:0}.fname{display:flex;gap:8px;flex-wrap:wrap;align-items:center}code{font:600 15px ui-monospace,Menlo,monospace;background:var(--bg);padding:2px 6px;border-radius:6px}
+.meta{color:var(--mute);font-size:14px;margin-top:2px}.tag{font-size:12px;padding:1px 8px;border-radius:99px;border:1px solid var(--line);margin-right:4px}.tag.cut{border-color:var(--warn);color:var(--warn)}.tag.ref{border-color:var(--red);color:var(--red)}
+.st{flex:none;font-size:13px;font-weight:600;padding:2px 8px;border-radius:6px}.st.ok{color:#fff;background:var(--ok)}.st.warn{color:#fff;background:var(--warn)}.st.todo{color:var(--mute);border:1px solid var(--line)}
+.chk{flex:none;font-size:14px;color:var(--mute);white-space:nowrap}.how{margin:8px 0;padding-left:20px;font-size:14px;color:var(--mute)}
+pre{white-space:pre-wrap;word-break:break-word;background:var(--bg);border-radius:8px;padding:10px 12px;margin:8px 0;font:14px/1.5 ui-monospace,Menlo,monospace}
+button.copy{border:0;background:var(--ink);color:var(--bg);border-radius:8px;padding:8px 14px;font:inherit;font-size:14px;cursor:pointer}button.copy.small{padding:2px 10px;font-size:13px;background:transparent;color:var(--ink);border:1px solid var(--line)}
+button.copy.done{background:var(--ok);color:#fff}.card.isdone{opacity:.55}
+</style></head><body><main>
+<h1>ใบงานภาพ: ผมตามหาชายที่หายไปกลางฟ้า</h1><p class="sub">คลิปแนวตั้ง 9:16 · ภาพทั้งหมด 9 ภาพ + ภาพอ้างอิงตัวละคร 2 ภาพ</p>
+<ol class="steps">
+<li>เตรียมภาพอ้างอิงตัวละคร (การ์ดขอบแดง) ก่อน แล้วแนบภาพนั้นไปทุกครั้งที่เจนภาพที่มีคนคนนั้น</li>
+<li>กด "คัดลอก prompt" แล้ววางในเครื่องมือเจนภาพ (ChatGPT, Gemini, Midjourney, Leonardo ฯลฯ) ตั้งสัดส่วนภาพตามที่เขียนไว้</li>
+<li>ดาวน์โหลดภาพ แล้ว<b>ตั้งชื่อไฟล์ตามที่เขียนไว้</b> (นามสกุล .jpg .png .webp ใช้ได้หมด) วางไว้ในโฟลเดอร์ <code>images</code> ของงาน</li>
+<li>ภาพไดคัท: เจนบนพื้นหลังสีเทาเรียบก็พอ โปรแกรมจะลบพื้นหลังให้</li>
+<li>ครบแล้วบอก Claude ว่า "ใส่ภาพแล้ว" (หรือรัน <code>python3 tools/check_images.py งาน</code>) ระบบจะตรวจขนาด ไดคัท แล้วแจ้งภาพที่ต้องแก้</li>
+</ol>
+<p class="prog">มีภาพแล้ว 0 จาก 9</p>
+
+<article class="card ref"><header><span class="num">★</span><div><div class="fname"><code>speaker_ref.jpg</code><button class="copy small" data-copy="speaker_ref.jpg">คัดลอกชื่อไฟล์</button></div>
+  <div class="meta"><span class="tag ref">หน้าผู้พูด · มีให้แล้ว</span> ดึงจากคลิปนั่งพูดให้อัตโนมัติ อยู่ในโฟลเดอร์ <code>images</code> แล้ว ใช้แนบตอนเจนภาพที่ผู้พูดสวมบทเป็นตัวละคร</div></div><label class="chk"><input type="checkbox"> เสร็จ</label></header>
+  </article>
+<article class="card ref"><header><span class="num">★</span><div><div class="fname"><code>cooper_ref.jpg</code><button class="copy small" data-copy="cooper_ref.jpg">คัดลอกชื่อไฟล์</button></div>
+  <div class="meta"><span class="tag ref">ภาพถ่ายบุคคลจริง · หาเอง</span> หาภาพถ่ายหน้าตรงที่ชัดของ <b>D.B. Cooper (ภาพสเก็ตช์ FBI ปี 1971)</b> (เช่น จาก Wikimedia Commons หรือภาพที่มีสิทธิ์ใช้) บันทึกเป็นชื่อนี้ในโฟลเดอร์ <code>images</code> แล้วแนบตอนเจนภาพที่มีคนนี้ (เครื่องมือบางตัวไม่ยอมเจนหน้าคนดัง ถ้าไม่ยอมให้ใช้ภาพถ่ายนั้นเป็นภาพติดบอร์ดแทน)</div></div><label class="chk"><input type="checkbox"> เสร็จ</label></header>
+  </article>
+<article class="card" data-k="sky.jpg">
+  <header><span class="num">1</span><div><div class="fname"><code>sky.jpg</code><button class="copy small" data-copy="sky.jpg">คัดลอกชื่อไฟล์</button></div>
+  <div class="meta"><span class="tag plate">ฉากหลัง</span> ช็อต 2 ท้องฟ้าเหนือเมฆ</div></div>
+  <span class="st todo">ยังไม่มี</span><label class="chk"><input type="checkbox"> เสร็จ</label></header>
+  <ul class="how"><li>สัดส่วนภาพ <b>9:16</b> · อย่างน้อย 1152x2048</li>
+  </ul>
+  <pre>Cinematic documentary photograph, 1971, warm muted sepia palette, soft motivated light, shallow depth of field, realistic, high detail. A sea of clouds at sunset seen from above, golden haze, empty sky. Vertical 9:16 portrait composition, leave calm empty space in the upper third for title text. No text, no letters, no watermark, no border, no film grain.</pre><button class="copy" data-copy="Cinematic documentary photograph, 1971, warm muted sepia palette, soft motivated light, shallow depth of field, realistic, high detail. A sea of clouds at sunset seen from above, golden haze, empty sky. Vertical 9:16 portrait composition, leave calm empty space in the upper third for title text. No text, no letters, no watermark, no border, no film grain.">คัดลอก prompt</button>
+</article>
+<article class="card" data-k="plane.png">
+  <header><span class="num">2</span><div><div class="fname"><code>plane.png</code><button class="copy small" data-copy="plane.png">คัดลอกชื่อไฟล์</button></div>
+  <div class="meta"><span class="tag cut">ตัวละคร/วัตถุ ไดคัท</span> ช็อต 2 เครื่องบิน 727 (ไดคัท)</div></div>
+  <span class="st todo">ยังไม่มี</span><label class="chk"><input type="checkbox"> เสร็จ</label></header>
+  <ul class="how"><li>สัดส่วนภาพ <b>2:3 หรือ 9:16</b> · สูงอย่างน้อย 1500 px</li>
+  <li>ได้ภาพที่พื้นหลังเรียบแล้ว ไม่ต้องลบพื้นหลังเอง โปรแกรมตรวจภาพจะไดคัทให้บน Mac (หรือใช้ remove.bg / Canva)</li></ul>
+  <pre>Cinematic documentary photograph, 1971, warm muted sepia palette, soft motivated light, shallow depth of field, realistic, high detail. A 1971 Boeing 727 airliner in flight, side three-quarter view. The whole subject fully in frame, nothing cropped, centered, isolated on a plain flat light-grey studio background, soft even light, no shadow on the background. No text, no watermark.</pre><button class="copy" data-copy="Cinematic documentary photograph, 1971, warm muted sepia palette, soft motivated light, shallow depth of field, realistic, high detail. A 1971 Boeing 727 airliner in flight, side three-quarter view. The whole subject fully in frame, nothing cropped, centered, isolated on a plain flat light-grey studio background, soft even light, no shadow on the background. No text, no watermark.">คัดลอก prompt</button>
+</article>
+<article class="card" data-k="airport.jpg">
+  <header><span class="num">3</span><div><div class="fname"><code>airport.jpg</code><button class="copy small" data-copy="airport.jpg">คัดลอกชื่อไฟล์</button></div>
+  <div class="meta"><span class="tag plate">ฉากหลัง</span> ช็อต 3 ลานบินกลางคืน</div></div>
+  <span class="st todo">ยังไม่มี</span><label class="chk"><input type="checkbox"> เสร็จ</label></header>
+  <ul class="how"><li>สัดส่วนภาพ <b>9:16</b> · อย่างน้อย 1152x2048</li>
+  </ul>
+  <pre>Cinematic documentary photograph, 1971, warm muted sepia palette, soft motivated light, shallow depth of field, realistic, high detail. Rainy airport apron at night in 1971, wet tarmac reflections, boarding stairs to a Boeing 727, warm sodium lights. Vertical 9:16 portrait composition, leave calm empty space in the upper third for title text. No text, no letters, no watermark, no border, no film grain.</pre><button class="copy" data-copy="Cinematic documentary photograph, 1971, warm muted sepia palette, soft motivated light, shallow depth of field, realistic, high detail. Rainy airport apron at night in 1971, wet tarmac reflections, boarding stairs to a Boeing 727, warm sodium lights. Vertical 9:16 portrait composition, leave calm empty space in the upper third for title text. No text, no letters, no watermark, no border, no film grain.">คัดลอก prompt</button>
+</article>
+<article class="card" data-k="cooper.png">
+  <header><span class="num">4</span><div><div class="fname"><code>cooper.png</code><button class="copy small" data-copy="cooper.png">คัดลอกชื่อไฟล์</button></div>
+  <div class="meta"><span class="tag cut">ตัวละคร/วัตถุ ไดคัท</span> ช็อต 3 คูเปอร์ยืนเต็มตัว (ไดคัท)</div></div>
+  <span class="st todo">ยังไม่มี</span><label class="chk"><input type="checkbox"> เสร็จ</label></header>
+  <ul class="how"><li>สัดส่วนภาพ <b>2:3 หรือ 9:16</b> · สูงอย่างน้อย 1500 px</li><li>แนบภาพอ้างอิง <code>cooper_ref.jpg</code> ไปด้วยทุกครั้ง (ให้หน้าตาตัวละครตรงกัน)</li>
+  <li>ได้ภาพที่พื้นหลังเรียบแล้ว ไม่ต้องลบพื้นหลังเอง โปรแกรมตรวจภาพจะไดคัทให้บน Mac (หรือใช้ remove.bg / Canva)</li></ul>
+  <pre>Cinematic documentary photograph, 1971, warm muted sepia palette, soft motivated light, shallow depth of field, realistic, high detail. Full body portrait of the man standing, raincoat over one arm, holding a briefcase. The person is the man from the attached FBI sketch, dark suit, thin black tie, dark sunglasses. Keep the exact face and identity of the person in the attached reference photo. The whole subject fully in frame, nothing cropped, centered, isolated on a plain flat light-grey studio background, soft even light, no shadow on the background. No text, no watermark.</pre><button class="copy" data-copy="Cinematic documentary photograph, 1971, warm muted sepia palette, soft motivated light, shallow depth of field, realistic, high detail. Full body portrait of the man standing, raincoat over one arm, holding a briefcase. The person is the man from the attached FBI sketch, dark suit, thin black tie, dark sunglasses. Keep the exact face and identity of the person in the attached reference photo. The whole subject fully in frame, nothing cropped, centered, isolated on a plain flat light-grey studio background, soft even light, no shadow on the background. No text, no watermark.">คัดลอก prompt</button>
+</article>
+<article class="card" data-k="sketch.jpg">
+  <header><span class="num">5</span><div><div class="fname"><code>sketch.jpg</code><button class="copy small" data-copy="sketch.jpg">คัดลอกชื่อไฟล์</button></div>
+  <div class="meta"><span class="tag plate">ฉากหลัง</span> ช็อต 4 ภาพสเก็ตช์บนบอร์ด</div></div>
+  <span class="st todo">ยังไม่มี</span><label class="chk"><input type="checkbox"> เสร็จ</label></header>
+  <ul class="how"><li>สัดส่วนภาพ <b>4:5</b> · อย่างน้อย 1024x1280</li><li>แนบภาพอ้างอิง <code>cooper_ref.jpg</code> ไปด้วยทุกครั้ง (ให้หน้าตาตัวละครตรงกัน)</li>
+  </ul>
+  <pre>Cinematic documentary photograph, 1971, warm muted sepia palette, soft motivated light, shallow depth of field, realistic, high detail. Police composite pencil sketch of the man, 1971 FBI wanted poster style, black and white drawing on paper. The person is the man from the attached FBI sketch, dark suit, thin black tie, dark sunglasses. Keep the exact face and identity of the person in the attached reference photo. 4:5 framing, subject centered. No text, no letters, no watermark, no border, no film grain.</pre><button class="copy" data-copy="Cinematic documentary photograph, 1971, warm muted sepia palette, soft motivated light, shallow depth of field, realistic, high detail. Police composite pencil sketch of the man, 1971 FBI wanted poster style, black and white drawing on paper. The person is the man from the attached FBI sketch, dark suit, thin black tie, dark sunglasses. Keep the exact face and identity of the person in the attached reference photo. 4:5 framing, subject centered. No text, no letters, no watermark, no border, no film grain.">คัดลอก prompt</button>
+</article>
+<article class="card" data-k="cabin.jpg">
+  <header><span class="num">6</span><div><div class="fname"><code>cabin.jpg</code><button class="copy small" data-copy="cabin.jpg">คัดลอกชื่อไฟล์</button></div>
+  <div class="meta"><span class="tag plate">ฉากหลัง</span> ช็อต 5 ห้องโดยสารยุค 70</div></div>
+  <span class="st todo">ยังไม่มี</span><label class="chk"><input type="checkbox"> เสร็จ</label></header>
+  <ul class="how"><li>สัดส่วนภาพ <b>9:16</b> · อย่างน้อย 1152x2048</li>
+  </ul>
+  <pre>Cinematic documentary photograph, 1971, warm muted sepia palette, soft motivated light, shallow depth of field, realistic, high detail. Dim 1970s airliner cabin interior at night, rows of seats, small window lights, light smoke haze. Vertical 9:16 portrait composition, leave calm empty space in the upper third for title text. No text, no letters, no watermark, no border, no film grain.</pre><button class="copy" data-copy="Cinematic documentary photograph, 1971, warm muted sepia palette, soft motivated light, shallow depth of field, realistic, high detail. Dim 1970s airliner cabin interior at night, rows of seats, small window lights, light smoke haze. Vertical 9:16 portrait composition, leave calm empty space in the upper third for title text. No text, no letters, no watermark, no border, no film grain.">คัดลอก prompt</button>
+</article>
+<article class="card" data-k="money.png">
+  <header><span class="num">7</span><div><div class="fname"><code>money.png</code><button class="copy small" data-copy="money.png">คัดลอกชื่อไฟล์</button></div>
+  <div class="meta"><span class="tag cut">ตัวละคร/วัตถุ ไดคัท</span> ช็อต 5 ถุงเงิน (ไดคัท)</div></div>
+  <span class="st todo">ยังไม่มี</span><label class="chk"><input type="checkbox"> เสร็จ</label></header>
+  <ul class="how"><li>สัดส่วนภาพ <b>2:3 หรือ 9:16</b> · สูงอย่างน้อย 1500 px</li>
+  <li>ได้ภาพที่พื้นหลังเรียบแล้ว ไม่ต้องลบพื้นหลังเอง โปรแกรมตรวจภาพจะไดคัทให้บน Mac (หรือใช้ remove.bg / Canva)</li></ul>
+  <pre>Cinematic documentary photograph, 1971, warm muted sepia palette, soft motivated light, shallow depth of field, realistic, high detail. A canvas bank bag overflowing with stacks of 1971 twenty dollar bills. The whole subject fully in frame, nothing cropped, centered, isolated on a plain flat light-grey studio background, soft even light, no shadow on the background. No text, no watermark.</pre><button class="copy" data-copy="Cinematic documentary photograph, 1971, warm muted sepia palette, soft motivated light, shallow depth of field, realistic, high detail. A canvas bank bag overflowing with stacks of 1971 twenty dollar bills. The whole subject fully in frame, nothing cropped, centered, isolated on a plain flat light-grey studio background, soft even light, no shadow on the background. No text, no watermark.">คัดลอก prompt</button>
+</article>
+<article class="card" data-k="forest.jpg">
+  <header><span class="num">8</span><div><div class="fname"><code>forest.jpg</code><button class="copy small" data-copy="forest.jpg">คัดลอกชื่อไฟล์</button></div>
+  <div class="meta"><span class="tag plate">ฉากหลัง</span> ช็อต 7 ป่าสนริมแม่น้ำ</div></div>
+  <span class="st todo">ยังไม่มี</span><label class="chk"><input type="checkbox"> เสร็จ</label></header>
+  <ul class="how"><li>สัดส่วนภาพ <b>9:16</b> · อย่างน้อย 1152x2048</li>
+  </ul>
+  <pre>Cinematic documentary photograph, 1971, warm muted sepia palette, soft motivated light, shallow depth of field, realistic, high detail. Misty pine forest on a river bank in Washington state, overcast morning, wet ferns. Vertical 9:16 portrait composition, leave calm empty space in the upper third for title text. No text, no letters, no watermark, no border, no film grain.</pre><button class="copy" data-copy="Cinematic documentary photograph, 1971, warm muted sepia palette, soft motivated light, shallow depth of field, realistic, high detail. Misty pine forest on a river bank in Washington state, overcast morning, wet ferns. Vertical 9:16 portrait composition, leave calm empty space in the upper third for title text. No text, no letters, no watermark, no border, no film grain.">คัดลอก prompt</button>
+</article>
+<article class="card" data-k="meWalk.png">
+  <header><span class="num">9</span><div><div class="fname"><code>meWalk.png</code><button class="copy small" data-copy="meWalk.png">คัดลอกชื่อไฟล์</button></div>
+  <div class="meta"><span class="tag cut">ตัวละคร/วัตถุ ไดคัท</span> ช็อต 7 ผู้พูดในชุดนักสำรวจ (ไดคัท)</div></div>
+  <span class="st todo">ยังไม่มี</span><label class="chk"><input type="checkbox"> เสร็จ</label></header>
+  <ul class="how"><li>สัดส่วนภาพ <b>2:3 หรือ 9:16</b> · สูงอย่างน้อย 1500 px</li><li>แนบภาพอ้างอิง <code>speaker_ref.jpg</code> ไปด้วยทุกครั้ง (ให้หน้าตาตัวละครตรงกัน)</li>
+  <li>ได้ภาพที่พื้นหลังเรียบแล้ว ไม่ต้องลบพื้นหลังเอง โปรแกรมตรวจภาพจะไดคัทให้บน Mac (หรือใช้ remove.bg / Canva)</li></ul>
+  <pre>Cinematic documentary photograph, 1971, warm muted sepia palette, soft motivated light, shallow depth of field, realistic, high detail. Full body portrait of the narrator as a 1970s investigator, holding a flashlight and an old map, looking to the side. The person is the narrator from the attached photo, wearing a 1970s field jacket. Keep the exact face and identity of the person in the attached reference photo. The whole subject fully in frame, nothing cropped, centered, isolated on a plain flat light-grey studio background, soft even light, no shadow on the background. No text, no watermark.</pre><button class="copy" data-copy="Cinematic documentary photograph, 1971, warm muted sepia palette, soft motivated light, shallow depth of field, realistic, high detail. Full body portrait of the narrator as a 1970s investigator, holding a flashlight and an old map, looking to the side. The person is the narrator from the attached photo, wearing a 1970s field jacket. Keep the exact face and identity of the person in the attached reference photo. The whole subject fully in frame, nothing cropped, centered, isolated on a plain flat light-grey studio background, soft even light, no shadow on the background. No text, no watermark.">คัดลอก prompt</button>
+</article>
+</main><script>
+document.querySelectorAll('button.copy').forEach(b=>b.onclick=async()=>{try{await navigator.clipboard.writeText(b.dataset.copy)}catch(e){const t=document.createElement('textarea');t.value=b.dataset.copy;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove()}
+const o=b.textContent;b.textContent='คัดลอกแล้ว';b.classList.add('done');setTimeout(()=>{b.textContent=o;b.classList.remove('done')},1400)});
+const K='ws:'+document.title;let S={};try{S=JSON.parse(localStorage.getItem(K)||'{}')}catch(e){}
+document.querySelectorAll('.card').forEach((c,i)=>{const x=c.querySelector('input');const k=c.dataset.k||('r'+i);x.checked=!!S[k];c.classList.toggle('isdone',x.checked);
+x.onchange=()=>{S[k]=x.checked;c.classList.toggle('isdone',x.checked);try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}});
+</script></body></html>
