@@ -600,7 +600,7 @@ footer{padding:50px 0 70px;color:var(--muted);font-size:14px}
 
   <div class="card">
     <h3>อ่านสเปคทีละบรรทัด: ครบทุกชนิดย่อย</h3>
-    <p class="small" style="margin:4px 0 10px">มีสเปคทุกชนิดย่อยในแต่ละหมวด (ป้าย "สเปคจริง" คือ 3 ตัวที่มาจากหน้าร้าน ที่เหลือเป็นสเปคตัวอย่างจากค่าทั่วไป) กดแต่ละบรรทัดเพื่อดูว่าแปลว่าอะไร บรรทัดที่มีป้าย <span style="color:var(--rec);font-family:var(--mono)">● คำใบ้</span> คือบรรทัดที่บอกได้ทันทีว่าเป็นอุปกรณ์อะไร</p>
+    <p class="small" style="margin:4px 0 10px">มีสเปคทุกชนิดย่อยในแต่ละหมวด (ป้าย "รุ่นจริง" คือสเปคของยี่ห้อและรุ่นที่มีขายจริง อยู่ลำดับแรกของแต่ละหมวด ส่วนที่ไม่มีป้ายเป็นสเปคตัวอย่างจากค่าทั่วไป) กดแต่ละบรรทัดเพื่อดูว่าแปลว่าอะไร บรรทัดที่มีป้าย <span style="color:var(--rec);font-family:var(--mono)">● คำใบ้</span> คือบรรทัดที่บอกได้ทันทีว่าเป็นอุปกรณ์อะไร</p>
     <p class="small" style="margin-bottom:6px"><b>1. เลือกหมวด</b></p><div class="chips" id="srTabs" role="group" aria-label="เลือกหมวดสเปค"></div>
     <p class="small" style="margin:10px 0 6px"><b>2. เลือกชนิดย่อย</b></p><div class="chips" id="srItems" role="group" aria-label="เลือกชนิดย่อย"></div>
     <div class="sr">
@@ -1234,9 +1234,9 @@ const sheets=[
   use:"ฟังเพลง ดูหนัง คุยโทรศัพท์ เดินทาง (ไม่เหมาะงานตัดต่อหรือมิกซ์เสียงจริงจัง เพราะ Bluetooth มีความหน่วง และเสียงถูกปรุงแต่งมาให้ฟังสนุก)",
   ans:"อุปกรณ์นี้คือหูฟังไร้สายแบบครอบหูที่มีระบบตัดเสียงรบกวน เพราะสเปคมีรุ่น NC (Noise Cancelling) เชื่อมต่อ Bluetooth 5.3 ที่รองรับ A2DP, AVRCP และ HFP มีแบตเตอรี่ใช้ได้ 70 ชั่วโมง และมีขนาดประมาณ 20 ซม. พร้อมปุ่มบนฝาครอบหู แสดงว่าเป็นแบบครอบหู อิมพีแดนซ์ 32 Ω ใช้กับมือถือได้ทันที และมีไมค์ในตัว จึงเหมาะกับการฟังเพลงและคุยโทรศัพท์ในชีวิตประจำวัน"}
 ];
-sheets[0].cat="ไมโครโฟน";sheets[0].name="คอนเดนเซอร์ Hybrid USB/XLR";sheets[0].real=1;
-sheets[1].cat="ไมโครโฟน";sheets[1].name="ไดนามิกแบบถือ (KSM8)";sheets[1].real=1;
-sheets[2].cat="หูฟัง";sheets[2].name="ครอบหูไร้สาย ANC (JBL)";sheets[2].real=1;
+sheets[0].cat="ไมโครโฟน";sheets[0].name="RØDE NT1 5th Gen (คอนเดนเซอร์ Hybrid)";sheets[0].real=1;
+sheets[1].cat="ไมโครโฟน";sheets[1].name="Shure KSM8 (ไดนามิกแบบถือ)";sheets[1].real=1;
+sheets[2].cat="หูฟัง";sheets[2].name="JBL Tune 770NC (ครอบหูไร้สาย ANC)";sheets[2].real=1;
 const R=(a,v,c,e)=>[a,v,c,e];
 const more=[
 /* ---------- MICS ---------- */
@@ -1433,6 +1433,129 @@ const more=[
  R("Power","60 W",0,"กำลังไฟ"),R("Mount","Bowens",0,"ใส่ softbox ได้"),R("Control","App / DMX",0,"ควบคุมระยะไกล")],
  feat:["ปรับสีแสงได้","สีแม่น"],use:"ถ่ายวิดีโอ สัมภาษณ์ สตูดิโอ",why:"แสดงว่าเป็นไฟสำหรับงานถ่ายทำ"}
 ];
+/* ---------- REAL BRAND SHEETS (checked Nov 2026) ---------- */
+const realMore=[
+{cat:"ไมโครโฟน",real:1,name:"Shure SM58 (ไดนามิกแบบถือ)",conc:"<b>Shure SM58: ไมโครโฟนไดนามิกแบบถือ สำหรับร้องเพลง</b>",rows:[
+ R("Type","Dynamic (moving coil)",1,"ไมค์ไดนามิก ไม่ต้องใช้ไฟ"),R("Polar Pattern","Cardioid",0,"รับด้านหน้า"),R("Frequency Response","50 – 15,000 Hz",0,"เน้นช่วงเสียงร้อง"),
+ R("Sensitivity","-54.5 dBV/Pa (1.85 mV)",1,"ไวต่ำ = ไดนามิก (คู่มือรุ่นใหม่ระบุ -56 dBV/Pa)"),R("Impedance","150 Ω (actual 300 Ω)",0,"อิมพีแดนซ์ต่ำ มาตรฐาน"),R("Weight","298 g",1,"น้ำหนักพอดีมือ = ไมค์ถือ"),R("Connector","XLR 3-pin",0,"ต่อมิกเซอร์")],
+ feat:["ทนทานมาก เป็นไมค์มาตรฐานบนเวทีทั่วโลก","ไม่ต้องใช้ไฟ"],use:"ร้องเพลงบนเวที พิธีกร",why:"แสดงว่าเป็นไมค์ไดนามิกแบบถือที่ไวต่ำ เก็บเสียงรบกวนน้อย"},
+{cat:"ไมโครโฟน",real:1,name:"Shure SM7B (ไดนามิกบรอดแคสต์)",conc:"<b>Shure SM7B: ไมโครโฟนไดนามิกสำหรับจัดรายการ/พอดแคสต์</b>",rows:[
+ R("Type","Dynamic",1,"ไมค์ไดนามิก"),R("Polar Pattern","Cardioid",0,"รับด้านหน้า"),R("Frequency Response","50 – 20,000 Hz",0,"ช่วงกว้างกว่า SM58"),
+ R("Sensitivity","-59 dBV/Pa (1.12 mV)",1,"ไวต่ำมาก จึงมักต้องใช้ปรีแอมป์ที่ขยายแรงหรืออุปกรณ์เสริมเพิ่มสัญญาณ"),R("Impedance","150 Ω",0,"มาตรฐาน"),R("Weight","~765 g",1,"หนัก ใช้ติดขาหรือแขนไมค์")],
+ feat:["เสียงพูดอุ่น เก็บเสียงห้องน้อย"],use:"พอดแคสต์ จัดรายการ สตรีม",why:"แสดงว่าเป็นไมค์ไดนามิกขนาดใหญ่ที่ไวต่ำมาก ใช้พูดใกล้ไมค์"},
+{cat:"ไมโครโฟน",real:1,name:"RØDE NT5 (คอนเดนเซอร์ไดอะแฟรมเล็ก)",conc:"<b>RØDE NT5: ไมโครโฟนคอนเดนเซอร์ไดอะแฟรมเล็ก (Pencil)</b>",rows:[
+ R("Capsule","½″ gold-sputtered",1,"แคปซูลครึ่งนิ้ว = ไดอะแฟรมเล็ก"),R("Polar Pattern","Cardioid",0,"รับด้านหน้า"),R("Frequency Response","20 Hz – 20 kHz",0,"ครบช่วง"),
+ R("Sensitivity","-38 dB re 1V/Pa (12 mV)",0,"ไวพอสมควร"),R("Equivalent Noise","16 dBA",0,"เสียงซ่าต่ำ"),R("Max SPL","143 dB SPL",0,"รับเสียงดังได้"),
+ R("Power","Phantom P24 / P48",1,"ต้องใช้ไฟเลี้ยง = คอนเดนเซอร์"),R("Weight","~101–110 g",1,"เบามาก ทรงแท่งดินสอ")],
+ feat:["ตัวเล็ก วางใกล้เครื่องดนตรีได้","มักขายเป็นคู่"],use:"อัดกีตาร์โปร่ง ฉาบกลอง คณะนักร้อง",why:"แสดงว่าเป็นไมค์คอนเดนเซอร์แคปซูลเล็กทรงแท่ง"},
+{cat:"ไมโครโฟน",real:1,name:"Royer R-121 (ริบบอน)",conc:"<b>Royer R-121: ไมโครโฟนริบบอน</b>",rows:[
+ R("Type","Ribbon · 2.5-micron aluminum",1,"แผ่นริบบอนอะลูมิเนียมบางมาก"),R("Polar Pattern","Figure-8",1,"รับหน้าและหลัง"),R("Frequency Response","30 – 15,000 Hz",0,"เสียงแหลมนุ่ม"),
+ R("Sensitivity","~3.16 mV/Pa",0,"ไวต่ำ"),R("Impedance","300 Ω",0,"มาตรฐาน"),R("Max SPL","135 dB",0,"รับแอมป์กีตาร์ได้"),R("Power","ไม่ต้องใช้ไฟ",0,"ริบบอนแบบ Passive"),R("Weight","~244 g",0,"น้ำหนัก")],
+ feat:["เสียงนุ่ม อุ่น"],use:"แอมป์กีตาร์ เครื่องเป่า",why:"แสดงว่าเป็นไมค์ริบบอนที่รับเสียงสองทิศ"},
+{cat:"ไมโครโฟน",real:1,name:"Shure BLX24/SM58 (ไร้สายแบบถือ)",conc:"<b>Shure BLX24/SM58: ชุดไมโครโฟนไร้สายแบบถือ</b>",rows:[
+ R("System","UHF wireless (ตัวส่ง BLX2 + ตัวรับ BLX4)",1,"ส่งไร้สายด้วยคลื่น UHF"),R("Frequency Band","เช่น H10: 542–572 MHz (มีหลายย่านตามประเทศ)",0,"ย่านความถี่วิทยุ"),
+ R("Capsule","SM58 (Dynamic Cardioid)",0,"หัวไมค์แบบเดียวกับ SM58"),R("Working Range","~91 m (300 ft) line of sight",1,"ระยะส่งสัญญาณ"),
+ R("Battery","2 × AA · สูงสุด ~14 h",1,"ใช้ถ่าน = ไร้สาย"),R("Compatible Systems","สูงสุด 12 ชุดต่อย่าน",0,"ใช้หลายตัวพร้อมกันได้")],
+ feat:["ไม่มีสาย","ใช้หลายชุดพร้อมกัน"],use:"เวที งานอีเวนต์",why:"แสดงว่าเป็นชุดไมค์ไร้สายแบบถือ"},
+{cat:"ไมโครโฟน",real:1,name:"DJI Mic 2 (ไร้สายหนีบปก)",conc:"<b>DJI Mic 2: ไมโครโฟนไร้สายแบบหนีบ (ตัวส่งมีไมค์ในตัว)</b>",rows:[
+ R("Polar Pattern","Omnidirectional",1,"รับรอบทิศ"),R("Transmitter Weight","~28 g",1,"เล็ก หนีบเสื้อได้"),R("Max Range","250 m (FCC) / 160 m (CE)",1,"ส่งไร้สาย"),
+ R("Internal Recording","32-bit float · 8 GB (~14 h)",0,"อัดสำรองในตัว"),R("Battery","~6 h (TX/RX) · 18 h รวมกล่องชาร์จ",0,"แบตในตัว"),R("Frequency Response","50 Hz – 20 kHz",0,"ครอบคลุมเสียงพูด")],
+ feat:["เล็ก หนีบเสื้อ","ต่อกล้องหรือมือถือ","อัดสำรอง 32-bit float"],use:"vlog สัมภาษณ์ ถ่ายวิดีโอ",why:"แสดงว่าเป็นไมค์ไร้สายตัวเล็กแบบหนีบที่รับรอบทิศ"},
+{cat:"ไมโครโฟน",real:1,name:"Sennheiser MKE 600 (ช็อตกัน)",conc:"<b>Sennheiser MKE 600: ไมโครโฟนช็อตกัน</b>",rows:[
+ R("Pick-up Pattern","Super-cardioid / Lobar",1,"รับแคบมากด้านหน้า"),R("Frequency Response","40 – 20,000 Hz",0,"ช่วงกว้าง"),
+ R("Sensitivity","21 mV/Pa (P48) · 19 mV/Pa (battery)",0,"ไวสูง"),R("Equivalent Noise","15 dB(A)",0,"เสียงซ่าต่ำ"),
+ R("Power","P48 หรือถ่าน AA",1,"ใช้ไฟได้ 2 แบบ เหมาะติดกล้อง"),R("Weight","128 g",0,"เบา")],
+ feat:["เล็งเสียงแม่น","ติดกล้องหรือบูม"],use:"ถ่ายวิดีโอ ภาพยนตร์",why:"แสดงว่าเป็นไมค์ที่รับเสียงแคบเฉพาะด้านหน้า"},
+{cat:"ไมโครโฟน",real:1,name:"Blue Yeti (ไมค์ USB)",conc:"<b>Blue Yeti: ไมโครโฟน USB</b>",rows:[
+ R("Capsules","3 × 14 mm condenser",0,"คอนเดนเซอร์ 3 แคปซูล"),R("Polar Patterns","Cardioid · Bidirectional · Omni · Stereo",0,"เลือกทิศรับเสียงได้ 4 แบบ"),
+ R("Connection","USB",1,"เสียบคอมได้ตรง"),R("Bit Depth / Sample Rate","16-bit / 48 kHz",1,"มีตัวแปลงดิจิทัลในตัว"),R("Max SPL","120 dB",0,"รับเสียงดังพอสมควร"),R("Weight","ไมค์ ~0.55 kg + ขาตั้ง ~1 kg",0,"มาพร้อมขาตั้งโต๊ะ")],
+ feat:["เสียบคอมใช้ได้เลย","เปลี่ยนทิศรับเสียงได้"],use:"พอดแคสต์ เรียนออนไลน์ สตรีม",why:"แสดงว่าเป็นไมค์ที่ต่อคอมผ่าน USB"},
+{cat:"หูฟัง",real:1,name:"Sony MDR-7506 (ครอบหูฝาปิด สตูดิโอ)",conc:"<b>Sony MDR-7506: หูฟังมอนิเตอร์สตูดิโอ ครอบหูฝาปิด</b>",rows:[
+ R("Type","Closed-back, dynamic",1,"ฝาปิด"),R("Driver","40 mm",1,"ไดรเวอร์ใหญ่ = ครอบหู"),R("Frequency Response","10 – 20,000 Hz",0,"ครบช่วง"),
+ R("Impedance","63 Ω (ร้านค้าส่วนใหญ่)",0,"ขับง่ายพอสมควร"),R("Sensitivity","106 dB/mW",0,"ดังง่าย"),R("Weight","~230–260 g",0,"ครอบหูทั่วไป"),R("Cord","สายขด ~3 m · ปลั๊ก 3.5 + 6.3 mm",1,"ลักษณะหูฟังสตูดิโอ")],
+ feat:["กันเสียงรั่ว","เสียงชัดสำหรับตรวจเสียง"],use:"มอนิเตอร์เสียงตอนอัด ถ่ายทำ",why:"แสดงว่าเป็นหูฟังสตูดิโอครอบหูฝาปิด"},
+{cat:"หูฟัง",real:1,name:"Beyerdynamic DT 990 PRO 250 Ω (ครอบหูฝาเปิด)",conc:"<b>Beyerdynamic DT 990 PRO: หูฟังครอบหูฝาเปิด (Open-back)</b>",rows:[
+ R("Type","Open-back · Circumaural",1,"ฝาเปิด ครอบหู"),R("Driver","Dynamic 45 mm",0,"ไดรเวอร์ใหญ่"),R("Frequency Response","5 – 35,000 Hz",0,"ช่วงกว้าง"),
+ R("Impedance","250 Ω",1,"สูง ต้องใช้แอมป์หรืออินเตอร์เฟซ"),R("Sensitivity","96 dB/mW",0,"ต้องการกำลังขับ"),R("Cable","Coiled 3 m",0,"สายขด"),R("Weight","~250 g (ไม่รวมสาย)",0,"น้ำหนัก")],
+ feat:["เสียงโปร่ง กว้าง","ต้องใช้แอมป์"],use:"มิกซ์เสียงในห้องเงียบ",why:"แสดงว่าเป็นหูฟังฝาเปิดอิมพีแดนซ์สูง"},
+{cat:"หูฟัง",real:1,name:"Shure SE215 (หูฟังจุก IEM)",conc:"<b>Shure SE215: หูฟังจุก In-Ear Monitor แบบมีสาย</b>",rows:[
+ R("Type","Sound-isolating in-ear · single dynamic driver",1,"หูฟังจุกที่กันเสียง"),R("Sensitivity","107 dB SPL/mW",0,"ดังง่าย"),
+ R("Impedance","17–20 Ω (แต่ละแหล่งต่างกัน)",0,"ขับง่าย"),R("Frequency Range","22 Hz – 17.5 kHz",0,"ช่วงเสียง"),R("Noise Isolation","สูงสุด ~37 dB",1,"จุกอุดหูกันเสียงได้มาก")],
+ feat:["กันเสียงภายนอกได้มาก","สายถอดได้"],use:"นักร้องบนเวที ฟังเพลง",why:"แสดงว่าเป็นหูฟังจุกที่อุดหูและกันเสียง"},
+{cat:"หูฟัง",real:1,name:"Apple AirPods Pro 2 (TWS)",conc:"<b>AirPods Pro 2: หูฟังจุกไร้สายแท้ (TWS) มี ANC</b>",rows:[
+ R("Chip","Apple H2",0,"ชิปควบคุมในหูฟัง"),R("Features","Active Noise Cancellation · Transparency · Adaptive Audio",0,"ตัดเสียงและโหมดฟังรอบข้าง"),
+ R("Battery","สูงสุด 6 h (หูฟัง) · ~30 h รวมกล่อง",1,"มีกล่องชาร์จ = TWS"),R("Water/Dust","IP54 (หูฟังและกล่อง รุ่น USB-C)",0,"กันเหงื่อและฝุ่น"),R("Bluetooth","5.3",0,"ไร้สาย")],
+ feat:["ไม่มีสาย","ตัดเสียงรบกวน"],use:"ชีวิตประจำวัน เดินทาง",why:"แสดงว่าเป็นหูฟังไร้สายแยกสองข้างมีกล่องชาร์จ"},
+{cat:"หูฟัง",real:1,name:"Sony WH-1000XM5 (ครอบหูไร้สาย ANC)",conc:"<b>Sony WH-1000XM5: หูฟังไร้สายครอบหู มี ANC</b>",rows:[
+ R("Driver","30 mm",0,"ไดรเวอร์"),R("Bluetooth","5.2 · SBC / AAC / LDAC",1,"ไร้สาย"),R("Frequency Response","4 Hz – 40 kHz (ใช้สาย) · ถึง 40 kHz ด้วย LDAC",0,"ช่วงกว้าง"),
+ R("Battery","30 h (NC ON) · 40 h (NC OFF)",1,"มีแบต + ตัดเสียงรบกวน"),R("Weight","~250 g",1,"น้ำหนักแบบครอบหู")],
+ feat:["ตัดเสียงรบกวนดีมาก","แบตอึด"],use:"เดินทาง ทำงาน",why:"แสดงว่าเป็นหูฟังไร้สายครอบหูที่ตัดเสียงรบกวน"},
+{cat:"หูฟัง",real:1,name:"Shokz OpenRun (Bone conduction)",conc:"<b>Shokz OpenRun: หูฟังนำเสียงผ่านกระดูก (Bone conduction)</b>",rows:[
+ R("Type","Bone conduction",1,"ส่งเสียงผ่านกระดูกโหนกแก้ม"),R("Bluetooth","5.1 · ~10 m",0,"ไร้สาย"),R("Water Resistance","IP67 (ไม่ใช่สำหรับว่ายน้ำ)",1,"กันเหงื่อและฝน"),
+ R("Battery","~8 h",0,"แบตในตัว"),R("Weight","26 g",0,"เบามาก"),R("Frequency Response","20 Hz – 20 kHz",0,"ช่วงเสียง")],
+ feat:["หูเปิดโล่ง","กันน้ำ เบา"],use:"วิ่ง ปั่นจักรยาน",why:"แสดงว่าเป็นหูฟังที่ส่งเสียงผ่านกระดูก ไม่อุดหู"},
+{cat:"หูฟัง",real:1,name:"Shokz OpenFit (Open-ear อากาศ)",conc:"<b>Shokz OpenFit: หูฟังเปิดหูแบบส่งเสียงทางอากาศ (TWS)</b>",rows:[
+ R("Type","Open-ear · Air conduction",1,"ไม่อุดหู ส่งเสียงทางอากาศ"),R("Driver","18 × 11 mm dynamic",0,"ไดรเวอร์รูปวงรี"),
+ R("Battery","~7 h · 28 h รวมกล่อง",0,"มีกล่องชาร์จ"),R("Water Resistance","IP54 (หูฟัง)",0,"กันเหงื่อ"),R("Weight","~8.3 g ต่อข้าง",0,"เบา")],
+ feat:["ได้ยินเสียงรอบข้าง","ใส่สบาย"],use:"ออกกำลังกาย ทำงาน",why:"แสดงว่าเป็นหูฟังเปิดหูที่ไม่อุดรูหู"},
+{cat:"หูฟัง",real:1,name:"Koss Porta Pro (แนบหู)",conc:"<b>Koss Porta Pro: หูฟังแนบหู (On-ear) แบบมีสาย</b>",rows:[
+ R("Type","On-ear",1,"วางบนใบหู"),R("Frequency Response","15 – 25,000 Hz",0,"ช่วงกว้าง"),R("Impedance","60 Ω",0,"ขับได้จากมือถือ"),
+ R("Sensitivity","101 dB SPL/mW",0,"ดังพอ"),R("Weight","~60–79 g",1,"เบามาก เล็กกว่าครอบหูเยอะ")],
+ feat:["เบา พับได้"],use:"ฟังทั่วไป พกพา",why:"แสดงว่าเป็นหูฟังแนบหูขนาดเล็ก"},
+{cat:"ลำโพง",real:1,name:"Yamaha HS5 (มอนิเตอร์ Active)",conc:"<b>Yamaha HS5: ลำโพงมอนิเตอร์สตูดิโอแบบ Active</b>",rows:[
+ R("Type","2-way bass-reflex, bi-amplified",1,"แอมป์ในตัวแยก 2 ชุด"),R("Drivers","5″ cone woofer + 1″ dome tweeter",1,"Woofer + Tweeter"),
+ R("Amplifier","LF 45 W + HF 25 W (รวม 70 W)",1,"Bi-amp"),R("Frequency Response","54 Hz – 30 kHz (-10 dB)",0,"ช่วงเสียง"),R("Inputs","XLR / TRS",0,"ต่อจากอินเตอร์เฟซ")],
+ feat:["เสียงตรงสำหรับมิกซ์"],use:"ห้องตัดต่อ ทำเพลง",why:"แสดงว่าเป็นลำโพงมอนิเตอร์ที่มีแอมป์ในตัว"},
+{cat:"ลำโพง",real:1,name:"JBL EON715 (PA Active)",conc:"<b>JBL EON715: ลำโพง PA แบบ Active 15 นิ้ว</b>",rows:[
+ R("Power","1300 W peak / 650 W RMS",1,"กำลังขับสูงมาก"),R("Drivers","15″ woofer + 2414H compression driver",1,"ดอกใหญ่ + ฮอร์น"),
+ R("Max SPL","128 dB peak (JBL)",1,"ดังมาก"),R("Frequency Range","55 Hz – 20 kHz (±3 dB)",0,"ช่วงเสียง"),R("Bluetooth","5.0 (สตรีมและควบคุม)",0,"ควบคุมผ่านแอป")],
+ feat:["ดังมาก สำหรับคนจำนวนมาก"],use:"งานอีเวนต์ เวที",why:"แสดงว่าเป็นลำโพงเวทีกำลังขับสูง"},
+{cat:"ลำโพง",real:1,name:"JBL Flip 6 (บลูทูธพกพา)",conc:"<b>JBL Flip 6: ลำโพงบลูทูธพกพา</b>",rows:[
+ R("Output","20 W (woofer) + 10 W (tweeter)",1,"หน่วยวัตต์ = ลำโพง"),R("Bluetooth","5.1",1,"ไร้สาย"),R("Battery","สูงสุด 12 h",1,"พกพา"),
+ R("Water/Dust","IP67",1,"กันน้ำกันฝุ่น"),R("Weight","0.55 kg",0,"เบา")],
+ feat:["พกพา กันน้ำ"],use:"เที่ยว ปาร์ตี้",why:"แสดงว่าเป็นลำโพงไร้สายมีแบตเตอรี่"},
+{cat:"ลำโพง",real:1,name:"Sonos Beam Gen 2 (ซาวด์บาร์)",conc:"<b>Sonos Beam (Gen 2): ซาวด์บาร์</b>",rows:[
+ R("Connection","HDMI eARC",1,"ต่อกับทีวี"),R("Audio","Dolby Atmos",1,"เสียงรอบทิศ"),R("Drivers / Amps","4 full-range + 1 tweeter · 5 Class-D amps",0,"ดอกและแอมป์ในตัว"),
+ R("Width","651 mm",1,"ยาว วางหน้าทีวี"),R("Weight","~2.8 kg",0,"น้ำหนัก")],
+ feat:["เพิ่มเสียงทีวี"],use:"ดูหนังที่บ้าน",why:"แสดงว่าเป็นซาวด์บาร์ต่อทีวี"},
+{cat:"ลำโพง",real:1,name:"KEF LS50 Meta (Bookshelf Passive)",conc:"<b>KEF LS50 Meta: ลำโพงวางชั้น แบบ Passive</b>",rows:[
+ R("Nominal Impedance","8 Ω (ต่ำสุด ~3.5 Ω)",1,"ลำโพง Passive ต่อจากแอมป์"),R("Sensitivity","85 dB (2.83 V/1 m)",0,"ค่อนข้างต่ำ ต้องใช้แอมป์ที่มีกำลัง"),
+ R("Frequency Range","79 Hz – 28 kHz (±3 dB)",0,"ช่วงเสียง"),R("Recommended Amplifier","40 – 100 W",1,"ต้องต่อแอมป์")],
+ feat:["เสียงคุณภาพสูง","ต้องใช้แอมป์แยก"],use:"ฟังเพลงในบ้าน",why:"แสดงว่าเป็นลำโพงแบบ Passive ที่ต้องต่อแอมป์"},
+{cat:"มิกเซอร์ / อินเตอร์เฟซ",real:1,name:"Yamaha MG10XU (Analog)",conc:"<b>Yamaha MG10XU: มิกเซอร์อนาล็อก 10 ช่อง พร้อม USB</b>",rows:[
+ R("Channels","10 inputs (4 mic/line)",1,"จำนวนช่อง"),R("Preamps","D-PRE · Phantom ช่อง 1–4",0,"ภาคขยายไมค์"),R("EQ","3-band + High-pass filter",1,"ปรับแต่งเสียง"),
+ R("Effects","SPX 24 programs",0,"เอฟเฟกต์ในตัว"),R("USB","2-in / 2-out audio",0,"อัดเข้าคอมได้")],
+ feat:["ใช้ง่าย มีเอฟเฟกต์"],use:"งานเล็ก ห้องประชุม",why:"แสดงว่าเป็นมิกเซอร์หลายช่อง"},
+{cat:"มิกเซอร์ / อินเตอร์เฟซ",real:1,name:"Behringer X32 (Digital)",conc:"<b>Behringer X32: มิกเซอร์ดิจิทัล</b>",rows:[
+ R("Inputs / Buses","40 input · 25 bus",0,"จำนวนช่อง"),R("Preamps","32 programmable MIDAS",0,"ปรีแอมป์"),R("Display","7″ color TFT",1,"ควบคุมผ่านจอ"),
+ R("Recall","Total recall (บันทึกค่า)",1,"ลักษณะดิจิทัลมิกเซอร์"),R("Networking","AES50",0,"ส่งเสียงดิจิทัลผ่านสาย LAN")],
+ feat:["บันทึกค่าได้","ช่องเยอะ"],use:"คอนเสิร์ต งานใหญ่",why:"แสดงว่าเป็นมิกเซอร์ดิจิทัล"},
+{cat:"มิกเซอร์ / อินเตอร์เฟซ",real:1,name:"RØDECaster Pro II (Podcast)",conc:"<b>RØDECaster Pro II: มิกเซอร์/สตูดิโอสำหรับพอดแคสต์</b>",rows:[
+ R("Inputs","4 Neutrik combo · Revolution Preamps",0,"รับไมค์ 4 ตัว"),R("Headphone Outputs","4",1,"หูฟังแยกให้ทุกคน"),R("Pads","SMART pads",1,"ปุ่มเสียงประกอบ"),
+ R("Connectivity","Dual USB-C · Bluetooth · Wi-Fi · Ethernet",0,"ต่อคอมและมือถือ"),R("Recording","microSD / USB storage / คอม",0,"อัดได้ในตัว"),R("Weight","1.96 kg",0,"น้ำหนัก")],
+ feat:["ครบสำหรับรายการหลายคน"],use:"พอดแคสต์ ไลฟ์สด",why:"แสดงว่าเป็นมิกเซอร์ที่ออกแบบสำหรับพอดแคสต์"},
+{cat:"มิกเซอร์ / อินเตอร์เฟซ",real:1,name:"Focusrite Scarlett 2i2 4th Gen (Interface)",conc:"<b>Focusrite Scarlett 2i2 (4th Gen): ออดิโออินเตอร์เฟซ 2 ช่อง</b>",rows:[
+ R("I/O","2 mic preamps · 2 instrument · 2 line",1,"ช่องน้อย"),R("Converters","24-bit / 192 kHz",1,"แปลงเสียงเข้าคอม"),R("Connection","USB-C (bus-powered)",1,"เสียบคอม ใช้ไฟจาก USB"),
+ R("Preamp Gain","69 dB",0,"ขยายสัญญาณได้มาก"),R("Features","Phantom · Air · Auto Gain · Clip Safe",0,"ฟีเจอร์ช่วยอัด")],
+ feat:["เล็ก ใช้ง่าย"],use:"อัดเสียงที่บ้าน ทำเพลง",why:"แสดงว่าเป็นอินเตอร์เฟซแปลงเสียงเข้าคอม"},
+{cat:"จอ / ภาพ",real:1,name:"Dell UltraSharp U2723QE (จองานกราฟิก)",conc:"<b>Dell UltraSharp U2723QE: จอ 4K สำหรับงานทำงาน/กราฟิก</b>",rows:[
+ R("Size","27″",0,"ขนาด"),R("Resolution","3840 × 2160 (4K)",1,"ละเอียดสูง"),R("Panel","IPS Black",1,"สีแม่น คอนทราสต์ดีขึ้น"),
+ R("Refresh Rate","60 Hz",0,"ไม่ได้เน้นเกม"),R("Brightness / Contrast","400 nits / 2000:1",0,"ความสว่าง"),R("Ports","USB-C 90 W · HDMI · DP",0,"ต่อโน้ตบุ๊ก")],
+ feat:["ละเอียด สีดี"],use:"ออกแบบ ตัดต่อ งานเอกสาร",why:"แสดงว่าเป็นจอความละเอียดสูง แผง IPS"},
+{cat:"จอ / ภาพ",real:1,name:"Atomos Ninja V (จอติดกล้อง)",conc:"<b>Atomos Ninja V: จอมอนิเตอร์/เครื่องบันทึกติดกล้อง</b>",rows:[
+ R("Display","5.2″ · 1920 × 1080 · touch",1,"จอเล็กติดกล้อง"),R("Brightness","1000 nits",1,"ดูกลางแดดได้"),R("Input","HDMI",1,"รับภาพจากกล้อง"),
+ R("Recording","สูงสุด 4K60 · ProRes / DNxHR / ProRes RAW",0,"บันทึกลง SSD"),R("Power","NP-F battery",0,"แบตกล้อง")],
+ feat:["ดูภาพชัด","บันทึกคุณภาพสูง"],use:"ถ่ายวิดีโอ",why:"แสดงว่าเป็นจอติดกล้อง"},
+{cat:"กล้อง / เลนส์ / ไฟ",real:1,name:"Sony α7 IV (มิเรอร์เลส)",conc:"<b>Sony α7 IV: กล้องมิเรอร์เลส Full Frame</b>",rows:[
+ R("Sensor","Full-frame ~33 MP",1,"เซนเซอร์ใหญ่"),R("ISO","100 – 51,200 (ขยาย 50 – 204,800)",1,"ความไวแสง"),R("Video","สูงสุด 4K 60p",1,"ถ่ายวิดีโอ"),
+ R("Card Slots","2 (CFexpress A / SD + SD)",0,"การ์ด 2 ช่อง"),R("Weight","~658 g",0,"น้ำหนักบอดี้")],
+ feat:["ภาพนิ่งและวิดีโอคุณภาพสูง"],use:"ถ่ายภาพ วิดีโอ",why:"แสดงว่าเป็นบอดี้กล้อง"},
+{cat:"กล้อง / เลนส์ / ไฟ",real:1,name:"amaran 100x S (ไฟ LED)",conc:"<b>amaran 100x S: ไฟ LED Bi-color สำหรับถ่ายวิดีโอ</b>",rows:[
+ R("Color Temperature","2700 – 6500 K (Bi-color)",1,"K = หน่วยแสง"),R("Color Quality","CRI 95+ · TLCI 97+",1,"สีแม่น"),R("Output","100 W (input สูงสุด 113 W)",0,"กำลังไฟ"),
+ R("Illuminance","~30,500 lux @1m กับ Hyper Reflector",1,"ความสว่าง"),R("Mount","Bowens",0,"ใส่ softbox ได้")],
+ feat:["ปรับสีแสงได้","สีแม่น"],use:"ถ่ายวิดีโอ สัมภาษณ์",why:"แสดงว่าเป็นไฟถ่ายทำ"}
+];
+realMore.forEach(m=>more.push(m));
 more.forEach(m=>{if(m.ans)return;const clues=m.rows.filter(r=>r[2]).map(r=>`${r[0]} ${r[1]}`).slice(0,4).join(", ");m.ans=`อุปกรณ์นี้คือ${m.conc.replace(/<[^>]+>/g,"")} เพราะสเปคระบุ ${clues} ${m.why} จึงเหมาะกับงาน${m.use}`;});
 const all=sheets.concat(more);
 const catNames=[...new Set(all.map(s=>s.cat))];
@@ -1442,8 +1565,8 @@ tabs.innerHTML=catNames.map((n,i)=>`<button type="button" data-i="${i}">${n} (${
 tabs.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>showCat(+b.dataset.i)));
 function showCat(c){
   curCat=c; tabs.querySelectorAll("button").forEach((b,k)=>{b.classList.toggle("on",k===c);b.setAttribute("aria-pressed",k===c)});
-  const idx=all.map((s,i)=>[s,i]).filter(([s])=>s.cat===catNames[c]);
-  items.innerHTML=idx.map(([s,i])=>`<button type="button" data-i="${i}">${s.name}${s.real?' <span class="tag" style="font-size:10px">สเปคจริง</span>':""}</button>`).join("");
+  const idx=all.map((s,i)=>[s,i]).filter(([s])=>s.cat===catNames[c]).sort((x,y)=>(y[0].real?1:0)-(x[0].real?1:0));
+  items.innerHTML=idx.map(([s,i])=>`<button type="button" data-i="${i}">${s.name}${s.real?' <span class="tag" style="font-size:10px">รุ่นจริง</span>':""}</button>`).join("");
   items.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>show(+b.dataset.i)));
   show(idx[0][1]);
 }
@@ -1457,7 +1580,7 @@ function show(i){
   items.querySelectorAll("button").forEach(b=>{const on=+b.dataset.i===i;b.classList.toggle("on",on);b.setAttribute("aria-pressed",on)});
   list.innerHTML=s.rows.map(r=>`<button type="button"><span class="a">${r[0]}${r[2]?'<span class="hit">● คำใบ้</span>':""}</span><span class="v">${r[1]}</span></button>`).join("");
   list.querySelectorAll("button").forEach((b,j)=>b.addEventListener("click",()=>line(j)));
-  $("#srConc").innerHTML=`<h4>สรุป: อุปกรณ์นี้คือ</h4><p>${s.conc}</p><p style="margin-top:8px"><b>คุณสมบัติเด่น</b></p><ul style="margin:4px 0 0;padding-left:20px">${s.feat.map(f=>`<li>${f}</li>`).join("")}</ul><p style="margin-top:8px"><b>ใช้กับงาน:</b> ${s.use}</p><div class="exam" style="margin-top:10px"><b class="k">ตัวอย่างเขียนตอบ</b>${s.ans}</div>${s.real?"":'<p class="small" style="margin-top:8px">สเปคตัวอย่างนี้แต่งจากค่าทั่วไปของอุปกรณ์ประเภทนี้ ไม่ใช่รุ่นจริงรุ่นใดรุ่นหนึ่ง</p>'}`;
+  $("#srConc").innerHTML=`<h4>สรุป: อุปกรณ์นี้คือ</h4><p>${s.conc}</p><p style="margin-top:8px"><b>คุณสมบัติเด่น</b></p><ul style="margin:4px 0 0;padding-left:20px">${s.feat.map(f=>`<li>${f}</li>`).join("")}</ul><p style="margin-top:8px"><b>ใช้กับงาน:</b> ${s.use}</p><div class="exam" style="margin-top:10px"><b class="k">ตัวอย่างเขียนตอบ</b>${s.ans}</div>${s.real?'<p class="small" style="margin-top:8px">สเปครุ่นจริงจากหน้าผู้ผลิตและร้านค้า (ตรวจเมื่อ พ.ย. 2026) ตัวเลขบางรายการแต่ละแหล่งระบุต่างกันเล็กน้อย จึงใส่ ~ หรือหมายเหตุไว้</p>':'<p class="small" style="margin-top:8px">สเปคตัวอย่างนี้แต่งจากค่าทั่วไปของอุปกรณ์ประเภทนี้ ไม่ใช่รุ่นจริงรุ่นใดรุ่นหนึ่ง</p>'}`;
   line(Math.max(0,s.rows.findIndex(r=>r[2])));
 }
 showCat(0);
